@@ -1,6 +1,6 @@
 const app = require('../app');
 const { testGetSampleItem, testCreateSampleItem } = require('./testOps');
-app.listen(3000, () => {
+let server = app.listen(3000, () => {
     console.log("Listening to port 3000")
 })
 
@@ -23,4 +23,5 @@ describe('TEST /' + uri, function() {
 
     testCreateSampleItem(collName, uri, sampleObject)
 
+    server.close();
 });

@@ -1,25 +1,27 @@
 const app = require('../app');
 const { testGetSampleItem, testCreateSampleItem } = require('./testOps');
-app.listen(3000, () => {
+let server = app.listen(3000, () => {
     console.log("Listening to port 3000")
 })
 
-let collName = 'location'
-let uri = 'locations'
+let collName = 'payment'
+let uri = 'payments'
 
 describe('TEST /uri', function() {
-    let sampleObjectId = "63aeb4943324972da5df09a0"
+    let sampleObjectId = "63b39f6939efba391d819a61"
 
     let sampleObject = {
-        driver_id: '01020202',
-        doc_name: 'sample doc name',
-        doc_category: 'sample category',
-        document_code: '011111',
-        expiration_date: '11/20/2050',
+        customer_id: '01020202',
+        type: 'normal test',
+        base_rate: '1',
+        tip_amount: '123',
+        total_amount: '1840',
+        transaction_id: '3223232'
     }
 
     testGetSampleItem(collName, uri, sampleObjectId)
 
     testCreateSampleItem(collName, uri, sampleObject)
 
+    server.close();
 });
