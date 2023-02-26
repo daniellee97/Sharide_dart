@@ -6,6 +6,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text('Home')),
         body: Container(
+            padding: EdgeInsets.all(15),
             color: Colors.black,
             child: Column(
               children: [
@@ -31,13 +32,14 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                    alignment: Alignment.center,
                     width: double.infinity,
                     height: 120,
                     margin: EdgeInsets.symmetric(horizontal: 15),
                     padding: EdgeInsets.all(10),
                     color: Colors.white,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           'Your default pick-up location:',
@@ -67,6 +69,8 @@ class HomeScreen extends StatelessWidget {
                         padding: EdgeInsets.all(10),
                         decoration: BoxDecoration(color: Colors.blue),
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Text(
                               'March 5th, 2023',
