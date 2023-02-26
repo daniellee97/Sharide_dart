@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class UserMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +24,25 @@ class HomeScreen extends StatelessWidget {
                     onPressed: () => {},
                     child: Text(
                       'Edit location',
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.blue.shade800)),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerRight,
+                  margin: EdgeInsets.only(right: 15),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SecondRoute()),
+                      );
+                    },
+                    child: Text(
+                      'Drive history',
                       style: TextStyle(color: Colors.black),
                     ),
                     style: ButtonStyle(
@@ -132,5 +151,35 @@ class HomeScreen extends StatelessWidget {
                 ),
               ],
             )));
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  const SecondRoute({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Drive history'),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            Text(
+              'Your drive history is as below',
+              textDirection: TextDirection.ltr,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Navigate back to first route when tapped
+                Navigator.pop(context);
+              },
+              child: const Text('Go back!'),
+            )
+          ]
+        )
+      ),
+    );
   }
 }
