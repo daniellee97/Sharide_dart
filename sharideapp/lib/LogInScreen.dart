@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './UserScreens.dart';
+import './DriverScreens.dart';
 
 class LogInScreen extends StatelessWidget {
     @override
@@ -19,39 +20,50 @@ class LogInScreen extends StatelessWidget {
                             color: Colors.white),
                         
                         ),
-                        Container(
-                            alignment: Alignment.centerRight,
-                            margin: EdgeInsets.only(right: 15),
-                            child: ElevatedButton(
-                                onPressed: () => {},
-                                child: Text(
-                                'Driver',
-                                style: TextStyle(color: Colors.black),
+                        Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children:[
+                                Container(
+                                alignment: Alignment.centerRight,
+                                margin: EdgeInsets.only(right: 15),
+                                child: ElevatedButton(
+                                    onPressed: () => {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => DriverMainScreen()),
+                                        )
+                                    },
+                                    child: Text(
+                                    'Driver',
+                                    style: TextStyle(color: Colors.black),
+                                    ),
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(Colors.blue.shade800)),
+                                    ),
                                 ),
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all(Colors.blue.shade800)),
-                            ),
-                        ),
-                        Container(
-                            alignment: Alignment.centerRight,
-                            margin: EdgeInsets.only(right: 15),
-                            child: ElevatedButton(
-                                onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => UserMainScreen()),
-                                );
-                                },
-                                child: Text(
-                                'Passenger',
-                                style: TextStyle(color: Colors.black),
+                                Container(
+                                    alignment: Alignment.centerRight,
+                                    margin: EdgeInsets.only(right: 15),
+                                    child: ElevatedButton(
+                                        onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => UserMainScreen()),
+                                            );
+                                        },
+                                        child: Text(
+                                        'Passenger',
+                                        style: TextStyle(color: Colors.black),
+                                        ),
+                                        style: ButtonStyle(
+                                            backgroundColor:
+                                                MaterialStateProperty.all(Colors.blue.shade800)),
+                                    ),
                                 ),
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all(Colors.blue.shade800)),
-                            ),
+                            ]
                         ),
+                        
                     ]
 
                 )
