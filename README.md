@@ -1,7 +1,7 @@
 # Sharide_dart
  
 https://www.mongodb.com/languages/express-mongodb-rest-api-tutorial
-to run the test npx jest /test/supertest.test.js
+to run the test npx jest /test/car1.test.js
 
 example of testing
 https://www.npmjs.com/package/supertest
