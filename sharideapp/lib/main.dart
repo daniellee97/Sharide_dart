@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'AuthenticationScreens.dart';
+import './driverSearchingScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: UserMainScreen(),
-      home: LogInScreen(),
+      home: DriverSearchingScreen(),
     );
   }
 }
