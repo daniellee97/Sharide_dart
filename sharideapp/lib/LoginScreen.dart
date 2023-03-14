@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+//import 'package:email_validator/email_validator.dart';
+//import 'package:regexed_validator/regexed_validator.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -54,7 +56,7 @@ Widget builPassword() {
       Text(
         'Password',
         style: TextStyle(
-            color: Color.fromARGB(255, 12, 12, 12),
+            color: Color.fromARGB(255, 246, 248, 247),
             fontSize: 16,
             fontWeight: FontWeight.bold),
       ),
@@ -116,7 +118,7 @@ Widget buildLoginBtn() {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
           textStyle: TextStyle(
-              color: Colors.black, fontSize: 40, fontWeight: FontWeight.bold),
+              color: Colors.black, fontSize: 34, fontWeight: FontWeight.bold),
         ),
         onPressed: () {
           print('Pressed');
