@@ -8,18 +8,20 @@ class LoginScreen extends StatefulWidget {
   _LoginScreenState createState() => _LoginScreenState();
 }
 
+String email = '';
+
 Widget builEmail() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
-      Text(
+      const Text(
         'Email',
         style: TextStyle(
             color: Color.fromARGB(255, 239, 238, 238),
             fontSize: 16,
             fontWeight: FontWeight.bold),
       ),
-      SizedBox(height: 10),
+      const SizedBox(height: 10),
       Container(
         alignment: Alignment.centerLeft,
         decoration: BoxDecoration(
@@ -32,8 +34,17 @@ Widget builEmail() {
         height: 60,
         child: TextField(
           keyboardType: TextInputType.emailAddress,
+          onChanged: (value) {
+            email = value;
+            print(email);
+          },
           style: TextStyle(color: Color.fromARGB(221, 15, 15, 15)),
           decoration: InputDecoration(
+            errorText: email == ''
+                ? null
+                : !email.contains("@")
+                    ? "Error: Not a valid email"
+                    : null,
             border: InputBorder.none,
             contentPadding: EdgeInsets.only(top: 14),
             prefixIcon: Icon(
@@ -53,7 +64,7 @@ Widget builPassword() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
-      Text(
+      const Text(
         'Password',
         style: TextStyle(
             color: Color.fromARGB(255, 246, 248, 247),
