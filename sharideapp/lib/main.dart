@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
 import 'AuthenticationScreens.dart';
-import 'DriverLiveTracking.dart';
-import 'scheduleScreen.dart';
+import './driverSearchingScreen.dart';
+import './tripEndingScreen.dart';
+import './Login.dart';
+import './PaymentScreen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  Stripe.publishableKey =
+      'pk_test_51MlgzdJ2VkQqns4i5iNV8xZiQaol7ZyCeAgBF5SWjVexVwu0R1Sw89sWQBUVPMvqUIi1jxc2niprcAdCZzL6qqlT00w7DpxfQQ';
+
   runApp(MyApp());
 }
 
@@ -24,10 +32,8 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: DriverMapScreen(),
-      //home: LogInScreen(),
-
-      //home: ScheduleScreen(),
+      // home: UserMainScreen(),
+      home: LoginScreen(),
     );
   }
 }
