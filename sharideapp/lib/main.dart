@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 import 'AuthenticationScreens.dart';
+import 'DriverLiveTracking.dart';
+import 'scheduleScreen.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
@@ -23,8 +24,10 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      // home: UserMainScreen(),
-      home: LogInScreen(),
+      home: DriverMapScreen(),
+      //home: LogInScreen(),
+
+      //home: ScheduleScreen(),
     );
   }
 }
