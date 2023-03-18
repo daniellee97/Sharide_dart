@@ -1,3 +1,5 @@
+//import org.gradle.api.GradleException
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -8,7 +10,8 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw new FileNotFoundException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    //Had to change because Gradle was giving me an error when set to 'new'
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
