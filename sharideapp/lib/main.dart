@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'AuthenticationScreens.dart';
 import './driverSearchingScreen.dart';
@@ -13,7 +14,9 @@ void main() {
   Stripe.publishableKey =
       'pk_test_51MlgzdJ2VkQqns4i5iNV8xZiQaol7ZyCeAgBF5SWjVexVwu0R1Sw89sWQBUVPMvqUIi1jxc2niprcAdCZzL6qqlT00w7DpxfQQ';
 
-  runApp(MyApp());
+  runApp(ProviderScope(
+    child: MyApp()
+    ));
 }
 
 class MyApp extends StatelessWidget {
@@ -37,3 +40,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
