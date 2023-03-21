@@ -19,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: Text('Login'),
       ),
-      body: Container(
+      body: SingleChildScrollView(
         //color: Colors.black,
         child: Column(
           children: [
