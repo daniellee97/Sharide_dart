@@ -4,9 +4,9 @@ class UserMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Home')),
+        appBar: AppBar(title: const Text('Home')),
         body: Container(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             color: Colors.black,
             child: Column(
               children: [
@@ -19,10 +19,10 @@ class UserMainScreen extends StatelessWidget {
                 ),
                 Container(
                   alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 15),
+                  margin: const EdgeInsets.only(right: 15),
                   child: ElevatedButton(
                     onPressed: () => {},
-                    child: Text(
+                    child: const Text(
                       'Edit location',
                       style: TextStyle(color: Colors.black),
                     ),
@@ -33,7 +33,7 @@ class UserMainScreen extends StatelessWidget {
                 ),
                 Container(
                   alignment: Alignment.centerRight,
-                  margin: EdgeInsets.only(right: 15),
+                  margin: const EdgeInsets.only(right: 15),
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -53,8 +53,8 @@ class UserMainScreen extends StatelessWidget {
                 Container(
                     width: double.infinity,
                     height: 120,
-                    margin: EdgeInsets.symmetric(horizontal: 15),
-                    padding: EdgeInsets.all(10),
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.all(10),
                     color: Colors.white,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -70,10 +70,10 @@ class UserMainScreen extends StatelessWidget {
                       ],
                     )),
                 Container(
-                  margin: EdgeInsets.all(15),
+                  margin: const EdgeInsets.all(15),
                   child: Column(
                     children: [
-                      Text(
+                      const Text(
                         'Your current ride schedule:',
                         style: TextStyle(
                             fontSize: 16,
@@ -84,9 +84,9 @@ class UserMainScreen extends StatelessWidget {
                       Container(
                         height: 120,
                         width: double.infinity,
-                        margin: EdgeInsets.symmetric(vertical: 15),
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(color: Colors.blue),
+                        margin: const EdgeInsets.symmetric(vertical: 15),
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(color: Colors.blue),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -130,7 +130,7 @@ class UserMainScreen extends StatelessWidget {
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.green)),
                                 onPressed: () => {},
-                                child: Text(
+                                child: const Text(
                                   'Schedule a ride',
                                   style: TextStyle(color: Colors.black),
                                 )),
@@ -139,7 +139,7 @@ class UserMainScreen extends StatelessWidget {
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.yellow)),
                                 onPressed: () => {},
-                                child: Text(
+                                child: const Text(
                                   'Search a driver',
                                   style: TextStyle(color: Colors.black),
                                 )),
@@ -154,6 +154,7 @@ class UserMainScreen extends StatelessWidget {
   }
 }
 
+
 class SecondRoute extends StatelessWidget {
   const SecondRoute({super.key});
 
@@ -166,7 +167,7 @@ class SecondRoute extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text(
+            const Text(
               'Your drive history is as below',
               textDirection: TextDirection.ltr,
             ),

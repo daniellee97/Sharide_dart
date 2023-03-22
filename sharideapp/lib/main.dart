@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'Providers.dart';
 
 import 'AuthenticationScreens.dart';
 import './driverSearchingScreen.dart';
 import './tripEndingScreen.dart';
 import './Login.dart';
-import './PaymentScreen.dart';
+import 'UserScreens.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,8 +20,9 @@ void main() {
     ));
 }
 
-class MyApp extends StatelessWidget {
-  Widget build(BuildContext context) {
+class MyApp extends ConsumerWidget {
+  Widget build(BuildContext context, WidgetRef ref) {
+    bool loggedInYet = ref.watch(loggedIn);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       // home: UserMainScreen(),
-      home: LoginScreen(),
+      home: loggedInYet ? UserMainScreen() : const LoginScreen(),
     );
   }
 }

@@ -59,7 +59,7 @@ class MyTestingScreen extends ConsumerWidget{
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // TODO: implement build
-    var value = ref.watch(helloWorldProvider);
+    var value = ref.watch(helloWorldProvider1);
     return Scaffold(
       body: Center(
         child: Column (
@@ -72,7 +72,7 @@ class MyTestingScreen extends ConsumerWidget{
                 backgroundColor: MaterialStateProperty.all(
                     Colors.green)),
             onPressed: () => {
-              ref.read(helloWorldProvider.notifier).state = "Testing",
+              ref.read(helloWorldProvider1.notifier).state = "Testing",
             },
             child: const Text(
               'Change value',
