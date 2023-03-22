@@ -151,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnnotatedRegion<SystemUiOverlayStyle>(
+      body: AnnotatedRegion<SystemUiOverlayStyle>(  
         value: SystemUiOverlayStyle.light,
         child: GestureDetector(
           child: Stack(
@@ -224,10 +224,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 }
