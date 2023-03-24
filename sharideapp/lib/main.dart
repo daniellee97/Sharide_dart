@@ -3,9 +3,6 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'Providers.dart';
 
-import 'AuthenticationScreens.dart';
-import './driverSearchingScreen.dart';
-import './tripEndingScreen.dart';
 import './Login.dart';
 import './DriverScreens.dart';
 import 'UserScreens.dart';
@@ -40,8 +37,8 @@ class MyApp extends ConsumerWidget {
         primarySwatch: Colors.blue,
       ),
       // home: UserMainScreen(),
-      // home: loggedInYet ? isCurrentUserDriver ? DriverMainScreen() : UserMainScreen() : const LoginScreen(),
-      home: loggedInYet ? UserMainScreen() : const LoginScreen(),
+      home: loggedInYet ? isCurrentUserDriver ? DriverMainScreen() : UserMainScreen() : const LoginScreen(),
+      // home: loggedInYet ? UserMainScreen() : const LoginScreen(),
     );
   }
 }

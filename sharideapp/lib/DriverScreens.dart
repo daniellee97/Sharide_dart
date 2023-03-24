@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import './UserScreens.dart';
+import './Providers.dart';
 
-class DriverMainScreen extends StatelessWidget {
+class DriverMainScreen extends ConsumerWidget {
     @override
-    Widget build(BuildContext context) {
+    Widget build(BuildContext context, WidgetRef ref) {
+
         return Scaffold(
             appBar: AppBar(title: Text('Hello, (driver name)')),
             body: Container(
@@ -52,7 +54,16 @@ class DriverMainScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                         ),
-
+                        ElevatedButton(
+                              onPressed: () {
+                                ref.read(loggedIn.notifier).state = false;
+                                ref.read(isDriver.notifier).state = false;
+                              }, 
+                              child: const Text(
+                                  'Log out',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                        )
                     ]
                 )
             )

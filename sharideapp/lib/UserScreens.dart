@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'Providers.dart';
 
-class UserMainScreen extends StatelessWidget {
+class UserMainScreen extends ConsumerWidget{
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Home')),
+        // appBar: AppBar(title: const Text('Home')),
         body: Container(
             padding: const EdgeInsets.all(15),
             color: Colors.black,
@@ -143,6 +145,15 @@ class UserMainScreen extends StatelessWidget {
                                   'Search a driver',
                                   style: TextStyle(color: Colors.black),
                                 )),
+                            ElevatedButton(
+                              onPressed: () {
+                                ref.read(loggedIn.notifier).state = false;
+                              }, 
+                              child: const Text(
+                                  'Log out',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                            )
                           ],
                         ),
                       ),
@@ -155,11 +166,11 @@ class UserMainScreen extends StatelessWidget {
 }
 
 
-class SecondRoute extends StatelessWidget {
+class SecondRoute extends ConsumerWidget {
   const SecondRoute({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Drive history'),
