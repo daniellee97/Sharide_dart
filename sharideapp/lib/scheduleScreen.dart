@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:go_router/go_router.dart';
 
 class ScheduleScreen extends StatefulWidget {
 
@@ -42,7 +43,7 @@ class _ScheduleState extends State<ScheduleScreen> {
             },
           ),
           Text('Selected date: ' + DateFormat.yMMMd().format(scheduledDate)),
-          ElevatedButton(onPressed: (){}, child: Text('Confirm')),
+          ElevatedButton(onPressed: ()=>context.pop(), child: Text('Confirm')),
         ],
       )),
     );

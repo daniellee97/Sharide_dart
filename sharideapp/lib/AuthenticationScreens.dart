@@ -1,145 +1,119 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
-import './UserScreens.dart';
-import './DriverScreens.dart';
-
-class LogInScreen extends StatelessWidget {
-    @override
-    Widget build(BuildContext context) {
-        return Scaffold(
-            appBar: AppBar(title: Text('Please log in')),
-            body: Container(
-                padding: EdgeInsets.all(15),
-                color: Colors.black,
-                child: Column(
-                    children: [
-                        const Text('Hello, log in as',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                        
+class LandingScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: Text('Sharide')),
+        body: Container(
+            padding: EdgeInsets.all(15),
+            color: Colors.black,
+            child: Column(children: [
+              const Text(
+                'Hello, log in as',
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      alignment: Alignment.centerRight,
+                      margin: EdgeInsets.only(right: 15),
+                      child: ElevatedButton(
+                        onPressed: () => context.go('/logIn'),
+                        child: Text(
+                          'Driver',
+                          style: TextStyle(color: Colors.black),
                         ),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children:[
-                                Container(
-                                alignment: Alignment.centerRight,
-                                margin: EdgeInsets.only(right: 15),
-                                child: ElevatedButton(
-                                    onPressed: () => {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => DriverMainScreen()),
-                                        )
-                                    },
-                                    child: Text(
-                                    'Driver',
-                                    style: TextStyle(color: Colors.black),
-                                    ),
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(Colors.blue.shade800)),
-                                    ),
-                                ),
-                                Container(
-                                    alignment: Alignment.centerRight,
-                                    margin: EdgeInsets.only(right: 15),
-                                    child: ElevatedButton(
-                                        onPressed: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(builder: (context) => UserMainScreen()),
-                                            );
-                                        },
-                                        child: Text(
-                                        'Passenger',
-                                        style: TextStyle(color: Colors.black),
-                                        ),
-                                        style: ButtonStyle(
-                                            backgroundColor:
-                                                MaterialStateProperty.all(Colors.blue.shade800)),
-                                    ),
-                                ),
-                            ]
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Colors.blue.shade800)),
+                      ),
+                    ),
+                    Container(
+                      alignment: Alignment.centerRight,
+                      margin: EdgeInsets.only(right: 15),
+                      child: ElevatedButton(
+                        onPressed: () => context.go('/logIn'),
+                        child: Text(
+                          'Passenger',
+                          style: TextStyle(color: Colors.black),
                         ),
-                        const Text('Or you can sign up below',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                        
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Colors.blue.shade800)),
+                      ),
+                    ),
+                  ]),
+              const Text(
+                'Or you can sign up below',
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      alignment: Alignment.centerRight,
+                      margin: EdgeInsets.only(right: 15),
+                      child: ElevatedButton(
+                        onPressed: () => context.go('/signUp'),
+                        child: Text(
+                          'Sign up',
+                          style: TextStyle(color: Colors.black),
                         ),
-                        Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children:[
-                                Container(
-                                alignment: Alignment.centerRight,
-                                margin: EdgeInsets.only(right: 15),
-                                child: ElevatedButton(
-                                    onPressed: () => {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => SignUpForm()),
-                                        )
-                                    },
-                                    child: Text(
-                                    'Sign up',
-                                    style: TextStyle(color: Colors.black),
-                                    ),
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(Colors.blue.shade800)),
-                                    ),
-                                ),
-                                
-                            ]
-                        ),
-                    ]
-
-                )
-            )
-        );
-    }
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                Colors.blue.shade800)),
+                      ),
+                    ),
+                  ]),
+            ])));
+  }
 }
 
-class SignUpForm extends StatelessWidget{
+class SignUpForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(title: Text("Sign up form")),
-      body: Container(
-        padding: EdgeInsets.all(15),
-        color: Color.fromARGB(255, 255, 255, 255),
-        child: Column(
-          children: <Widget> [
+        appBar: AppBar(title: Text("Sign up form")),
+        body: Container(
+          padding: EdgeInsets.all(15),
+          color: Color.fromARGB(255, 255, 255, 255),
+          child: Column(children: <Widget>[
             TextFormField(
-            decoration: InputDecoration(labelText: 'Your name'),
-            keyboardType: TextInputType.emailAddress,
-            // validator: (value) {
-            //   if (value?.isEmpty || !value?.contains('@')) {
-            //     return 'Invalid email!';
-            //   }
-            // },
+              decoration: InputDecoration(labelText: 'Your name'),
+              keyboardType: TextInputType.emailAddress,
+              // validator: (value) {
+              //   if (value?.isEmpty || !value?.contains('@')) {
+              //     return 'Invalid email!';
+              //   }
+              // },
             ),
             TextFormField(
-            decoration: InputDecoration(labelText: 'Username'),
-            keyboardType: TextInputType.emailAddress,
-            // validator: (value) {
-            //   if (value?.isEmpty || !value?.contains('@')) {
-            //     return 'Invalid email!';
-            //   }
-            // },
+              decoration: InputDecoration(labelText: 'Username'),
+              keyboardType: TextInputType.emailAddress,
+              // validator: (value) {
+              //   if (value?.isEmpty || !value?.contains('@')) {
+              //     return 'Invalid email!';
+              //   }
+              // },
             ),
             TextFormField(
-            decoration: InputDecoration(labelText: 'E-Mail'),
-            keyboardType: TextInputType.emailAddress,
-            // validator: (value) {
-            //   if (value?.isEmpty || !value?.contains('@')) {
-            //     return 'Invalid email!';
-            //   }
-            // },
+              decoration: InputDecoration(labelText: 'E-Mail'),
+              keyboardType: TextInputType.emailAddress,
+              // validator: (value) {
+              //   if (value?.isEmpty || !value?.contains('@')) {
+              //     return 'Invalid email!';
+              //   }
+              // },
             ),
             TextFormField(
               decoration: InputDecoration(labelText: 'Password'),
@@ -158,14 +132,12 @@ class SignUpForm extends StatelessWidget{
               style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
-              onPressed: () { 
+              onPressed: () {
                 Navigator.pop(context);
               },
               child: Text('Sign up and go back to log in screen'),
             )
-          ]
-        ),
-      )
-    );
+          ]),
+        ));
   }
 }

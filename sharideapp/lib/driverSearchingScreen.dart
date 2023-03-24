@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DriverSearchingScreen extends StatelessWidget {
   @override
@@ -22,7 +23,7 @@ class DriverSearchingScreen extends StatelessWidget {
               ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red)),
-                onPressed: () {},
+                onPressed: () => context.pop(),
                 child: Text('Cancel'),
               ),
             ],

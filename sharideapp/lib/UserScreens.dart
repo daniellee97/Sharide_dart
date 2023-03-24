@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class UserMainScreen extends StatelessWidget {
   @override
@@ -129,7 +130,7 @@ class UserMainScreen extends StatelessWidget {
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.green)),
-                                onPressed: () => {},
+                                onPressed: () => context.push('/scheduleRide'),
                                 child: Text(
                                   'Schedule a ride',
                                   style: TextStyle(color: Colors.black),
@@ -138,7 +139,7 @@ class UserMainScreen extends StatelessWidget {
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.yellow)),
-                                onPressed: () => {},
+                                onPressed: () => context.push('/searchDriver'),
                                 child: Text(
                                   'Search a driver',
                                   style: TextStyle(color: Colors.black),

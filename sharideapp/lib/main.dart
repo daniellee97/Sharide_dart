@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:go_router/go_router.dart';
 
-import 'AuthenticationScreens.dart';
+import './AuthenticationScreens.dart';
 import './driverSearchingScreen.dart';
 import './tripEndingScreen.dart';
 import './Login.dart';
 import './PaymentScreen.dart';
+import './UserScreens.dart';
+import './scheduleScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,23 +20,36 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      // home: UserMainScreen(),
-      home: LoginScreen(),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp.router(
+        routerDelegate: _router.routerDelegate,
+        routeInformationParser: _router.routeInformationParser,
+        routeInformationProvider: _router.routeInformationProvider,
+      );
+
+  final GoRouter _router = GoRouter(routes: <GoRoute>[
+    GoRoute(
+      routes: <GoRoute>[
+        GoRoute(
+          path: 'logIn',
+          builder: (context, state) => const LoginScreen(),
+        ),
+        GoRoute(
+          path: 'signUp',
+          builder: (context, state) => SignUpForm(),
+        ),
+        GoRoute(
+          path: 'main',
+          builder: (context, state) => UserMainScreen(),
+        ),
+        GoRoute(
+          path: 'scheduleRide', 
+          builder: (context, state) => ScheduleScreen()
+        ),
+        GoRoute(
+          path: 'searchDriver',
+          builder: (context, state) => DriverSearchingScreen(),
+        ),
+      ], path: '/', builder: (context, state) => LandingScreen()
+    ),
+  ]);
 }
