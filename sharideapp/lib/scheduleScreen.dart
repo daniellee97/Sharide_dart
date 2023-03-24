@@ -27,7 +27,7 @@ class _ScheduleState extends State<ScheduleScreen> {
       body: Container(
           child: Column(
         children: [
-          Text('Select your ride schedule date and time:', style:  TextStyle(color:Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
+          const Text('Select your ride schedule date and time:', style:  TextStyle(color:Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
           ElevatedButton(
             child: Text('Select date/time for your next ride'),
             onPressed: () {

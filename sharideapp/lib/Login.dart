@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginScreen extends StatefulWidget {
+import 'TestScreens.dart';
+import 'Providers.dart';
+
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
+
+  // @override
+  // ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String? _email;
@@ -15,16 +23,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Login'),
+        title: const Text('Login'),
       ),
-      body: SingleChildScrollView(
+      body: Container(
         //color: Colors.black,
         child: Column(
           children: [
-            SizedBox(height: 50),
-            Text(
+            const SizedBox(height: 50),
+            const Text(
               'Welcome to ShaRide',
               style: TextStyle(
                 fontSize: 30,
@@ -32,16 +41,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 color: Color.fromARGB(255, 48, 47, 47),
               ),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Form(
                 key: _formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Email',
                         border: OutlineInputBorder(),
                       ),
@@ -57,9 +66,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       onSaved: (value) => _email = value,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     TextFormField(
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Password',
                         border: OutlineInputBorder(),
                       ),
@@ -72,17 +81,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       onSaved: (value) => _password = value,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextButton(
                           onPressed: () {},
-                          child: Text('Forgot Password?'),
+                          child: const Text('Forgot Password?'),
                         ),
                       ],
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
@@ -92,7 +101,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           print('Password: $_password');
                         }
                       },
-                      child: Text('Login'),
+                      child: const Text('Login'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        ref.read(loggedIn.notifier).state = true;
+                        // context.read(loggedIn).state = true;
+
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(builder: (context) => MyTestingScreen()),
+                        //   );
+                      
+                      }, 
+                      child: const Text('Special Proffvider')
                     ),
                   ],
                 ),
@@ -104,3 +126,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+
