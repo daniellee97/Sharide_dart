@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'TestScreens.dart';
 import 'Providers.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
+
+  // @override
+  // ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String? _email;
@@ -18,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
@@ -99,13 +105,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () {
+                        ref.read(loggedIn.notifier).state = true;
+                        // context.read(loggedIn).state = true;
 
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => MyTestingScreen()),
-                          );
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(builder: (context) => MyTestingScreen()),
+                        //   );
+                      
                       }, 
-                      child: const Text('Learn provider')
+                      child: const Text('Special Proffvider')
                     ),
                   ],
                 ),
@@ -117,3 +126,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
+

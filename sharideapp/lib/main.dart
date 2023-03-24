@@ -40,7 +40,8 @@ class MyApp extends ConsumerWidget {
         primarySwatch: Colors.blue,
       ),
       // home: UserMainScreen(),
-      home: loggedInYet ? isCurrentUserDriver ? DriverMainScreen() : UserMainScreen() : const LoginScreen(),
+      // home: loggedInYet ? isCurrentUserDriver ? DriverMainScreen() : UserMainScreen() : const LoginScreen(),
+      home: loggedInYet ? UserMainScreen() : const LoginScreen(),
     );
   }
 }

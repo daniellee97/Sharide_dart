@@ -13,5 +13,5 @@ final isDriver = StateProvider<bool>((ref) {
 });
 
 final userName = StateProvider<String>((ref) {
-  return "currentUserName";
+  return "curredddntUserName";
 });
