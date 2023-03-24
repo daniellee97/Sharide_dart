@@ -7,6 +7,7 @@ import 'AuthenticationScreens.dart';
 import './driverSearchingScreen.dart';
 import './tripEndingScreen.dart';
 import './Login.dart';
+import './DriverScreens.dart';
 import 'UserScreens.dart';
 
 void main() {
@@ -23,6 +24,7 @@ void main() {
 class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     bool loggedInYet = ref.watch(loggedIn);
+    bool isCurrentUserDriver = ref.watch(isDriver);
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -38,7 +40,7 @@ class MyApp extends ConsumerWidget {
         primarySwatch: Colors.blue,
       ),
       // home: UserMainScreen(),
-      home: loggedInYet ? UserMainScreen() : const LoginScreen(),
+      home: loggedInYet ? isCurrentUserDriver ? DriverMainScreen() : UserMainScreen() : const LoginScreen(),
     );
   }
 }

@@ -7,3 +7,11 @@ final helloWorldProvider1 = StateProvider<String>((ref) {
 final loggedIn = StateProvider<bool>((ref) {
   return false;
 });
+
+final isDriver = StateProvider<bool>((ref) {
+  return false;
+});
+
+final userName = StateProvider<String>((ref) {
+  return "currentUserName";
+});
