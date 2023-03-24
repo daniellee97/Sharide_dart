@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'TestScreens.dart';
 import 'Providers.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -106,15 +105,17 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ElevatedButton(
                       onPressed: () {
                         ref.read(loggedIn.notifier).state = true;
-                        // context.read(loggedIn).state = true;
-
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(builder: (context) => MyTestingScreen()),
-                        //   );
                       
                       }, 
-                      child: const Text('Special Proffvider')
+                      child: const Text('Special user log in')
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        ref.read(loggedIn.notifier).state = true;
+                        ref.read(isDriver.notifier).state = true;
+                      
+                      }, 
+                      child: const Text('Special driver log in')
                     ),
                   ],
                 ),

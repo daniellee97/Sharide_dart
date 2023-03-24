@@ -22,7 +22,7 @@ class _ScheduleState extends State<ScheduleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sharide'),
+        title: const Text('Sharide'),
       ),
       body: Container(
           child: Column(
