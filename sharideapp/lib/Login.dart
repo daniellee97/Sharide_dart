@@ -1,3 +1,5 @@
+import 'dart:js_util';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
@@ -23,25 +25,47 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     _logInAsPassenger() async {
-      print('Email: $_email');
-      print('Password: $_password');
-      print('Test');
+      // print('Email: $_email');
+      // print('Password: $_password');
+      // print('Test');
+      // one example student: sampleStudent@sjsu.edu, samplePassword
+      
 
       String authority = "192.168.1.83:3000";
       var url = Uri.http(authority, '/customers/logIn');
-      http.post(url, body: {'sjsu_email':'sampleStudent@sjsu.edu', 'password': 'samplePassword'}).then((response) {
+      http.post(url, body: {'sjsu_email': _email, 'password': _password}).then((response) {
         if(response.statusCode == 200) {
-          print("Log in successfully");
+          // print("Log in successfully");
+          ref.read(loggedIn.notifier).state = true;
+          Navigator.pop(context);
         } else {
-          print("Error log in");
+          // print("Error log in");
         }
       }).catchError((e) {
-        print("Offline");
-      })
-      
-      ;
+        // print("Offline");
+      });
 
     }
+
+    _logInAsDriver() async {
+      // one example driver: sampleDriver@sjsu.edu, sampleDriver
+      String authority = "192.168.1.83:3000";
+      var url = Uri.http(authority, '/drivers/logIn');
+      http.post(url, body: {'sjsu_email': _email, 'password': _password}).then((response) {
+        if(response.statusCode == 200) {
+          // print("Log in successfully");
+          ref.read(loggedIn.notifier).state = true;
+          ref.read(isDriver.notifier).state = true;
+          Navigator.pop(context);
+        } else {
+          // print("Error log in");
+        }
+      }).catchError((e) {
+        // print("Offline");
+      });
+
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
@@ -115,8 +139,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           // Do something with the email and password
-                          print('Email: $_email');
-                          print('Password: $_password');
+                          _logInAsDriver();
 
                         }
                       },
