@@ -8,7 +8,10 @@ const getAllDocuments = async (database, collName, res) => {
 const getOneDocument = async (database, collName, listingQuery, res) => {
     ;(await database).collection(collName).findOne(listingQuery)
     .then( result => {
-        res.json(result)
+        if(!result)
+            res.status(500).send({"Error": "Error"})
+        else
+            res.json(result)
     })
 
 }
