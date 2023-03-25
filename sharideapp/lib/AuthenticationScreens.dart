@@ -69,7 +69,7 @@ class WelcomeScreen extends ConsumerWidget {
                       
                       },
                       child: Text(
-                        'Driver',
+                        'Driver (test)',
                         style: TextStyle(color: Colors.black),
                       ),
                       style: ButtonStyle(
@@ -86,7 +86,7 @@ class WelcomeScreen extends ConsumerWidget {
                         ref.read(loggedIn.notifier).state = true;
                       },
                       child: Text(
-                        'Passenger',
+                        'Passenger (test)',
                         style: TextStyle(color: Colors.black),
                       ),
                       style: ButtonStyle(

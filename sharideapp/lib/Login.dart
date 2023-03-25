@@ -98,7 +98,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           print('Password: $_password');
                         }
                       },
-                      child: const Text('Login'),
+                      child: const Text('Login as Driver'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          _formKey.currentState!.save();
+                          // Do something with the email and password
+                          print('Email: $_email');
+                          print('Password: $_password');
+                        }
+                      },
+                      child: const Text('Login as Passenger'),
                     ),
                   ],
                 ),
