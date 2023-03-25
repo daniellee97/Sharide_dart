@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:sharideapp/Login.dart';
 
-import './UserScreens.dart';
-import './DriverScreens.dart';
+import 'Providers.dart';
 
-class LogInScreen extends StatelessWidget {
+class WelcomeScreen extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-        appBar: AppBar(title: Text('Please log in')),
+        appBar: AppBar(title: const Text('Please log in')),
         body: Container(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             color: Colors.black,
             child: Column(children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(
-                    vertical: 60.0), // Set the vertical padding to 10
+                    vertical: 20.0), // Set the vertical padding to 10
                 child: Text(
                   'SHARIDE',
                   style: TextStyle(
@@ -23,7 +24,7 @@ class LogInScreen extends StatelessWidget {
                       color: Color.fromARGB(255, 41, 54, 238)),
                 ),
               ),
-              Padding(
+              const Padding(
                 padding:
                     EdgeInsets.only(top: 60.0), // Set the top padding to 10
                 child: Text(
@@ -45,8 +46,27 @@ class LogInScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => DriverMainScreen()),
+                              builder: (context) => const LoginScreen()),
                         );
+                      },
+                      child: Text(
+                        'Log in',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          Color.fromARGB(255, 238, 241, 245),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 200, // set the fixed width of the button
+                    child: ElevatedButton(
+                      onPressed: () {
+                        ref.read(loggedIn.notifier).state = true;
+                        ref.read(isDriver.notifier).state = true;
+                      
                       },
                       child: Text(
                         'Driver',
@@ -63,11 +83,7 @@ class LogInScreen extends StatelessWidget {
                     width: 200, // set the fixed width of the button
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => UserMainScreen()),
-                        );
+                        ref.read(loggedIn.notifier).state = true;
                       },
                       child: Text(
                         'Passenger',
@@ -82,7 +98,7 @@ class LogInScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Padding(
+              const Padding(
                 padding:
                     EdgeInsets.only(top: 200.0), // Set the top padding to 10
                 child: Text(
@@ -99,8 +115,8 @@ class LogInScreen extends StatelessWidget {
                   children: [
                     Container(
                       alignment: Alignment.center,
-                      margin: EdgeInsets.only(right: 15),
-                      padding: EdgeInsets.all(30.0),
+                      margin: const EdgeInsets.only(right: 15),
+                      padding: const EdgeInsets.all(30.0),
                       child: ElevatedButton(
                         onPressed: () => {
                           Navigator.push(
@@ -115,7 +131,7 @@ class LogInScreen extends StatelessWidget {
                         ),
                         style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all(
-                                Color.fromARGB(255, 41, 54, 238))),
+                                const Color.fromARGB(255, 41, 54, 238))),
                       ),
                     ),
                   ]),
@@ -161,21 +177,21 @@ class _SignUpFormState extends State<SignUpForm> {
       body: Form(
         key: _formKey,
         child: Container(
-          padding: EdgeInsets.all(15),
-          color: Color.fromARGB(255, 255, 255, 255),
+          padding: const EdgeInsets.all(15),
+          color: const Color.fromARGB(255, 255, 255, 255),
           child: Column(
             children: <Widget>[
               TextFormField(
-                decoration: InputDecoration(labelText: 'Your name'),
+                decoration: const InputDecoration(labelText: 'Your name'),
                 //keyboardType: TextInputType.emailAddress,
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Username'),
+                decoration: const InputDecoration(labelText: 'Username'),
                 //keyboardType: TextInputType.emailAddress,
               ),
               TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(labelText: 'E-Mail'),
+                decoration: const InputDecoration(labelText: 'E-Mail'),
                 keyboardType: TextInputType.emailAddress,
                 validator: (value) {
                   if (value == null || !value.endsWith('@sjsu.edu')) {
@@ -185,12 +201,12 @@ class _SignUpFormState extends State<SignUpForm> {
                 },
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Password'),
+                decoration: const InputDecoration(labelText: 'Password'),
                 //keyboardType: TextInputType.visiblePassword,
                 obscureText: true,
               ),
               TextFormField(
-                decoration: InputDecoration(labelText: 'Default location'),
+                decoration: const InputDecoration(labelText: 'Default location'),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -199,7 +215,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   _goback();
                 },
                 //onPressed: _validateEmail,
-                child: Text('Sign up and go back to log in screen'),
+                child: const Text('Sign up and go back to log in screen'),
               ),
             ],
           ),
