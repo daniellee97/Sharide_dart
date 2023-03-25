@@ -102,21 +102,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       },
                       child: const Text('Login'),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        ref.read(loggedIn.notifier).state = true;
-                      
-                      }, 
-                      child: const Text('Special user log in')
-                    ),
-                    ElevatedButton(
-                      onPressed: () {
-                        ref.read(loggedIn.notifier).state = true;
-                        ref.read(isDriver.notifier).state = true;
-                      
-                      }, 
-                      child: const Text('Special driver log in')
-                    ),
                   ],
                 ),
               ),

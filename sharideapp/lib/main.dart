@@ -6,6 +6,7 @@ import 'Providers.dart';
 import './Login.dart';
 import './DriverScreens.dart';
 import 'UserScreens.dart';
+import 'AuthenticationScreens.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +38,7 @@ class MyApp extends ConsumerWidget {
         primarySwatch: Colors.blue,
       ),
       // home: UserMainScreen(),
-      home: loggedInYet ? isCurrentUserDriver ? DriverMainScreen() : UserMainScreen() : const LoginScreen(),
+      home: loggedInYet ? isCurrentUserDriver ? DriverMainScreen() : UserMainScreen() : WelcomeScreen(),
       // home: loggedInYet ? UserMainScreen() : const LoginScreen(),
     );
   }
