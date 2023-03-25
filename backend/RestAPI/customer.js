@@ -8,7 +8,7 @@ const { getAllDocuments, getOneDocument, createOneDocument, updateOneDocumentWit
 var collName = "customers"
 const customer_columns = ["name", "sjsu_email", "password", "address", "phone_no", "joined_date"]
 
-customer.get("/logIn", (req, res) => {
+customer.post("/logIn", (req, res) => {
     let listingQuery = {
         sjsu_email: req.body.sjsu_email,
         password: req.body.password

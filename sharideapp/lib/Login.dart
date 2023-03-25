@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'Providers.dart';
@@ -17,10 +18,30 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   String? _email;
   String? _password;
+  String? _result = '-1';
 
   @override
   Widget build(BuildContext context) {
+    _logInAsPassenger() async {
+      print('Email: $_email');
+      print('Password: $_password');
+      print('Test');
 
+      String authority = "192.168.1.83:3000";
+      var url = Uri.http(authority, '/customers/logIn');
+      http.post(url, body: {'sjsu_email':'sampleStudent@sjsu.edu', 'password': 'samplePassword'}).then((response) {
+        if(response.statusCode == 200) {
+          print("Log in successfully");
+        } else {
+          print("Error log in");
+        }
+      }).catchError((e) {
+        print("Offline");
+      })
+      
+      ;
+
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
@@ -96,6 +117,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           // Do something with the email and password
                           print('Email: $_email');
                           print('Password: $_password');
+
                         }
                       },
                       child: const Text('Login as Driver'),
@@ -105,8 +127,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           // Do something with the email and password
-                          print('Email: $_email');
-                          print('Password: $_password');
+                          _logInAsPassenger();
+
+                          // start loging in as Passenger
+
                         }
                       },
                       child: const Text('Login as Passenger'),
