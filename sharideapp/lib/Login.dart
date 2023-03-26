@@ -1,6 +1,5 @@
-import 'dart:js_util';
-
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +19,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   String? _email;
   String? _password;
-  String? _result = '-1';
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +35,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         if(response.statusCode == 200) {
           // print("Log in successfully");
           ref.read(loggedIn.notifier).state = true;
+          var temp = json.decode(response.body)['name'];
+          ref.read(userName.notifier).state = temp;
           Navigator.pop(context);
         } else {
           // print("Error log in");
@@ -53,15 +53,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       var url = Uri.http(authority, '/drivers/logIn');
       http.post(url, body: {'sjsu_email': _email, 'password': _password}).then((response) {
         if(response.statusCode == 200) {
-          // print("Log in successfully");
           ref.read(loggedIn.notifier).state = true;
           ref.read(isDriver.notifier).state = true;
+          var temp = json.decode(response.body)['name'];
+          ref.read(userName.notifier).state = temp;
           Navigator.pop(context);
         } else {
-          // print("Error log in");
+          print("Error log in");
         }
       }).catchError((e) {
-        // print("Offline");
+        print("Offline");
       });
 
     }

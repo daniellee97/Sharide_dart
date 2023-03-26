@@ -5,6 +5,7 @@ import 'Providers.dart';
 class UserMainScreen extends ConsumerWidget{
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var value = ref.watch(userName);
     return Scaffold(
         // appBar: AppBar(title: const Text('Home')),
         body: Container(
@@ -12,8 +13,8 @@ class UserMainScreen extends ConsumerWidget{
             color: Colors.black,
             child: Column(
               children: [
-                const Text(
-                  'Hello, (Customer Name)',
+                Text(
+                  'Hello, $value',
                   style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -148,6 +149,7 @@ class UserMainScreen extends ConsumerWidget{
                             ElevatedButton(
                               onPressed: () {
                                 ref.read(loggedIn.notifier).state = false;
+                                ref.read(userName.notifier).state = "";
                               }, 
                               child: const Text(
                                   'Log out',

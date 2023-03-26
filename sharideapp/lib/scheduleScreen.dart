@@ -29,7 +29,7 @@ class _ScheduleState extends State<ScheduleScreen> {
         children: [
           const Text('Select your ride schedule date and time:', style:  TextStyle(color:Colors.black, fontSize: 18, fontWeight: FontWeight.bold),),
           ElevatedButton(
-            child: Text('Select date/time for your next ride'),
+            child: const Text('Select date/time for your next ride'),
             onPressed: () {
               DatePicker.showDatePicker(context,
                   showTitleActions: true,
