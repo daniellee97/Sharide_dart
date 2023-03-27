@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import './Router/router.dart';
+
+import 'Router/route_constants.dart';
 
 class LandingScreen extends StatelessWidget {
   @override
@@ -24,7 +27,7 @@ class LandingScreen extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       margin: EdgeInsets.only(right: 15),
                       child: ElevatedButton(
-                        onPressed: () => context.go('/logIn'),
+                        onPressed: () => context.go('/login'),
                         child: Text(
                           'Driver',
                           style: TextStyle(color: Colors.black),
@@ -38,7 +41,7 @@ class LandingScreen extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       margin: EdgeInsets.only(right: 15),
                       child: ElevatedButton(
-                        onPressed: () => context.go('/logIn'),
+                        onPressed: () => context.go('/login'),
                         child: Text(
                           'Passenger',
                           style: TextStyle(color: Colors.black),
@@ -63,7 +66,7 @@ class LandingScreen extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       margin: EdgeInsets.only(right: 15),
                       child: ElevatedButton(
-                        onPressed: () => context.go('/signUp'),
+                        onPressed: () => context.go('/signup'),
                         child: Text(
                           'Sign up',
                           style: TextStyle(color: Colors.black),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:go_router/go_router.dart';
 
+import 'Router/router.dart';
+
 import './AuthenticationScreens.dart';
 import './driverSearchingScreen.dart';
 import './tripEndingScreen.dart';
@@ -20,36 +22,37 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  Widget build(BuildContext context) => MaterialApp.router(
-        routerDelegate: _router.routerDelegate,
-        routeInformationParser: _router.routeInformationParser,
-        routeInformationProvider: _router.routeInformationProvider,
-      );
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      title: 'Sharide',
+      routerConfig: router,
+    );
+  }
 
-  final GoRouter _router = GoRouter(routes: <GoRoute>[
-    GoRoute(
-      routes: <GoRoute>[
-        GoRoute(
-          path: 'logIn',
-          builder: (context, state) => const LoginScreen(),
-        ),
-        GoRoute(
-          path: 'signUp',
-          builder: (context, state) => SignUpForm(),
-        ),
-        GoRoute(
-          path: 'main',
-          builder: (context, state) => UserMainScreen(),
-        ),
-        GoRoute(
-          path: 'scheduleRide', 
-          builder: (context, state) => ScheduleScreen()
-        ),
-        GoRoute(
-          path: 'searchDriver',
-          builder: (context, state) => DriverSearchingScreen(),
-        ),
-      ], path: '/', builder: (context, state) => LandingScreen()
-    ),
-  ]);
+  // final GoRouter _router = GoRouter(routes: <GoRoute>[
+//     GoRoute(
+//       routes: <GoRoute>[
+//         GoRoute(
+//           path: 'logIn',
+//           builder: (context, state) => const LoginScreen(),
+//         ),
+//         GoRoute(
+//           path: 'signUp',
+//           builder: (context, state) => SignUpForm(),
+//         ),
+//         GoRoute(
+//           path: 'main',
+//           builder: (context, state) => UserMainScreen(),
+//         ),
+//         GoRoute(
+//           path: 'scheduleRide', 
+//           builder: (context, state) => ScheduleScreen()
+//         ),
+//         GoRoute(
+//           path: 'searchDriver',
+//           builder: (context, state) => DriverSearchingScreen(),
+//         ),
+//       ], path: '/', builder: (context, state) => LandingScreen()
+//     ),
+//   ]);
 }
