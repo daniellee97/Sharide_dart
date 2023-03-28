@@ -4,11 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import './Providers.dart';
 
 class DriverMainScreen extends ConsumerWidget {
+
     @override
     Widget build(BuildContext context, WidgetRef ref) {
-
+        var value = ref.watch(userName);
         return Scaffold(
-            appBar: AppBar(title: Text('Hello, (driver name)')),
+            appBar: AppBar(title: Text('Hello, $value')),
             body: Container(
                 padding: EdgeInsets.all(15),
                 color: Colors.black,
@@ -58,6 +59,7 @@ class DriverMainScreen extends ConsumerWidget {
                               onPressed: () {
                                 ref.read(loggedIn.notifier).state = false;
                                 ref.read(isDriver.notifier).state = false;
+                                ref.read(userName.notifier).state = "";
                               }, 
                               child: const Text(
                                   'Log out',

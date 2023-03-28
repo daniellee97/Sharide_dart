@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'Providers.dart';
@@ -20,6 +22,50 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    _logInAsPassenger() async {
+      // print('Email: $_email');
+      // print('Password: $_password');
+      // print('Test');
+      // one example student: sampleStudent@sjsu.edu, samplePassword
+      
+
+      String authority = "192.168.1.83:3000";
+      var url = Uri.http(authority, '/customers/logIn');
+      http.post(url, body: {'sjsu_email': _email, 'password': _password}).then((response) {
+        if(response.statusCode == 200) {
+          // print("Log in successfully");
+          ref.read(loggedIn.notifier).state = true;
+          var temp = json.decode(response.body)['name'];
+          ref.read(userName.notifier).state = temp;
+          Navigator.pop(context);
+        } else {
+          // print("Error log in");
+        }
+      }).catchError((e) {
+        // print("Offline");
+      });
+
+    }
+
+    _logInAsDriver() async {
+      // one example driver: sampleDriver@sjsu.edu, sampleDriver
+      String authority = "192.168.1.83:3000";
+      var url = Uri.http(authority, '/drivers/logIn');
+      http.post(url, body: {'sjsu_email': _email, 'password': _password}).then((response) {
+        if(response.statusCode == 200) {
+          ref.read(loggedIn.notifier).state = true;
+          ref.read(isDriver.notifier).state = true;
+          var temp = json.decode(response.body)['name'];
+          ref.read(userName.notifier).state = temp;
+          Navigator.pop(context);
+        } else {
+          print("Error log in");
+        }
+      }).catchError((e) {
+        print("Offline");
+      });
+
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +75,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         //color: Colors.black,
         child: Column(
           children: [
-            const SizedBox(height: 50),
+            const SizedBox(height: 30),
             const Text(
               'Welcome to ShaRide',
               style: TextStyle(
@@ -78,7 +124,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       },
                       onSaved: (value) => _password = value,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -94,8 +140,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           // Do something with the email and password
-                          print('Email: $_email');
-                          print('Password: $_password');
+                          _logInAsDriver();
+
                         }
                       },
                       child: const Text('Login as Driver'),
@@ -105,8 +151,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         if (_formKey.currentState!.validate()) {
                           _formKey.currentState!.save();
                           // Do something with the email and password
-                          print('Email: $_email');
-                          print('Password: $_password');
+                          _logInAsPassenger();
+
+                          // start loging in as Passenger
+
                         }
                       },
                       child: const Text('Login as Passenger'),
