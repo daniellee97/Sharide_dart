@@ -52,7 +52,6 @@ class WelcomeScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  
                 ],
               ),
               const Padding(
@@ -105,7 +104,11 @@ class _SignUpFormState extends State<SignUpForm> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
 
-  late String _email;
+  String? _email;
+  String? _password;
+  String? _name;
+  String? _userName;
+  String? _defaultLocation;
 
   void _validateEmail() {
     final isValid = _formKey.currentState?.validate() ?? false;
@@ -141,10 +144,24 @@ class _SignUpFormState extends State<SignUpForm> {
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Your name'),
                 //keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your name';
+                  }
+                  return null;
+                },
+                onSaved: (value) => _name = value,
               ),
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Username'),
                 //keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your user name';
+                  }
+                  return null;
+                },
+                onSaved: (value) => _userName = value,
               ),
               TextFormField(
                 controller: _emailController,
@@ -156,14 +173,30 @@ class _SignUpFormState extends State<SignUpForm> {
                   }
                   return null;
                 },
+                onSaved: (value) => _email = value,
               ),
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Password'),
                 //keyboardType: TextInputType.visiblePassword,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  return null;
+                },
                 obscureText: true,
+                onSaved: (value) => _password = value,
               ),
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Default location'),
+                decoration:
+                    const InputDecoration(labelText: 'Default location'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your default location';
+                  }
+                  return null;
+                },
+                onSaved: (value) => _defaultLocation = value,
               ),
               ElevatedButton(
                 onPressed: () {
