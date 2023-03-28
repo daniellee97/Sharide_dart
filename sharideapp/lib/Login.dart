@@ -91,10 +91,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           // Do something with the email and password
                           print('Email: $_email');
                           print('Password: $_password');
-                        }
-                        else{
-                          return context.push('/main');
-                        }
+                          
+                        } 
+                        return context.go('/main');
                       },
                       child: Text('Login'),
                     ),

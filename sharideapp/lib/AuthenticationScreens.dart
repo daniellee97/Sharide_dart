@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import './Router/router.dart';
-
-import 'Router/route_constants.dart';
 
 class LandingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Sharide')),
+        appBar: AppBar(title: const Text('Sharide')),
         body: Container(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             color: Colors.black,
             child: Column(children: [
               const Text(
@@ -25,7 +22,7 @@ class LandingScreen extends StatelessWidget {
                   children: [
                     Container(
                       alignment: Alignment.centerRight,
-                      margin: EdgeInsets.only(right: 15),
+                      margin: const EdgeInsets.only(right: 15),
                       child: ElevatedButton(
                         onPressed: () => context.go('/login'),
                         child: Text(
@@ -136,7 +133,7 @@ class SignUpForm extends StatelessWidget {
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               onPressed: () {
-                Navigator.pop(context);
+                context.go('/login');
               },
               child: Text('Sign up and go back to log in screen'),
             )
