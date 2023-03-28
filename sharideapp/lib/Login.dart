@@ -75,7 +75,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         //color: Colors.black,
         child: Column(
           children: [
-            const SizedBox(height: 50),
+            const SizedBox(height: 30),
             const Text(
               'Welcome to ShaRide',
               style: TextStyle(
@@ -124,7 +124,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       },
                       onSaved: (value) => _password = value,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 10),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [

@@ -27,14 +27,6 @@ class WelcomeScreen extends ConsumerWidget {
               const Padding(
                 padding:
                     EdgeInsets.only(top: 60.0), // Set the top padding to 10
-                child: Text(
-                  'Log in as',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -60,42 +52,7 @@ class WelcomeScreen extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 200, // set the fixed width of the button
-                    child: ElevatedButton(
-                      onPressed: () {
-                        ref.read(loggedIn.notifier).state = true;
-                        ref.read(isDriver.notifier).state = true;
-                      
-                      },
-                      child: Text(
-                        'Driver (test)',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(255, 238, 241, 245),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 200, // set the fixed width of the button
-                    child: ElevatedButton(
-                      onPressed: () {
-                        ref.read(loggedIn.notifier).state = true;
-                      },
-                      child: Text(
-                        'Passenger (test)',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                          Color.fromARGB(255, 238, 241, 245),
-                        ),
-                      ),
-                    ),
-                  ),
+                  
                 ],
               ),
               const Padding(
