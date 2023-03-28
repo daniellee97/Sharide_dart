@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sharideapp/routes/RouteConst.dart';
 
 class DriverSearchingScreen extends StatelessWidget {
   @override
@@ -7,6 +8,7 @@ class DriverSearchingScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('Sharide'),
+          automaticallyImplyLeading: false,
         ),
         body: Container(
           width: double.infinity,
@@ -23,7 +25,7 @@ class DriverSearchingScreen extends StatelessWidget {
               ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red)),
-                onPressed: () => context.pop(),
+                onPressed: () => context.goNamed(RouteConst().main),
                 child: Text('Cancel'),
               ),
             ],

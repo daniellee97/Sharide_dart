@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '/routes/RouteConst.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -93,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           print('Password: $_password');
                           
                         } 
-                        return context.go('/main');
+                        return context.goNamed(RouteConst().main);
                       },
                       child: Text('Login'),
                     ),

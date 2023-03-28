@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sharideapp/routes/RouteConst.dart';
 
 class ScheduleScreen extends StatefulWidget {
   @override
@@ -23,6 +24,7 @@ class _ScheduleState extends State<ScheduleScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Sharide'),
+        automaticallyImplyLeading: false,
       ),
       body: Container(
           child: Column(
@@ -42,7 +44,8 @@ class _ScheduleState extends State<ScheduleScreen> {
             },
           ),
           Text('Selected date: ' + DateFormat.yMMMd().format(scheduledDate)),
-          ElevatedButton(onPressed: ()=>context.pop(), child: Text('Confirm')),
+          ElevatedButton(onPressed: ()=>context.goNamed(RouteConst().main), child: Text('Confirm')),
+          ElevatedButton(onPressed: ()=>context.goNamed(RouteConst().main), child: Text('Cancel'))
         ],
       )),
     );

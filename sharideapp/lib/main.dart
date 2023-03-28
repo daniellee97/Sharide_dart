@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:go_router/go_router.dart';
 
+import 'routes/RouteConst.dart';
+
 import './AuthenticationScreens.dart';
 import './driverSearchingScreen.dart';
 import './tripEndingScreen.dart';
@@ -25,29 +27,35 @@ class MyApp extends StatelessWidget {
   final GoRouter _router = GoRouter(
     routes: [
       GoRoute(
+          name: RouteConst().landing,
           path: '/',
           builder: (BuildContext context, GoRouterState state) =>
               LandingScreen(),
           routes: [
             GoRoute(
+                name: RouteConst().login,
                 path: 'login',
                 builder: (BuildContext context, GoRouterState state) =>
                     const LoginScreen()),
             GoRoute(
+              name: RouteConst().signup,
               path: 'signup',
               builder: (BuildContext context, GoRouterState state) =>
                   SignUpForm(),
             ),
             GoRoute(
+              name: RouteConst().main,
               path: 'main',
               builder: (BuildContext context, GoRouterState state) =>
                   UserMainScreen(),
             ),
             GoRoute(
+                name: RouteConst().scheduleRide,
                 path: 'scheduleRide',
                 builder: (BuildContext context, GoRouterState state) =>
                     ScheduleScreen()),
             GoRoute(
+              name: RouteConst().searchDriver,
               path: 'searchDriver',
               builder: (BuildContext context, GoRouterState state) =>
                   DriverSearchingScreen(),

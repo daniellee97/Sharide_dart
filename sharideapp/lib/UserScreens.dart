@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'routes/RouteConst.dart';
+
 class UserMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -134,7 +136,7 @@ class UserMainScreen extends StatelessWidget {
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.green)),
-                                onPressed: () => context.push('/scheduleRide'),
+                                onPressed: () => context.goNamed(RouteConst().scheduleRide),
                                 child: Text(
                                   'Schedule a ride',
                                   style: TextStyle(color: Colors.black),
@@ -143,7 +145,7 @@ class UserMainScreen extends StatelessWidget {
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.yellow)),
-                                onPressed: () => context.push('/searchDriver'),
+                                onPressed: () => context.goNamed(RouteConst().searchDriver),
                                 child: Text(
                                   'Search a driver',
                                   style: TextStyle(color: Colors.black),

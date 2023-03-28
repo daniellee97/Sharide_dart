@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'routes/RouteConst.dart';
+
 class LandingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class LandingScreen extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       margin: const EdgeInsets.only(right: 15),
                       child: ElevatedButton(
-                        onPressed: () => context.go('/login'),
+                        onPressed: () => context.goNamed(RouteConst().login),
                         child: Text(
                           'Driver',
                           style: TextStyle(color: Colors.black),
@@ -38,7 +40,7 @@ class LandingScreen extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       margin: EdgeInsets.only(right: 15),
                       child: ElevatedButton(
-                        onPressed: () => context.go('/login'),
+                        onPressed: () => context.goNamed(RouteConst().login),
                         child: Text(
                           'Passenger',
                           style: TextStyle(color: Colors.black),
@@ -63,7 +65,7 @@ class LandingScreen extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       margin: EdgeInsets.only(right: 15),
                       child: ElevatedButton(
-                        onPressed: () => context.go('/signup'),
+                        onPressed: () => context.goNamed(RouteConst().signup),
                         child: Text(
                           'Sign up',
                           style: TextStyle(color: Colors.black),
@@ -133,7 +135,7 @@ class SignUpForm extends StatelessWidget {
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
               ),
               onPressed: () {
-                context.go('/login');
+                context.goNamed(RouteConst().login);
               },
               child: Text('Sign up and go back to log in screen'),
             )
