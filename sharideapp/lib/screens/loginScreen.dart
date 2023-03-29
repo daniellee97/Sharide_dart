@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'Providers.dart';
+import '../Providers.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
