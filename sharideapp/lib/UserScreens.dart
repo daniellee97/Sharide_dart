@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'Providers.dart';
 
-class UserMainScreen extends ConsumerWidget{
+class UserMainScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var value = ref.watch(userName);
     return Scaffold(
-        // appBar: AppBar(title: const Text('Home')),
+        appBar: AppBar(
+          title: const Text('Sharide'),
+          centerTitle: true,
+          automaticallyImplyLeading: false,
+        ),
         body: Container(
             padding: const EdgeInsets.all(15),
             color: Colors.black,
-            child: Column(
+            child: ListView(
               children: [
                 Text(
                   'Hello, $value',
@@ -41,7 +46,8 @@ class UserMainScreen extends ConsumerWidget{
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const SecondRoute()),
+                        MaterialPageRoute(
+                            builder: (context) => const SecondRoute()),
                       );
                     },
                     child: Text(
@@ -132,7 +138,7 @@ class UserMainScreen extends ConsumerWidget{
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.green)),
-                                onPressed: () => {},
+                                onPressed: () => context.push('/scheduleRide'),
                                 child: const Text(
                                   'Schedule a ride',
                                   style: TextStyle(color: Colors.black),
@@ -141,7 +147,7 @@ class UserMainScreen extends ConsumerWidget{
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.yellow)),
-                                onPressed: () => {},
+                                onPressed: () => context.push('/searchDriver'),
                                 child: const Text(
                                   'Search a driver',
                                   style: TextStyle(color: Colors.black),
@@ -150,11 +156,11 @@ class UserMainScreen extends ConsumerWidget{
                               onPressed: () {
                                 ref.read(loggedIn.notifier).state = false;
                                 ref.read(userName.notifier).state = "";
-                              }, 
+                              },
                               child: const Text(
-                                  'Log out',
-                                  style: TextStyle(color: Colors.black),
-                                ),
+                                'Log out',
+                                style: TextStyle(color: Colors.black),
+                              ),
                             )
                           ],
                         ),
@@ -167,7 +173,6 @@ class UserMainScreen extends ConsumerWidget{
   }
 }
 
-
 class SecondRoute extends ConsumerWidget {
   const SecondRoute({super.key});
 
@@ -178,22 +183,19 @@ class SecondRoute extends ConsumerWidget {
         title: const Text('Drive history'),
       ),
       body: Center(
-        child: Column(
-          children: [
-            const Text(
-              'Your drive history is as below',
-              textDirection: TextDirection.ltr,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate back to first route when tapped
-                Navigator.pop(context);
-              },
-              child: const Text('Go back!'),
-            )
-          ]
+          child: Column(children: [
+        const Text(
+          'Your drive history is as below',
+          textDirection: TextDirection.ltr,
+        ),
+        ElevatedButton(
+          onPressed: () {
+            // Navigate back to first route when tapped
+            Navigator.pop(context);
+          },
+          child: const Text('Go back!'),
         )
-      ),
+      ])),
     );
   }
 }

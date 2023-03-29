@@ -46,6 +46,7 @@ dependencies:
   equatable: ^2.0.5
   get: ^4.6.5
   email_validator: ^2.1.17
+  go_router: ^6.5.0
 
 dev_dependencies:
   flutter_test:

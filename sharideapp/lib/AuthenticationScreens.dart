@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:sharideapp/Login.dart';
 
 import 'Providers.dart';
@@ -8,7 +9,7 @@ class WelcomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Please log in')),
+        appBar: AppBar(title: const Text('Welcome to Sharide'), centerTitle: true,),
         body: Container(
             padding: const EdgeInsets.all(15),
             color: Colors.black,
@@ -34,13 +35,7 @@ class WelcomeScreen extends ConsumerWidget {
                   SizedBox(
                     width: 200, // set the fixed width of the button
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginScreen()),
-                        );
-                      },
+                      onPressed: () => context.push('/login'),
                       child: Text(
                         'Log in',
                         style: TextStyle(color: Colors.black),
@@ -75,13 +70,7 @@ class WelcomeScreen extends ConsumerWidget {
                       margin: const EdgeInsets.only(right: 15),
                       padding: const EdgeInsets.all(30.0),
                       child: ElevatedButton(
-                        onPressed: () => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SignUpForm()),
-                          )
-                        },
+                        onPressed: () => context.push('/signup'),
                         child: Text(
                           'Sign up',
                           style: TextStyle(color: Colors.white),
