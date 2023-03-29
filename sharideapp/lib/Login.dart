@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,7 +29,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       // print('Test');
       // one example student: sampleStudent@sjsu.edu, samplePassword
       
-
+      // change IP address to your IP address (ex. "xxx.xxx.x.xx:3000")
       String authority = "192.168.1.83:3000";
       var url = Uri.http(authority, '/customers/logIn');
       http.post(url, body: {'sjsu_email': _email, 'password': _password}).then((response) {
@@ -37,7 +38,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ref.read(loggedIn.notifier).state = true;
           var temp = json.decode(response.body)['name'];
           ref.read(userName.notifier).state = temp;
-          Navigator.pop(context);
         } else {
           // print("Error log in");
         }
@@ -57,7 +57,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ref.read(isDriver.notifier).state = true;
           var temp = json.decode(response.body)['name'];
           ref.read(userName.notifier).state = temp;
-          Navigator.pop(context);
         } else {
           print("Error log in");
         }
@@ -70,6 +69,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
+        centerTitle: true,
       ),
       body: Container(
         //color: Colors.black,
@@ -154,7 +154,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           _logInAsPassenger();
 
                           // start loging in as Passenger
-
+                          
                         }
                       },
                       child: const Text('Login as Passenger'),

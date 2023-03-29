@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DriverSearchingScreen extends StatelessWidget {
   @override
@@ -6,6 +7,7 @@ class DriverSearchingScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Sharide'),
+          centerTitle: true,
         ),
         body: Container(
           width: double.infinity,
@@ -22,7 +24,7 @@ class DriverSearchingScreen extends StatelessWidget {
               ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red)),
-                onPressed: () {},
+                onPressed: () => context.pop(),
                 child: const Text('Cancel'),
               ),
             ],
