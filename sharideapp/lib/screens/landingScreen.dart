@@ -22,7 +22,7 @@ class LandingScreen extends ConsumerWidget {
               color: Color.fromARGB(255, 41, 54, 238),
             ),
           ), 
-          const SizedBox(height: 250),
+          const SizedBox(height: 200),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.7,
             height: MediaQuery.of(context).size.height * 0.05,
@@ -53,10 +53,26 @@ class LandingScreen extends ConsumerWidget {
             width: MediaQuery.of(context).size.width * 0.7,
             height: MediaQuery.of(context).size.height * 0.05,
             child: ElevatedButton(
-              onPressed: () => context.push('/signup'),
+              onPressed: () => context.push('/driverSignup'),
               child: Text(
                 style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                'Sign up',
+                'Sign up as Driver',
+              ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                    const Color.fromARGB(255, 41, 54, 238)),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          SizedBox(
+            width: MediaQuery.of(context).size.width * 0.7,
+            height: MediaQuery.of(context).size.height * 0.05,
+            child: ElevatedButton(
+              onPressed: () => context.push('/passengerSignup'),
+              child: Text(
+                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                'Sign up as Passenger',
               ),
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(

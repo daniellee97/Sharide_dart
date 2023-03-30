@@ -16,55 +16,67 @@ class UserMainScreen extends ConsumerWidget {
         body: Container(
             padding: const EdgeInsets.all(15),
             color: Colors.black,
-            child: ListView(
+            child: Column(
               children: [
-                Text(
-                  'Hello, $value',
-                  style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
-                ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  margin: const EdgeInsets.only(right: 15),
-                  child: ElevatedButton(
-                    onPressed: () => {},
-                    child: const Text(
-                      'Edit location',
-                      style: TextStyle(color: Colors.black),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'Hello, $value',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
                     ),
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.blue.shade800)),
-                  ),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red)),
+                      onPressed: () {
+                        ref.read(loggedIn.notifier).state = false;
+                        ref.read(userName.notifier).state = "";
+                      },
+                      child: const Text(
+                        'Log out',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    )
+                  ],
                 ),
-                Container(
-                  alignment: Alignment.centerRight,
-                  margin: const EdgeInsets.only(right: 15),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SecondRoute()),
-                      );
-                    },
-                    child: Text(
-                      'Drive history',
-                      style: TextStyle(color: Colors.black),
+                const SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    const Text(
+                      'Your default pick-up location:',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                      textAlign: TextAlign.center,
                     ),
-                    style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(Colors.blue.shade800)),
-                  ),
+                    ElevatedButton(
+                      onPressed: () => {},
+                      child: const Text(
+                        'Edit',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.blue.shade800)),
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 10),
                 Container(
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        color: Colors.white),
                     width: double.infinity,
                     height: 120,
                     margin: const EdgeInsets.symmetric(horizontal: 15),
                     padding: const EdgeInsets.all(10),
-                    color: Colors.white,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -95,7 +107,9 @@ class UserMainScreen extends ConsumerWidget {
                         width: double.infinity,
                         margin: const EdgeInsets.symmetric(vertical: 15),
                         padding: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(color: Colors.blue),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8)),
+                            color: Colors.blue),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -131,36 +145,38 @@ class UserMainScreen extends ConsumerWidget {
                           ],
                         ),
                       ),
+                      const SizedBox(height: 20),
                       Column(
                         children: [
-                          ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.green)),
-                              onPressed: () => context.push('/scheduleRide'),
-                              child: const Text(
-                                'Schedule a ride',
-                                style: TextStyle(color: Colors.black),
-                              )),
-                          ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all(Colors.yellow)),
-                              onPressed: () => context.push('/searchDriver'),
-                              child: const Text(
-                                'Search a driver',
-                                style: TextStyle(color: Colors.black),
-                              )),
-                          ElevatedButton(
-                            onPressed: () {
-                              ref.read(loggedIn.notifier).state = false;
-                              ref.read(userName.notifier).state = "";
-                            },
-                            child: const Text(
-                              'Log out',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          )
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.green)),
+                                onPressed: () => context.push('/scheduleRide'),
+                                child: const Text(
+                                  'Schedule a ride',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16),
+                                )),
+                          ),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.yellow)),
+                                onPressed: () => context.push('/searchDriver'),
+                                child: const Text(
+                                  'Search a driver',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16),
+                                )),
+                          ),
                         ],
                       ),
                     ],

@@ -8,10 +8,11 @@ import 'Providers.dart';
 import 'screens/loginScreen.dart';
 import 'screens/driverMainScreens.dart';
 import 'screens/userMainScreen.dart';
-import 'screens/signupScreen.dart';
+import 'screens/passengerSignupScreen.dart';
 import 'screens/scheduleScreen.dart';
 import 'screens/driverSearchingScreen.dart';
 import 'screens/landingScreen.dart';
+import 'screens/driverSignupScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,9 +47,14 @@ class MyApp extends ConsumerWidget {
               builder: (context, state) => const LoginScreen(),
             ),
             GoRoute(
-              name: 'signup',
-              path: 'signup',
+              name: 'passengerSignup',
+              path: 'passengerSignup',
               builder: (context, state) => SignUpForm(),
+            ),
+            GoRoute(
+              name: 'driverSignup',
+              path: 'driverSignup',
+              builder: (context, state) => SignUpFormDriver(),
             ),
             GoRoute(
               name: 'userMain',
