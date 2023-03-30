@@ -20,7 +20,7 @@ class UserMainScreen extends ConsumerWidget {
               children: [
                 Text(
                   'Hello, $value',
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
@@ -68,7 +68,7 @@ class UserMainScreen extends ConsumerWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
+                      children: const [
                         Text(
                           'Your default pick-up location:',
                           style: TextStyle(
@@ -99,7 +99,7 @@ class UserMainScreen extends ConsumerWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
+                          children: const [
                             Text(
                               'March 5th, 2023',
                               style: TextStyle(
@@ -131,39 +131,37 @@ class UserMainScreen extends ConsumerWidget {
                           ],
                         ),
                       ),
-                      Container(
-                        child: Column(
-                          children: [
-                            ElevatedButton(
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.green)),
-                                onPressed: () => context.push('/scheduleRide'),
-                                child: const Text(
-                                  'Schedule a ride',
-                                  style: TextStyle(color: Colors.black),
-                                )),
-                            ElevatedButton(
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.yellow)),
-                                onPressed: () => context.push('/searchDriver'),
-                                child: const Text(
-                                  'Search a driver',
-                                  style: TextStyle(color: Colors.black),
-                                )),
-                            ElevatedButton(
-                              onPressed: () {
-                                ref.read(loggedIn.notifier).state = false;
-                                ref.read(userName.notifier).state = "";
-                              },
+                      Column(
+                        children: [
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.green)),
+                              onPressed: () => context.push('/scheduleRide'),
                               child: const Text(
-                                'Log out',
+                                'Schedule a ride',
                                 style: TextStyle(color: Colors.black),
-                              ),
-                            )
-                          ],
-                        ),
+                              )),
+                          ElevatedButton(
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.yellow)),
+                              onPressed: () => context.push('/searchDriver'),
+                              child: const Text(
+                                'Search a driver',
+                                style: TextStyle(color: Colors.black),
+                              )),
+                          ElevatedButton(
+                            onPressed: () {
+                              ref.read(loggedIn.notifier).state = false;
+                              ref.read(userName.notifier).state = "";
+                            },
+                            child: const Text(
+                              'Log out',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          )
+                        ],
                       ),
                     ],
                   ),
