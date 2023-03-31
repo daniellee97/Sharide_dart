@@ -267,6 +267,20 @@ class SignUpFormDriver extends StatefulWidget {
 }
 
 class _DriverSignUpFormState extends State<SignUpFormDriver> {
+  AlertDialog showSignUpSuccessfully = const AlertDialog(
+            title: Text("Sign up successfully, please go back and log in"),
+            actions:[
+              // okButton,
+            ]
+  );
+
+  AlertDialog showSignUpUnsuccessfully = const AlertDialog(
+            title: Text("Sign up unsuccessfully"),
+            actions:[
+              // okButton,
+            ]
+  );
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -322,28 +336,39 @@ class _DriverSignUpFormState extends State<SignUpFormDriver> {
   // String? _vehicleModel;
 
     var body = {
-      
+      'license_no': _licence,
+      'name': _name,
+      'sjsu_email': _email,
+      'password': _password,
+      'vehicleYear': _vehicleYear.toString(),
+      'vehicleMake': _vehicleMake,
     
     };
-    print("name $_name and email $_email and password $_password and year $_vehicleYear and make $_vehicleMake and licence $_licence and model $_vehicleModel");
-    // String authority = "192.168.1.83:3000";
-    // var url = Uri.http(authority, '/customers');
 
-    // http.put(url, body: body).then((response) {
-    //     if(response.statusCode == 200) {
-    //       // showDialog(context: context, builder: (BuildContext context) {
-    //       //   return showSignUpSuccessfully;}
-    //       // );
-    //       print("Testing here");
-    //     } else {
-    //       // showDialog(context: context, builder: (BuildContext context) {
-    //       //   return showSignUpUnsuccessfully;}
-    //       // );
-    //       print("Testing here");
-    //     }
-    //   }).catchError((e) {
-    //     print("Error");
-    //   });
+    print("name $_name and email $_email and password $_password and year $_vehicleYear and make $_vehicleMake and licence $_licence and model ");
+    
+    String authority = "192.168.1.83:3000";
+    var url = Uri.http(authority, '/drivers');
+
+    http.put(url, body: body).then((response) {
+        if(response.statusCode == 200) {
+          // showDialog(context: context, builder: (BuildContext context) {
+          //   return showSignUpSuccessfully;}
+          // );
+          showDialog(context: context, builder: (BuildContext context) {
+            return showSignUpSuccessfully;}
+          );
+        } else {
+          // showDialog(context: context, builder: (BuildContext context) {
+          //   return showSignUpUnsuccessfully;}
+          // );
+          showDialog(context: context, builder: (BuildContext context) {
+            return showSignUpUnsuccessfully;}
+          );
+        }
+      }).catchError((e) {
+        print("Error $e");
+      });
   }
   
   @override
