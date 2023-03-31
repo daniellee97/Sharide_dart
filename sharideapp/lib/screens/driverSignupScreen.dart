@@ -61,7 +61,7 @@ class _DriverSignUpFormState extends State<SignUpFormDriver> {
       return;
     }
     setState(() {
-      Navigator.pop(context);
+      context.pop();
     });
   }
 
@@ -207,6 +207,7 @@ class _DriverSignUpFormState extends State<SignUpFormDriver> {
                     // call both functions here
                     _validateEmail();
                     _signUpDriver();
+                    _goback();
                   },
                   //onPressed: _validateEmail,
                   child: const Text('Complete'),
