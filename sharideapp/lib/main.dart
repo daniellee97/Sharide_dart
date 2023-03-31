@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'Providers.dart';
 import 'package:go_router/go_router.dart';
 
-import './Login.dart';
-import './DriverScreens.dart';
-import 'UserScreens.dart';
-import 'AuthenticationScreens.dart';
-import './scheduleScreen.dart';
-import './driverSearchingScreen.dart';
+import 'Providers.dart';
+
+import 'screens/loginScreen.dart';
+import 'screens/driverMainScreens.dart';
+import 'screens/userMainScreen.dart';
+import 'screens/passengerSignupScreen.dart';
+import 'screens/scheduleScreen.dart';
+import 'screens/driverSearchingScreen.dart';
+import 'screens/landingScreen.dart';
+import 'screens/driverSignupScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,17 +39,22 @@ class MyApp extends ConsumerWidget {
         GoRoute(
           name: 'landing',
           path: '/',
-          builder: (context, state) => WelcomeScreen(),
+          builder: (context, state) => LandingScreen(),
           routes: <GoRoute>[
             GoRoute(
               name: 'login',
               path: 'login',
-              builder: (context, state) => LoginScreen(),
+              builder: (context, state) => const LoginScreen(),
             ),
             GoRoute(
-              name: 'signup',
-              path: 'signup',
+              name: 'passengerSignup',
+              path: 'passengerSignup',
               builder: (context, state) => SignUpForm(),
+            ),
+            GoRoute(
+              name: 'driverSignup',
+              path: 'driverSignup',
+              builder: (context, state) => SignUpFormDriver(),
             ),
             GoRoute(
               name: 'userMain',

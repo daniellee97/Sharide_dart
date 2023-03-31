@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'Providers.dart';
+import '../Providers.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -81,7 +81,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         title: const Text('Login'),
         centerTitle: true,
       ),
-      body: Container(
+      body: SingleChildScrollView(
         //color: Colors.black,
         child: Column(
           children: [
@@ -145,29 +145,38 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          // Do something with the email and password
-                          _logInAsDriver();
-
-                        }
-                      },
-                      child: const Text('Login as Driver'),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width *0.4,
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            // Do something with the email and password
+                            _logInAsDriver();
+                    
+                          }
+                        },
+                        child: const Text('Login as Driver'),
+                      ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _formKey.currentState!.save();
-                          // Do something with the email and password
-                          _logInAsPassenger();
-
-                          // start loging in as Passenger
-                          
-                        }
-                      },
-                      child: const Text('Login as Passenger'),
+                    const SizedBox(height:15),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width *0.4,
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            _formKey.currentState!.save();
+                            // Do something with the email and password
+                            _logInAsPassenger();
+                    
+                            // start loging in as Passenger
+                            
+                          }
+                        },
+                        child: const Text('Login as Passenger'),
+                      ),
                     ),
                   ],
                 ),
