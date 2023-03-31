@@ -23,6 +23,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AlertDialog alert = const AlertDialog(
+            title: Text("Wrong login credentials"),
+            actions:[
+              // okButton,
+            ]
+          );
     _logInAsPassenger() async {
       // print('Email: $_email');
       // print('Password: $_password');
@@ -39,7 +45,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           var temp = json.decode(response.body)['name'];
           ref.read(userName.notifier).state = temp;
         } else {
-          // print("Error log in");
+          showDialog(context: context, builder: (BuildContext context) {
+            return alert;}
+          );
         }
       }).catchError((e) {
         // print("Offline");
@@ -58,7 +66,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           var temp = json.decode(response.body)['name'];
           ref.read(userName.notifier).state = temp;
         } else {
-          print("Error log in");
+          showDialog(context: context, builder: (BuildContext context) {
+            return alert;}
+          );
         }
       }).catchError((e) {
         print("Offline");

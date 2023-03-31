@@ -63,6 +63,11 @@ class MyApp extends ConsumerWidget {
               path: 'searchDriver',
               builder: (context, state) => DriverSearchingScreen(),
             ),
+            GoRoute(
+              name: 'driverMain',
+              path: 'driverMain',
+              builder: (context, state) => DriverMainScreen(),
+            ),
           ],
         )
       ],
