@@ -60,11 +60,11 @@ class UserMainScreen extends ConsumerWidget {
                       onPressed: () => {},
                       child: const Text(
                         'Edit',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                       style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.blue.shade800)),
+                              MaterialStateProperty.all(Colors.teal)),
                     ),
                   ],
                 ),
@@ -72,7 +72,7 @@ class UserMainScreen extends ConsumerWidget {
                 Container(
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: Colors.white),
+                        color:  Color(0xFFFEFBE9)),
                     width: double.infinity,
                     height: 120,
                     margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -109,7 +109,7 @@ class UserMainScreen extends ConsumerWidget {
                         padding: const EdgeInsets.all(10),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color: Colors.blue),
+                            color:  Color(0xFFFEFBE9)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -117,28 +117,28 @@ class UserMainScreen extends ConsumerWidget {
                             Text(
                               'March 5th, 2023',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
                               '11:30',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
                               'Pick-up at:',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
                               '123 ABC Rd., San Jose, CA 95050',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -154,7 +154,7 @@ class UserMainScreen extends ConsumerWidget {
                             child: ElevatedButton(
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
-                                        Colors.green)),
+                                        Colors.teal)),
                                 onPressed: () => context.push('/scheduleRide'),
                                 child: const Text(
                                   'Schedule a ride',
@@ -169,7 +169,7 @@ class UserMainScreen extends ConsumerWidget {
                             child: ElevatedButton(
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
-                                        Colors.yellow)),
+                                        Colors.teal)),
                                 onPressed: () => context.push('/searchDriver'),
                                 child: const Text(
                                   'Search a driver',
