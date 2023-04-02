@@ -5,7 +5,17 @@ const driver = express.Router()
 var MongoDB = require('../mongoDB');
 const { getAllDocuments, getOneDocument, createOneDocument, updateOneDocumentWithAnyValues, deleteOneDocument, deleteAllDocument } = require('./CRUDOps');
 var collName = "drivers"
-const driver_columns = ["license_no", "name", "address", "sjsu_email", "phone_no", "joined_date"]
+const driver_columns = ["license_no", "name", "address", "sjsu_email", "phone_no", "joined_date", "password"]
+
+driver.post("/logIn", (req, res) => {
+    let listingQuery = {
+        sjsu_email: req.body.sjsu_email,
+        password: req.body.password
+    }
+
+    getOneDocument(MongoDB, collName, listingQuery, res)
+    
+})
 
 driver.get("/", (req, res) => {
     getAllDocuments(MongoDB, collName, res)
