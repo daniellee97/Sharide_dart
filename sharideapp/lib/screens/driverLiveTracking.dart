@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sharideapp/DirectionsRepository.dart';
+import '../DirectionsModel.dart';
 
 //const String google_api_key = "AIzaSyC88AJvT4lwQlhR2DdgWILhDbjuH13mtBg";
 
@@ -14,6 +16,83 @@ class _DriverMapScreenState extends State<DriverMapScreen> {
     target: LatLng(37.773972, -122.431297),
     zoom: 11.5,
   );
+  late Directions? _info = Directions(
+    bounds: LatLngBounds(
+      southwest: LatLng(0, 0),
+      northeast: LatLng(0, 0),
+    ),
+    polylinePoints: [],
+    totalDistance: '',
+    totalDuration: '',
+  );
+  late GoogleMapController _googleMapController;
+  late Marker? _origin = Marker(
+    markerId: MarkerId('origin'),
+    position: LatLng(0, 0),
+  );
+  late Marker? _destination = Marker(
+    markerId: MarkerId('destination'),
+    position: LatLng(0, 0),
+  );
+
+  //late Directions? _info
+  /*
+  @override
+  void dispose() {
+    _googleMapController.dispose();
+    super.dispose();
+  }
+
+  void _onMapCreated(GoogleMapController controller) {
+    _googleMapController = controller;
+  }
+  */
+  void _addMarker(LatLng pos) async {
+    if (_origin == null || (_origin != null && _destination != null)) {
+      //Origin is not set OR Origin/Destination are both set
+      //Set Origin
+      setState(() {
+        _origin = Marker(
+          markerId: const MarkerId('orgin'),
+          infoWindow: const InfoWindow(title: 'origin'),
+          icon:
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+          position: pos,
+        );
+        //Reset Destination
+        _destination = null;
+
+        //Reset info
+        _info = Directions(
+          bounds: LatLngBounds(
+            southwest: LatLng(0, 0),
+            northeast: LatLng(0, 0),
+          ),
+          polylinePoints: [],
+          totalDistance: '',
+          totalDuration: '',
+        );
+        ;
+      });
+    } else {
+      //Origin is already set
+      //Set Destination
+      setState(() {
+        _destination = Marker(
+          markerId: const MarkerId('destination'),
+          infoWindow: const InfoWindow(title: 'destination'),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          position: pos,
+        );
+      });
+
+      //Then here we are getting the directions
+      final directions = await DirectionsRepository()
+          .getDirections(origin: _origin!.position, destination: pos);
+
+      setState(() => _info = directions!);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +110,27 @@ class _DriverMapScreenState extends State<DriverMapScreen> {
                   bottom: 400.0, top: 20.0, left: 12.0, right: 12.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
-                child: GoogleMap(initialCameraPosition: _initialCameraPosition),
+                child: GoogleMap(
+                  //onMapCreated: _onMapCreated,
+                  initialCameraPosition: _initialCameraPosition,
+                  markers: {
+                    if (_origin != null) _origin!,
+                    if (_destination != null) _destination!,
+                  },
+                  polylines: {
+                    if (_info != null)
+                      Polyline(
+                        polylineId: const PolylineId('overview_polyine'),
+                        color: Colors.blue,
+                        width: 5,
+                        points: _info!.polylinePoints
+                            .map((e) => LatLng(e.latitude, e.longitude))
+                            .toList(),
+                      )
+                  },
+                  myLocationButtonEnabled: true,
+                  onLongPress: _addMarker,
+                ),
               ),
             ),
           ),
@@ -49,14 +148,14 @@ class _DriverMapScreenState extends State<DriverMapScreen> {
                 children: [
                   Expanded(
                     child: Center(
-                      child: Text('15 Min',
+                      child: Text(_info!.totalDistance,
                           style: TextStyle(fontSize: 20, color: Colors.white)),
                     ),
                   ),
                   Expanded(
                     child: Center(
                       child: Text(
-                        '7.2 mi',
+                        _info!.totalDuration,
                         style: TextStyle(fontSize: 20, color: Colors.white),
                       ),
                     ),
