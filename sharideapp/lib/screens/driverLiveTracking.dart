@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sharideapp/DirectionsRepository.dart';
-import './DirectionsModel.dart';
+import '../DirectionsModel.dart';
 
 //const String google_api_key = "AIzaSyC88AJvT4lwQlhR2DdgWILhDbjuH13mtBg";
 
