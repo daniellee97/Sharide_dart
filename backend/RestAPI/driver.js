@@ -17,6 +17,7 @@ driver.post("/logIn", (req, res) => {
     
 })
 
+// get avail driver here
 driver.get("/avail", (req, res) => {
     let listingQuery = {
         "avail": "yes"
@@ -43,8 +44,6 @@ driver.put("/", (req, res) => {
 
 driver.post("/", (req, res) => {
     // update driver
-    let listingQuery = {_id: ObjectId(req.body.id) }
-
     let filter = {sjsu_email: req.body.email}
 
     updateOneDocumentWithAnyValues(MongoDB, collName, filter, driver_columns, req, res)
