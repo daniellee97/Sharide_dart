@@ -35,8 +35,6 @@ const updateOneDocumentWithAnyValues = async (database, collName, listingQuery, 
     ;(await database).collection(collName).findOne(listingQuery)
     .then(async (document) => {
 
-        console.log("Found document " + document)
-
         let setDocument = {}
 
         for (let i =0; i < schema_columns.length; i++) {
