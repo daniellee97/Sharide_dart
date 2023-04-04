@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
+import 'package:sharideapp/Providers.dart';
 
-class SignUpForm extends StatefulWidget {
+class SignUpForm extends ConsumerStatefulWidget {
   @override
   _SignUpFormState createState() => _SignUpFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class _SignUpFormState extends ConsumerState<SignUpForm> {
   AlertDialog showSignUpSuccessfully = const AlertDialog(
       title: Text("Sign up successfully, please go back and log in"),
       actions: [
@@ -24,8 +25,7 @@ class _SignUpFormState extends State<SignUpForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _defaultLocationController =
-      TextEditingController();
+  final TextEditingController _defaultLocationController = TextEditingController();
 
   String? _email;
   String? _password;
@@ -55,38 +55,39 @@ class _SignUpFormState extends State<SignUpForm> {
     });
   }
 
-  void _signUpPassenger() {
-    var body = {
-      'sjsu_email': _email,
-      'password': _password,
-      'address': _defaultLocation,
-      'name': _name,
-    };
-
-    String authority = "192.168.1.83:3000";
-    var url = Uri.http(authority, '/customers');
-
-    http.put(url, body: body).then((response) {
-      if (response.statusCode == 200) {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return showSignUpSuccessfully;
-            });
-      } else {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return showSignUpUnsuccessfully;
-            });
-      }
-    }).catchError((e) {
-      print("Error");
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    String backendURL = ref.watch(authority);
+
+    void _signUpPassenger() {
+      var body = {
+        'sjsu_email': _email,
+        'password': _password,
+        'address': _defaultLocation,
+        'name': _name,
+      };
+
+      var url = Uri.http(backendURL, '/customers');
+
+      http.put(url, body: body).then((response) {
+        if (response.statusCode == 200) {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return showSignUpSuccessfully;
+              });
+        } else {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return showSignUpUnsuccessfully;
+              });
+        }
+      }).catchError((e) {
+        print("Error");
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text("Sign up form")),
       body: SingleChildScrollView(
@@ -151,7 +152,6 @@ class _SignUpFormState extends State<SignUpForm> {
                     // call both functions here
                     _validateEmail();
                     _signUpPassenger();
-                    _goback();
                   },
                   //onPressed: _validateEmail,
                   child: const Text('Sign up'),

@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
+import 'package:sharideapp/Providers.dart';
 
-class SignUpFormDriver extends StatefulWidget {
+class SignUpFormDriver extends ConsumerStatefulWidget {
   @override
   _DriverSignUpFormState createState() => _DriverSignUpFormState();
 }
 
-class _DriverSignUpFormState extends State<SignUpFormDriver> {
+class _DriverSignUpFormState extends ConsumerState<SignUpFormDriver> {
   AlertDialog showSignUpSuccessfully = const AlertDialog(
       title: Text("Sign up successfully, please go back and log in"),
       actions: [
@@ -65,7 +66,11 @@ class _DriverSignUpFormState extends State<SignUpFormDriver> {
     });
   }
 
-  void _signUpDriver() {
+  @override
+  Widget build(BuildContext context) {
+    String backendURL = ref.watch(authority);
+    
+      void _signUpDriver() {
     // String? _name;
     // String? _email;
     // String? _password;
@@ -83,26 +88,19 @@ class _DriverSignUpFormState extends State<SignUpFormDriver> {
       'vehicleMake': _vehicleMake,
     };
 
-    print(
-        "name $_name and email $_email and password $_password and year $_vehicleYear and make $_vehicleMake and licence $_licence and model ");
+    // print(
+    //     "name $_name and email $_email and password $_password and year $_vehicleYear and make $_vehicleMake and licence $_licence and model ");
 
-    String authority = "192.168.1.83:3000";
-    var url = Uri.http(authority, '/drivers');
+    var url = Uri.http(backendURL, 'drivers');
 
     http.put(url, body: body).then((response) {
       if (response.statusCode == 200) {
-        // showDialog(context: context, builder: (BuildContext context) {
-        //   return showSignUpSuccessfully;}
-        // );
         showDialog(
             context: context,
             builder: (BuildContext context) {
               return showSignUpSuccessfully;
             });
       } else {
-        // showDialog(context: context, builder: (BuildContext context) {
-        //   return showSignUpUnsuccessfully;}
-        // );
         showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -114,8 +112,6 @@ class _DriverSignUpFormState extends State<SignUpFormDriver> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Sign up form"),
@@ -207,9 +203,7 @@ class _DriverSignUpFormState extends State<SignUpFormDriver> {
                     // call both functions here
                     _validateEmail();
                     _signUpDriver();
-                    _goback();
                   },
-                  //onPressed: _validateEmail,
                   child: const Text('Complete'),
                 ),
               ],

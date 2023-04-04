@@ -15,3 +15,7 @@ final isDriver = StateProvider<bool>((ref) {
 final userName = StateProvider<String>((ref) {
   return "curredddntUserName";
 });
+
+final authority = StateProvider<String>((ref) {
+  return "192.168.56.1:3000";
+});
