@@ -16,6 +16,7 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String? _email;
@@ -23,6 +24,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+   
+    String backendURL = ref.watch(authority);
     AlertDialog alert = const AlertDialog(
             title: Text("Wrong login credentials"),
             actions:[
@@ -30,15 +33,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ]
           );
     _logInAsPassenger() async {
-      // print('Email: $_email');
-      // print('Password: $_password');
-      // print('Test');
       // one example student: sampleStudent@sjsu.edu, samplePassword
       
       // change IP address to your IP address (ex. "xxx.xxx.x.xx:3000")
-      String authority = "192.168.1.83:3000";
-      var url = Uri.http(authority, '/customers/logIn');
+
+      var url = Uri.http(backendURL, '/customers/logIn');
+      print("sjsu_email is $_email and password is $_password");
       http.post(url, body: {'sjsu_email': _email, 'password': _password}).then((response) {
+        print("testing");
+        print("what here $response.statusCode");
         if(response.statusCode == 200) {
           // print("Log in successfully");
           ref.read(loggedIn.notifier).state = true;
@@ -50,15 +53,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           );
         }
       }).catchError((e) {
-        // print("Offline");
+         print("Offline for user $e");
       });
 
     }
 
     _logInAsDriver() async {
       // one example driver: sampleDriver@sjsu.edu, sampleDriver
-      String authority = "192.168.1.83:3000";
-      var url = Uri.http(authority, '/drivers/logIn');
+
+      var url = Uri.http(backendURL, '/drivers/logIn');
       http.post(url, body: {'sjsu_email': _email, 'password': _password}).then((response) {
         if(response.statusCode == 200) {
           ref.read(loggedIn.notifier).state = true;
@@ -71,7 +74,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           );
         }
       }).catchError((e) {
-        print("Offline");
+        print("Offline for whatever reason");
       });
 
     }
