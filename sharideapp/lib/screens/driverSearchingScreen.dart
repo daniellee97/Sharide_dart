@@ -21,6 +21,9 @@ class DriverSearchingScreen extends StatelessWidget {
                       fontSize: 25,
                       color: Colors.white,
                       fontWeight: FontWeight.bold)),
+              Center(
+                child: CircularProgressIndicator(),
+              ),
               ElevatedButton(
                 style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.red)),
