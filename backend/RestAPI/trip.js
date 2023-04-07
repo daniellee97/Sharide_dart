@@ -5,7 +5,7 @@ const trip = express.Router()
 var MongoDB = require('../mongoDB');
 const { getAllDocuments, getOneDocument, createOneDocument, updateOneDocumentWithAnyValues, deleteOneDocument, deleteAllDocument } = require('./CRUDOps');
 var collName = "trips"
-const trip_columns = ["driver_id", "customer_id", "start_location_id", "end_location_id", "payment_id", "car_id", "trip_requested_timestamp", "trip_start_timestamp", "wait_time", "trip_status"]
+const trip_columns = ["driver_email", "customer_email", "start_location_id", "end_location_id", "payment_id", "car_id", "trip_requested_timestamp", "trip_start_timestamp", "wait_time", "trip_status"]
 
 trip.get("/", (req, res) => {
     getAllDocuments(MongoDB, collName, res)
