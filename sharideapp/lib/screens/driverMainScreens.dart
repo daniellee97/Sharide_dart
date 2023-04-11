@@ -35,6 +35,7 @@ class DriverMainScreen extends ConsumerWidget {
                               MaterialStateProperty.all(Colors.red)),
                       onPressed: () {
                         ref.read(loggedIn.notifier).state = false;
+                        ref.read(isDriver.notifier).state = false;
                         ref.read(userName.notifier).state = "";
                       },
                       child: const Text(
