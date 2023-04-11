@@ -35,7 +35,6 @@ class DriverMainScreen extends ConsumerWidget {
                               MaterialStateProperty.all(Colors.red)),
                       onPressed: () {
                         ref.read(loggedIn.notifier).state = false;
-                        ref.read(isDriver.notifier).state = false;
                         ref.read(userName.notifier).state = "";
                       },
                       child: const Text(
@@ -61,11 +60,11 @@ class DriverMainScreen extends ConsumerWidget {
                       onPressed: () => {},
                       child: const Text(
                         'Edit',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                       style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.blue.shade800)),
+                              MaterialStateProperty.all(Colors.teal)),
                     ),
                   ],
                 ),
@@ -73,7 +72,7 @@ class DriverMainScreen extends ConsumerWidget {
                 Container(
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: Colors.white),
+                        color:  Color(0xFFFEFBE9)),
                     width: double.infinity,
                     height: 120,
                     margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -83,7 +82,7 @@ class DriverMainScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: const [
                         Text(
-                          'Your default pick-up location:',
+                          'Your default location:',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
@@ -110,7 +109,7 @@ class DriverMainScreen extends ConsumerWidget {
                         padding: const EdgeInsets.all(10),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color: Colors.blue),
+                            color:  Color(0xFFFEFBE9)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,28 +117,28 @@ class DriverMainScreen extends ConsumerWidget {
                             Text(
                               'March 5th, 2023',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
                               '11:30',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
                               'Pick-up at:',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
                               '123 ABC Rd., San Jose, CA 95050',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -155,7 +154,7 @@ class DriverMainScreen extends ConsumerWidget {
                             child: ElevatedButton(
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
-                                        Colors.green)),
+                                        Colors.teal)),
                                 onPressed: () => context.push('/scheduleRide'),
                                 child: const Text(
                                   'Schedule a ride',
@@ -170,10 +169,10 @@ class DriverMainScreen extends ConsumerWidget {
                             child: ElevatedButton(
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
-                                        Colors.yellow)),
-                                onPressed: () => context.push('/searchDriver'),
+                                        Colors.teal)),
+                                onPressed: () => context.push('/searchPassenger'),
                                 child: const Text(
-                                  'Search a driver',
+                                  'Go online',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 16),
                                 )),

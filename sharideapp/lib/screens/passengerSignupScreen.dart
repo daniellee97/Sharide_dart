@@ -25,7 +25,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _defaultLocationController = TextEditingController();
+  final TextEditingController _defaultLocationController =
+      TextEditingController();
 
   String? _email;
   String? _password;
@@ -51,7 +52,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       return;
     }
     setState(() {
-      context.pop();
+      context.goNamed('login');
     });
   }
 
