@@ -9,7 +9,6 @@ let uri = 'drivers'
 
 // test sample drivers
 describe('TEST /' + uri, function() {
-    let sampleObjectId = "63aed1458b0c9cdb6d7c9a75"
 
     let sampleObject = {
         license_no:29229101,
