@@ -53,7 +53,7 @@ const updateOneDocumentWithAnyValues = async (database, collName, listingQuery, 
 }
 
 const deleteOneDocument = async (database, collName, listingQuery, res) => {
-    ;(await database).collection(collName).deleteOne(listingQuery);
+    ;(await database).collection(collName).deleteMany(listingQuery);
     res.send("Deleted one document")
 }
 

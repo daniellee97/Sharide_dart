@@ -44,7 +44,10 @@ customer.post("/", (req, res) => {
 })
 
 customer.delete("/", (req, res) => {
-    let listingQuery = {_id: ObjectId(req.body.id)}
+    let listingQuery = {
+        sjsu_email: req.body.sjsu_email,
+    }
+
     deleteOneDocument(MongoDB, collName, listingQuery, res)
 
 })
