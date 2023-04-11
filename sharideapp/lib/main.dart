@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sharideapp/screens/passengerSearchingScreen.dart';
 
 import 'Providers.dart';
 
@@ -31,10 +32,10 @@ class MyApp extends ConsumerWidget {
     // go router
     GoRouter _router = GoRouter(
       initialLocation: loggedInYet
-            ? isCurrentUserDriver
-                ? '/driverMain'
-                : '/userMain'
-            : '/',
+          ? isCurrentUserDriver
+              ? '/driverMain'
+              : '/userMain'
+          : '/',
       routes: <GoRoute>[
         GoRoute(
           name: 'landing',
@@ -76,6 +77,10 @@ class MyApp extends ConsumerWidget {
               path: 'driverMain',
               builder: (context, state) => DriverMainScreen(),
             ),
+            GoRoute(
+                name: 'searchPassenger',
+                path: 'searchPassenger',
+                builder: (context, state) => PassengerSearchingScreen()),
           ],
         )
       ],
