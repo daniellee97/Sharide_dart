@@ -1,12 +1,61 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../Providers.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class DriverMainScreen extends ConsumerWidget {
+class DriverMainScreen extends ConsumerStatefulWidget {
+  const DriverMainScreen({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _DriverMainScreenState createState() => _DriverMainScreenState();
+
+}
+
+class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
+  
+
+  @override
+  Widget build(BuildContext context) {
+    // get current user name
     var value = ref.watch(userName);
+
+    // get current email
+    var _currEmail = ref.watch(email);
+    var _currStatus = ref.watch(available);
+
+    String backendURL = ref.watch(authority);
+    AlertDialog alert = const AlertDialog(
+            title: Text("Wrong login credentials"),
+            actions:[
+              // okButton,
+            ]
+          );
+    
+    // driver status setter
+    _setDriverStatusAvailable() async {
+      var url = Uri.http(backendURL, '/drivers');
+      print("sjsu_email is $_currEmail and current status is $_currStatus");
+      http.post(url, body: {'sjsu_email': _currEmail, 'avail': _currStatus}).then((response) {
+        print("testing");
+        print("what here $response.statusCode");
+        if(response.statusCode == 200) {
+          ref.read(available.notifier).state = 'yes';
+        } else {
+          showDialog(context: context, builder: (BuildContext context) {
+            return alert;}
+          );
+        }
+      }).catchError((e) {
+         print("Offline for user $e");
+      });
+
+    }
+
+    
     return Scaffold(
         appBar: AppBar(
           title: const Text('Sharide'),
@@ -34,6 +83,7 @@ class DriverMainScreen extends ConsumerWidget {
                           backgroundColor:
                               MaterialStateProperty.all(Colors.red)),
                       onPressed: () {
+                        ref.read(available.notifier).state = "no";
                         ref.read(loggedIn.notifier).state = false;
                         ref.read(isDriver.notifier).state = false;
                         ref.read(userName.notifier).state = "";
@@ -171,7 +221,12 @@ class DriverMainScreen extends ConsumerWidget {
                                 style: ButtonStyle(
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.teal)),
-                                onPressed: () => context.push('/searchPassenger'),
+                                onPressed: (){
+                                  // TODO: send post request to make driver available status
+                                  _setDriverStatusAvailable();
+                                  // navigate to the searching screen
+                                  context.push('/searchPassenger');
+                                },
                                 child: const Text(
                                   'Go online',
                                   style: TextStyle(

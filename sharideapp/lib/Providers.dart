@@ -19,3 +19,9 @@ final userName = StateProvider<String>((ref) {
 final authority = StateProvider<String>((ref) {
   return "192.168.56.1:3000";
 });
+
+// added the available status provider
+final available = StateProvider<String>((ref) => "no");
+
+// added the email 
+final email = StateProvider<String>((ref) => "test");
