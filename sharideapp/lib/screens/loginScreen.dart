@@ -47,6 +47,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ref.read(loggedIn.notifier).state = true;
           var temp = json.decode(response.body)['name'];
           ref.read(userName.notifier).state = temp;
+          ref.read(email.notifier).state = json.decode(response.body)['sjsu_email'];
         } else {
           showDialog(context: context, builder: (BuildContext context) {
             return alert;}
@@ -68,6 +69,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ref.read(isDriver.notifier).state = true;
           var temp = json.decode(response.body)['name'];
           ref.read(userName.notifier).state = temp;
+          ref.read(email.notifier).state = json.decode(response.body)['sjsu_email'];
+          ref.read(available.notifier).state = 'no'; 
+
         } else {
           showDialog(context: context, builder: (BuildContext context) {
             return alert;}
