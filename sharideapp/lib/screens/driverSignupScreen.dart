@@ -62,55 +62,55 @@ class _DriverSignUpFormState extends ConsumerState<SignUpFormDriver> {
       return;
     }
     setState(() {
-      context.pop();
+      context.goNamed('login');
     });
   }
 
   @override
   Widget build(BuildContext context) {
     String backendURL = ref.watch(authority);
-    
-      void _signUpDriver() {
-    // String? _name;
-    // String? _email;
-    // String? _password;
-    // int? _vehicleYear;
-    // String? _vehicleMake;
-    // String? _licence;
-    // String? _vehicleModel;
 
-    var body = {
-      'license_no': _licence,
-      'name': _name,
-      'sjsu_email': _email,
-      'password': _password,
-      'vehicleYear': _vehicleYear.toString(),
-      'vehicleMake': _vehicleMake,
-    };
+    void _signUpDriver() {
+      // String? _name;
+      // String? _email;
+      // String? _password;
+      // int? _vehicleYear;
+      // String? _vehicleMake;
+      // String? _licence;
+      // String? _vehicleModel;
 
-    // print(
-    //     "name $_name and email $_email and password $_password and year $_vehicleYear and make $_vehicleMake and licence $_licence and model ");
+      var body = {
+        'license_no': _licence,
+        'name': _name,
+        'sjsu_email': _email,
+        'password': _password,
+        'vehicleYear': _vehicleYear.toString(),
+        'vehicleMake': _vehicleMake,
+      };
 
-    var url = Uri.http(backendURL, 'drivers');
+      // print(
+      //     "name $_name and email $_email and password $_password and year $_vehicleYear and make $_vehicleMake and licence $_licence and model ");
 
-    http.put(url, body: body).then((response) {
-      if (response.statusCode == 200) {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return showSignUpSuccessfully;
-            });
-      } else {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return showSignUpUnsuccessfully;
-            });
-      }
-    }).catchError((e) {
-      print("Error $e");
-    });
-  }
+      var url = Uri.http(backendURL, 'drivers');
+
+      http.put(url, body: body).then((response) {
+        if (response.statusCode == 200) {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return showSignUpSuccessfully;
+              });
+        } else {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return showSignUpUnsuccessfully;
+              });
+        }
+      }).catchError((e) {
+        print("Error $e");
+      });
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -203,6 +203,7 @@ class _DriverSignUpFormState extends ConsumerState<SignUpFormDriver> {
                     // call both functions here
                     _validateEmail();
                     _signUpDriver();
+                    _goback();
                   },
                   child: const Text('Complete'),
                 ),
