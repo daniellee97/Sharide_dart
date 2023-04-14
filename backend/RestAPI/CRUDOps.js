@@ -39,7 +39,7 @@ const updateOneDocumentWithAnyValues = async (database, collName, listingQuery, 
 
         for (let i =0; i < schema_columns.length; i++) {
             let property = schema_columns[i]
-            setDocument[property] = req.body[property] ? req.body[property] : document[property]
+            setDocument[property] = req.body[property] ? req.body[property] : document[property] ? document[property] : ""
         }
         
         let newDocument = {

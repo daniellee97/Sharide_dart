@@ -10,7 +10,6 @@ let uri = 'customers'
 
 // test sample customers
 describe('TEST /customers', function() {
-    let sampleObjectId = "63ad4b97a9584d1da1237b7b"
 
     let sjsu_email_test = 'sampleStudentTest123@sjsu.edu'
     let password_test = 'samplePasswordTest'

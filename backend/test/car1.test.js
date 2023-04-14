@@ -1,9 +1,6 @@
 const app = require('../app');
+const MongoDB = require("../mongoDB")
 const { testGetSampleItem, testCreateSampleItem } = require('./testOps');
-
-app.listen(4000, () => {
-    console.log("Listening to port 3000")
-})
 
 
 let collName = 'car'
@@ -25,4 +22,7 @@ describe('TEST /cars', function() {
 
     testCreateSampleItem(collName, uri, sampleObject)
 
+  
+
 });
+

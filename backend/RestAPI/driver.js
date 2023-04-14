@@ -43,14 +43,15 @@ driver.put("/", (req, res) => {
 })
 
 driver.post("/", (req, res) => {
-    // update driver
-    let filter = {sjsu_email: req.body.email}
+    let filter = {sjsu_email: req.body.sjsu_email}
 
     updateOneDocumentWithAnyValues(MongoDB, collName, filter, driver_columns, req, res)
 })
 
 driver.delete("/", (req, res) => {
-    let listingQuery = {_id: ObjectId(req.body.id)}
+    let listingQuery = {
+        sjsu_email: req.body.sjsu_email,
+    }
     deleteOneDocument(MongoDB, collName, listingQuery, res)
 })
 
