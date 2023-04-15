@@ -41,9 +41,10 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
       print("sjsu_email is $_currEmail and current status is $_currStatus");
       http.post(url, body: {'sjsu_email': _currEmail, 'avail': _currStatus}).then((response) {
         print("testing");
-        print("what here $response.statusCode");
+        print("what here ${response.statusCode}");
         if(response.statusCode == 200) {
           ref.read(available.notifier).state = 'yes';
+          print("sjsu_email is $_currEmail and current status is ${ref.read(available.notifier).state} after changing the status");
         } else {
           showDialog(context: context, builder: (BuildContext context) {
             return alert;}
@@ -52,8 +53,9 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
       }).catchError((e) {
          print("Offline for user $e");
       });
-
     }
+
+    
 
     
     return Scaffold(
