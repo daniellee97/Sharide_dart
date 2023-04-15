@@ -43,7 +43,7 @@ driver.put("/", (req, res) => {
 })
 
 driver.post("/", (req, res) => {
-    let filter = {sjsu_email: req.body.sjsu_email}
+    let filter = {sjsu_email: req.body.sjsu_sjsu_email}
 
     updateOneDocumentWithAnyValues(MongoDB, collName, filter, driver_columns, req, res)
 })
