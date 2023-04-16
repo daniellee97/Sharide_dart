@@ -43,9 +43,16 @@ driver.put("/", (req, res) => {
 })
 
 driver.post("/", (req, res) => {
+    // update driver
     let filter = {sjsu_email: req.body.sjsu_email}
 
     updateOneDocumentWithAnyValues(MongoDB, collName, filter, driver_columns, req, res)
+})
+
+// added post request for updating available status of a driver
+driver.post("/drivers", (req, res)=>{
+    let filter={sjsu_email: req.body.email}
+    updateOneDocumentWithAnyValues(MongoDb, colName, filter, driver_columns, req, res)
 })
 
 driver.delete("/", (req, res) => {
