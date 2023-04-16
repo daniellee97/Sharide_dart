@@ -16,6 +16,7 @@ app.use("/drivers", require("./RestAPI/driver"))
 app.use("/locations", require("./RestAPI/location"))
 app.use("/payments", require("./RestAPI/payment"))
 app.use("/trips", require("./RestAPI/trip"))
+app.use("/tripProcessing", require("./RestAPI/tripProcessing"))
 
 
 app.get("/", (req, res)  => {

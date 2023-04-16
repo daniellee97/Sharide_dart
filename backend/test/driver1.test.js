@@ -51,7 +51,6 @@ describe('TEST /' + uri, function() {
         .expect(200, done)
     })
 
-    // Not working for some reason
     it('test update newly created object ' + collName, (done) => {
         request(app)
         .post('/' + uri)
