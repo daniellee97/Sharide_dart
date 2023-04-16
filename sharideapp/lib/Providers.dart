@@ -17,5 +17,5 @@ final userName = StateProvider<String>((ref) {
 });
 
 final authority = StateProvider<String>((ref) {
-  return "192.168.56.1:3000";
+  return "192.168.1.83:3000";
 });
