@@ -25,7 +25,7 @@ class _PassengerSearchingScreenState extends ConsumerState<PassengerSearchingScr
        var url = Uri.http(backendURL, '/drivers');
       http.post(url, body: {'sjsu_email': _currEmail, 'avail': 'no'}).then((response) {
         print("testing");
-        print("what here $response.statusCode");
+        print("what here ${response.statusCode}");
         if(response.statusCode == 200) {
           ref.read(available.notifier).state = 'no';
           print("sjsu_email is $_currEmail and current status is ${ref.read(available.notifier).state}");
