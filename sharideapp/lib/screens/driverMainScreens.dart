@@ -224,7 +224,6 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                                     backgroundColor: MaterialStateProperty.all(
                                         Colors.teal)),
                                 onPressed: (){
-                                  // TODO: send post request to make driver available status
                                   _setDriverStatusAvailable();
                                   // navigate to the searching screen
                                   context.push('/searchPassenger');
