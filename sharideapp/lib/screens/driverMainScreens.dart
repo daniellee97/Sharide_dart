@@ -65,7 +65,7 @@ class DriverMainScreen extends ConsumerWidget {
                       ),
                       style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.blue.shade800)),
+                              MaterialStateProperty.all(Colors.teal)),
                     ),
                   ],
                 ),
@@ -73,7 +73,7 @@ class DriverMainScreen extends ConsumerWidget {
                 Container(
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: Colors.white),
+                        color: Color(0xFFFEFBE9)),
                     width: double.infinity,
                     height: 120,
                     margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -110,7 +110,7 @@ class DriverMainScreen extends ConsumerWidget {
                         padding: const EdgeInsets.all(10),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color: Colors.blue),
+                            color: Color(0xFFFEFBE9)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -118,28 +118,28 @@ class DriverMainScreen extends ConsumerWidget {
                             Text(
                               'March 5th, 2023',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
                               '11:30',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
                               'Pick-up at:',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
                               '123 ABC Rd., San Jose, CA 95050',
                               style: TextStyle(
-                                  color: Colors.white,
+                                  color: Colors.black,
                                   fontSize: 14,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -152,16 +152,44 @@ class DriverMainScreen extends ConsumerWidget {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.7,
                             height: MediaQuery.of(context).size.height * 0.06,
-                            child: ElevatedButton(
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.green)),
-                                onPressed: () => context.push('/scheduleRide'),
-                                child: const Text(
-                                  'Schedule a ride',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                )),
+                            child: DropdownButton<String>(
+                              value: 'Default Location',
+                              icon: const Icon(Icons.arrow_drop_down),
+                              iconSize: 24,
+                              elevation: 16,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              dropdownColor: Colors.teal,
+                              underline: Container(
+                                height: 2,
+                                color: Colors.white,
+                              ),
+                              onChanged: (String? newValue) {
+                                if (newValue == 'Default Location' ||
+                                    newValue == 'Campus') {
+                                  context.push('/scheduleRide');
+                                }
+                              },
+                              items: <String>[
+                                'Default Location',
+                                'Campus',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
                           const SizedBox(height: 10),
                           SizedBox(
@@ -169,8 +197,8 @@ class DriverMainScreen extends ConsumerWidget {
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: ElevatedButton(
                                 style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.yellow)),
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.teal)),
                                 onPressed: () => context.push('/searchDriver'),
                                 child: const Text(
                                   'Search a driver',
