@@ -2,11 +2,55 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../Providers.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class UserMainScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var value = ref.watch(userName);
+    var currentUserName = ref.watch(userName);
+    var userEmail = ref.watch(email);
+
+    String backendURL = ref.watch(authority);
+
+    AlertDialog foundDriverAlert = const AlertDialog(
+      title: Text("Found driver! Click on next step to start ride"),
+    );
+
+    AlertDialog cannotFindDriverAlert =
+        const AlertDialog(title: Text("Cannot find driver"), actions: [
+      // okButton,
+    ]);
+
+    _findDriver() async {
+      var url = Uri.http(backendURL, '/drivers/avail');
+      http.get(url).then((response) {
+        // print("what here $response.statusCode");
+        if (response.statusCode == 200) {
+          var temp = json.decode(response.body);
+          print("Driver found! \n Driver information: $temp");
+
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return foundDriverAlert;
+              });
+
+          var driverEmail = json.decode(response.body)["sjsu_email"];
+          // create a processing trip here and check for status code
+        } else {
+          print('No available driver');
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return cannotFindDriverAlert;
+              });
+        }
+      }).catchError((e) {
+        print("Offline for user $e");
+      });
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Sharide'),
@@ -22,7 +66,7 @@ class UserMainScreen extends ConsumerWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      'Hello, $value',
+                      'Hello, $currentUserName',
                       style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -198,7 +242,10 @@ class UserMainScreen extends ConsumerWidget {
                                 style: ButtonStyle(
                                     backgroundColor:
                                         MaterialStateProperty.all(Colors.teal)),
-                                onPressed: () => context.push('/searchDriver'),
+                                onPressed: () {
+                                  _findDriver();
+                                  context.push('/searchDriver');
+                                },
                                 child: const Text(
                                   'Search a driver',
                                   style: TextStyle(

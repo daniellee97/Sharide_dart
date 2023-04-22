@@ -1,12 +1,59 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../Providers.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-class DriverMainScreen extends ConsumerWidget {
+class DriverMainScreen extends ConsumerStatefulWidget {
+  const DriverMainScreen({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _DriverMainScreenState createState() => _DriverMainScreenState();
+}
+
+class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
+  @override
+  Widget build(BuildContext context) {
+    // get current user name
     var value = ref.watch(userName);
+
+    // get current email
+    var _currEmail = ref.watch(email);
+    var _currStatus = ref.watch(available);
+
+    String backendURL = ref.watch(authority);
+    AlertDialog alert =
+        const AlertDialog(title: Text("Wrong login credentials"), actions: [
+      // okButton,
+    ]);
+
+    // driver status setter
+    _setDriverStatusAvailable() async {
+      var url = Uri.http(backendURL, '/drivers');
+      print("sjsu_email is $_currEmail and current status is $_currStatus");
+      http.post(url, body: {'sjsu_email': _currEmail, 'avail': 'yes'}).then(
+          (response) {
+        print("testing");
+        print("what here ${response.statusCode}");
+        if (response.statusCode == 200) {
+          ref.read(available.notifier).state = 'yes';
+          print(
+              "sjsu_email is $_currEmail and current status is ${ref.read(available.notifier).state} after changing the status");
+        } else {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return alert;
+              });
+        }
+      }).catchError((e) {
+        print("Offline for user $e");
+      });
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Sharide'),
@@ -34,6 +81,7 @@ class DriverMainScreen extends ConsumerWidget {
                           backgroundColor:
                               MaterialStateProperty.all(Colors.red)),
                       onPressed: () {
+                        ref.read(available.notifier).state = "no";
                         ref.read(loggedIn.notifier).state = false;
                         ref.read(isDriver.notifier).state = false;
                         ref.read(userName.notifier).state = "";
@@ -61,7 +109,7 @@ class DriverMainScreen extends ConsumerWidget {
                       onPressed: () => {},
                       child: const Text(
                         'Edit',
-                        style: TextStyle(color: Colors.black),
+                        style: TextStyle(color: Colors.white),
                       ),
                       style: ButtonStyle(
                           backgroundColor:
@@ -83,7 +131,7 @@ class DriverMainScreen extends ConsumerWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: const [
                         Text(
-                          'Your default pick-up location:',
+                          'Your default location:',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
@@ -152,44 +200,16 @@ class DriverMainScreen extends ConsumerWidget {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.7,
                             height: MediaQuery.of(context).size.height * 0.06,
-                            child: DropdownButton<String>(
-                              value: 'Default Location',
-                              icon: const Icon(Icons.arrow_drop_down),
-                              iconSize: 24,
-                              elevation: 16,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                              dropdownColor: Colors.teal,
-                              underline: Container(
-                                height: 2,
-                                color: Colors.white,
-                              ),
-                              onChanged: (String? newValue) {
-                                if (newValue == 'Default Location' ||
-                                    newValue == 'Campus') {
-                                  context.push('/scheduleRide');
-                                }
-                              },
-                              items: <String>[
-                                'Default Location',
-                                'Campus',
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.teal)),
+                                onPressed: () => context.push('/scheduleRide'),
+                                child: const Text(
+                                  'Schedule a ride',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16),
+                                )),
                           ),
                           const SizedBox(height: 10),
                           SizedBox(
@@ -201,7 +221,7 @@ class DriverMainScreen extends ConsumerWidget {
                                         MaterialStateProperty.all(Colors.teal)),
                                 onPressed: () => context.push('/searchDriver'),
                                 child: const Text(
-                                  'Search a driver',
+                                  'Go online',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 16),
                                 )),

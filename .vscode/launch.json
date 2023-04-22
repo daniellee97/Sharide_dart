@@ -1,0 +1,48 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "sharideapp",
+            "cwd": "sharideapp",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "sharideapp (profile mode)",
+            "cwd": "sharideapp",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "sharideapp (release mode)",
+            "cwd": "sharideapp",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "Android",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "emulator-5554",
+            "program": "sharideapp/lib/main.dart"
+        },
+        {
+            "name": "Android 2",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "emulator-5556",
+            "program": "sharideapp/lib/main.dart"
+        }
+    ],
+    "compounds": [
+        {
+            "name": "All Devices",
+            "configurations": ["Android", "Android 2"]
+        }
+    ]
+}

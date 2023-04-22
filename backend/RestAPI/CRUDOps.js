@@ -35,13 +35,11 @@ const updateOneDocumentWithAnyValues = async (database, collName, listingQuery, 
     ;(await database).collection(collName).findOne(listingQuery)
     .then(async (document) => {
 
-        console.log("Found document " + document)
-
         let setDocument = {}
 
         for (let i =0; i < schema_columns.length; i++) {
             let property = schema_columns[i]
-            setDocument[property] = req.body[property] ? req.body[property] : document[property]
+            setDocument[property] = req.body[property] ? req.body[property] : document[property] ? document[property] : ""
         }
         
         let newDocument = {
@@ -55,7 +53,7 @@ const updateOneDocumentWithAnyValues = async (database, collName, listingQuery, 
 }
 
 const deleteOneDocument = async (database, collName, listingQuery, res) => {
-    ;(await database).collection(collName).deleteOne(listingQuery);
+    ;(await database).collection(collName).deleteMany(listingQuery);
     res.send("Deleted one document")
 }
 
