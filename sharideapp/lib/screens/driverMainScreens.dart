@@ -12,12 +12,9 @@ class DriverMainScreen extends ConsumerStatefulWidget {
 
   @override
   _DriverMainScreenState createState() => _DriverMainScreenState();
-
 }
 
 class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
-  
-
   @override
   Widget build(BuildContext context) {
     // get current user name
@@ -28,37 +25,35 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
     var _currStatus = ref.watch(available);
 
     String backendURL = ref.watch(authority);
-    AlertDialog alert = const AlertDialog(
-            title: Text("Wrong login credentials"),
-            actions:[
-              // okButton,
-            ]
-          );
-    
+    AlertDialog alert =
+        const AlertDialog(title: Text("Wrong login credentials"), actions: [
+      // okButton,
+    ]);
+
     // driver status setter
     _setDriverStatusAvailable() async {
       var url = Uri.http(backendURL, '/drivers');
       print("sjsu_email is $_currEmail and current status is $_currStatus");
-      http.post(url, body: {'sjsu_email': _currEmail, 'avail': 'yes'}).then((response) {
+      http.post(url, body: {'sjsu_email': _currEmail, 'avail': 'yes'}).then(
+          (response) {
         print("testing");
         print("what here ${response.statusCode}");
-        if(response.statusCode == 200) {
+        if (response.statusCode == 200) {
           ref.read(available.notifier).state = 'yes';
-          print("sjsu_email is $_currEmail and current status is ${ref.read(available.notifier).state} after changing the status");
+          print(
+              "sjsu_email is $_currEmail and current status is ${ref.read(available.notifier).state} after changing the status");
         } else {
-          showDialog(context: context, builder: (BuildContext context) {
-            return alert;}
-          );
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return alert;
+              });
         }
       }).catchError((e) {
-         print("Offline for user $e");
+        print("Offline for user $e");
       });
     }
 
-
-    
-
-    
     return Scaffold(
         appBar: AppBar(
           title: const Text('Sharide'),
@@ -126,7 +121,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                 Container(
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color:  Color(0xFFFEFBE9)),
+                        color: Color(0xFFFEFBE9)),
                     width: double.infinity,
                     height: 120,
                     margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -163,7 +158,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                         padding: const EdgeInsets.all(10),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color:  Color(0xFFFEFBE9)),
+                            color: Color(0xFFFEFBE9)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -205,16 +200,44 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.7,
                             height: MediaQuery.of(context).size.height * 0.06,
-                            child: ElevatedButton(
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.teal)),
-                                onPressed: () => context.push('/scheduleRide'),
-                                child: const Text(
-                                  'Schedule a ride',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                )),
+                            child: DropdownButton<String>(
+                              value: 'Default Location',
+                              icon: const Icon(Icons.arrow_drop_down),
+                              iconSize: 24,
+                              elevation: 16,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              dropdownColor: Colors.teal,
+                              underline: Container(
+                                height: 2,
+                                color: Colors.white,
+                              ),
+                              onChanged: (String? newValue) {
+                                if (newValue == 'Default Location' ||
+                                    newValue == 'Campus') {
+                                  context.push('/scheduleRide');
+                                }
+                              },
+                              items: <String>[
+                                'Default Location',
+                                'Campus',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
                           const SizedBox(height: 10),
                           SizedBox(
@@ -222,11 +245,10 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: ElevatedButton(
                                 style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.teal)),
-                                onPressed: (){
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.teal)),
+                                onPressed: () {
                                   _setDriverStatusAvailable();
-                                  // navigate to the searching screen
                                   context.push('/searchPassenger');
                                 },
                                 child: const Text(

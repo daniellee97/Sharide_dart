@@ -15,41 +15,38 @@ class UserMainScreen extends ConsumerWidget {
 
     AlertDialog foundDriverAlert = const AlertDialog(
       title: Text("Found driver! Click on next step to start ride"),
-
     );
 
-    AlertDialog cannotFindDriverAlert = const AlertDialog(
-            title: Text("Cannot find driver"),
-            actions:[
-              // okButton,
-            ]
-          );
+    AlertDialog cannotFindDriverAlert =
+        const AlertDialog(title: Text("Cannot find driver"), actions: [
+      // okButton,
+    ]);
 
     _findDriver() async {
-       var url = Uri.http(backendURL, '/drivers/avail');
+      var url = Uri.http(backendURL, '/drivers/avail');
       http.get(url).then((response) {
         // print("what here $response.statusCode");
-        if(response.statusCode == 200) {
+        if (response.statusCode == 200) {
           var temp = json.decode(response.body);
           print("Driver found! \n Driver information: $temp");
-
-          showDialog(context: context, builder: (BuildContext context) {
-            return foundDriverAlert;}
-          );
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return foundDriverAlert;
+              });
 
           var driverEmail = json.decode(response.body)["sjsu_email"];
           // create a processing trip here and check for status code
-          
-
-
         } else {
           print('No available driver');
-          showDialog(context: context, builder: (BuildContext context) {
-            return cannotFindDriverAlert;}
-          );
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return cannotFindDriverAlert;
+              });
         }
       }).catchError((e) {
-         print("Offline for user $e");
+        print("Offline for user $e");
       });
     }
 
@@ -118,7 +115,7 @@ class UserMainScreen extends ConsumerWidget {
                 Container(
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color:  Color(0xFFFEFBE9)),
+                        color: Color(0xFFFEFBE9)),
                     width: double.infinity,
                     height: 120,
                     margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -155,7 +152,7 @@ class UserMainScreen extends ConsumerWidget {
                         padding: const EdgeInsets.all(10),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color:  Color(0xFFFEFBE9)),
+                            color: Color(0xFFFEFBE9)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -197,16 +194,44 @@ class UserMainScreen extends ConsumerWidget {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.7,
                             height: MediaQuery.of(context).size.height * 0.06,
-                            child: ElevatedButton(
-                                style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.teal)),
-                                onPressed: () => context.push('/scheduleRide'),
-                                child: const Text(
-                                  'Schedule a ride',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                )),
+                            child: DropdownButton<String>(
+                              value: 'Default Location',
+                              icon: const Icon(Icons.arrow_drop_down),
+                              iconSize: 24,
+                              elevation: 16,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              dropdownColor: Colors.teal,
+                              underline: Container(
+                                height: 2,
+                                color: Colors.white,
+                              ),
+                              onChanged: (String? newValue) {
+                                if (newValue == 'Default Location' ||
+                                    newValue == 'Campus') {
+                                  context.push('/scheduleRide');
+                                }
+                              },
+                              items: <String>[
+                                'Default Location',
+                                'Campus',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
                           const SizedBox(height: 10),
                           SizedBox(
@@ -214,12 +239,12 @@ class UserMainScreen extends ConsumerWidget {
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: ElevatedButton(
                                 style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.teal)),
-                                onPressed: (){
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.teal)),
+                                onPressed: () {
                                   _findDriver();
                                   context.push('/searchDriver');
-                                }, 
+                                },
                                 child: const Text(
                                   'Search a driver',
                                   style: TextStyle(
