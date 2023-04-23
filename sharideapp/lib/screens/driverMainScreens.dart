@@ -200,16 +200,44 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.7,
                             height: MediaQuery.of(context).size.height * 0.06,
-                            child: ElevatedButton(
-                                style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all(Colors.teal)),
-                                onPressed: () => context.push('/scheduleRide'),
-                                child: const Text(
-                                  'Schedule a ride',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 16),
-                                )),
+                            child: DropdownButton<String>(
+                              value: 'Default Location',
+                              icon: const Icon(Icons.arrow_drop_down),
+                              iconSize: 24,
+                              elevation: 16,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              dropdownColor: Colors.teal,
+                              underline: Container(
+                                height: 2,
+                                color: Colors.white,
+                              ),
+                              onChanged: (String? newValue) {
+                                if (newValue == 'Default Location' ||
+                                    newValue == 'Campus') {
+                                  context.push('/scheduleRide');
+                                }
+                              },
+                              items: <String>[
+                                'Default Location',
+                                'Campus',
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
                           ),
                           const SizedBox(height: 10),
                           SizedBox(
