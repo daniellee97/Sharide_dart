@@ -219,7 +219,10 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                                 style: ButtonStyle(
                                     backgroundColor:
                                         MaterialStateProperty.all(Colors.teal)),
-                                onPressed: () => context.push('/searchDriver'),
+                                onPressed: () {
+                                  _setDriverStatusAvailable();
+                                  context.push('/searchPassenger');
+                                },
                                 child: const Text(
                                   'Go online',
                                   style: TextStyle(

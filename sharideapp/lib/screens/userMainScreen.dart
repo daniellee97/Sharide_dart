@@ -29,7 +29,6 @@ class UserMainScreen extends ConsumerWidget {
         if (response.statusCode == 200) {
           var temp = json.decode(response.body);
           print("Driver found! \n Driver information: $temp");
-
           showDialog(
               context: context,
               builder: (BuildContext context) {
