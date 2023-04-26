@@ -22,23 +22,54 @@ class UserMainScreen extends ConsumerWidget {
       // okButton,
     ]);
 
+    AlertDialog startsDrive = 
+      const AlertDialog(title: Text("Ride started"), actions: [
+
+      ]);
+
+    AlertDialog cannotStartsDrive = 
+      const AlertDialog(title: Text("Cannot starts ride, no trip processing"), actions: []);
+
+
     _findDriver() async {
       var url = Uri.http(backendURL, '/drivers/avail');
       http.get(url).then((response) {
         // print("what here $response.statusCode");
         if (response.statusCode == 200) {
-          var temp = json.decode(response.body);
-          print("Driver found! \n Driver information: $temp");
+          // create a trip processing here
+          var urlTripProcessing = Uri.http(backendURL, '/tripProcessing');
+
+          var driver_email =  json.decode(response.body)["sjsu_email"];
+
+          var body = {
+            'customer_email': userEmail,
+            'driver_email': driver_email,
+          };
+
+          http.put(urlTripProcessing, body: body).then((response) {
+            // print("what here $response.statusCode");
+            if (response.statusCode == 200) {
+              
+            } else {
+              // print('No trip processing created yet');
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return cannotStartsDrive;
+                  });
+            }
+          }).catchError((e) {
+            print("Offline for user $e");
+          });
+
+          // end creating a trip processing
+
           showDialog(
               context: context,
               builder: (BuildContext context) {
                 return foundDriverAlert;
               });
-
-          var driverEmail = json.decode(response.body)["sjsu_email"];
-          // create a processing trip here and check for status code
         } else {
-          print('No available driver');
           showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -49,6 +80,57 @@ class UserMainScreen extends ConsumerWidget {
         print("Offline for user $e");
       });
     }
+
+    _startsRideForPassenger() async {
+      var url = Uri.http(backendURL, '/tripProcessing/forCustomer');
+  
+      // print("user email is $userEmail");
+      var body = {
+        'customer_email': userEmail,
+      };
+
+      http.post(url, body: body).then((response) {
+        // print("what here $response.statusCode");
+        if (response.statusCode == 200) {
+          
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return startsDrive;
+              });
+        } else {
+          // print('No trip processing created yet');
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return cannotStartsDrive;
+              });
+        }
+      }).catchError((e) {
+        print("Offline for user $e");
+      });
+    }
+
+    _deleteAnyTripProcessing() async {
+      var url = Uri.http(backendURL, '/tripProcessing/forCustomer');
+  
+      // print("user email is $userEmail");
+      var body = {
+        'customer_email': userEmail,
+      };
+
+      http.delete(url, body: body).then((response) {
+        // print("what here $response.statusCode");
+        if (response.statusCode == 200) {
+          
+        } else {
+        }
+      }).catchError((e) {
+        print("Offline for user $e");
+      });
+    }
+
+
 
     return Scaffold(
         appBar: AppBar(
@@ -77,6 +159,7 @@ class UserMainScreen extends ConsumerWidget {
                           backgroundColor:
                               MaterialStateProperty.all(Colors.red)),
                       onPressed: () {
+                        _deleteAnyTripProcessing();
                         ref.read(loggedIn.notifier).state = false;
                         ref.read(userName.notifier).state = "";
                       },
@@ -247,6 +330,22 @@ class UserMainScreen extends ConsumerWidget {
                                 },
                                 child: const Text(
                                   'Search a driver',
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 16),
+                                )),
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.7,
+                            height: MediaQuery.of(context).size.height * 0.06,
+                            child: ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.teal)),
+                                onPressed: () {
+                                  _startsRideForPassenger();
+                                },
+                                child: const Text(
+                                  'Start ride',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 16),
                                 )),
