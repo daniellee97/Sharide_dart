@@ -22,14 +22,11 @@ class UserMainScreen extends ConsumerWidget {
       // okButton,
     ]);
 
-    AlertDialog startsDrive = 
-      const AlertDialog(title: Text("Ride started"), actions: [
+    AlertDialog startsDrive =
+        const AlertDialog(title: Text("Ride started"), actions: []);
 
-      ]);
-
-    AlertDialog cannotStartsDrive = 
-      const AlertDialog(title: Text("Cannot starts ride, no trip processing"), actions: []);
-
+    AlertDialog cannotStartsDrive = const AlertDialog(
+        title: Text("Cannot starts ride, no trip processing"), actions: []);
 
     _findDriver() async {
       var url = Uri.http(backendURL, '/drivers/avail');
@@ -39,7 +36,7 @@ class UserMainScreen extends ConsumerWidget {
           // create a trip processing here
           var urlTripProcessing = Uri.http(backendURL, '/tripProcessing');
 
-          var driver_email =  json.decode(response.body)["sjsu_email"];
+          var driver_email = json.decode(response.body)["sjsu_email"];
 
           var body = {
             'customer_email': userEmail,
@@ -49,7 +46,6 @@ class UserMainScreen extends ConsumerWidget {
           http.put(urlTripProcessing, body: body).then((response) {
             // print("what here $response.statusCode");
             if (response.statusCode == 200) {
-              
             } else {
               // print('No trip processing created yet');
               showDialog(
@@ -83,7 +79,7 @@ class UserMainScreen extends ConsumerWidget {
 
     _startsRideForPassenger() async {
       var url = Uri.http(backendURL, '/tripProcessing/forCustomer');
-  
+
       // print("user email is $userEmail");
       var body = {
         'customer_email': userEmail,
@@ -92,7 +88,6 @@ class UserMainScreen extends ConsumerWidget {
       http.post(url, body: body).then((response) {
         // print("what here $response.statusCode");
         if (response.statusCode == 200) {
-          
           showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -113,7 +108,7 @@ class UserMainScreen extends ConsumerWidget {
 
     _deleteAnyTripProcessing() async {
       var url = Uri.http(backendURL, '/tripProcessing/forCustomer');
-  
+
       // print("user email is $userEmail");
       var body = {
         'customer_email': userEmail,
@@ -122,15 +117,11 @@ class UserMainScreen extends ConsumerWidget {
       http.delete(url, body: body).then((response) {
         // print("what here $response.statusCode");
         if (response.statusCode == 200) {
-          
-        } else {
-        }
+        } else {}
       }).catchError((e) {
         print("Offline for user $e");
       });
     }
-
-
 
     return Scaffold(
         appBar: AppBar(

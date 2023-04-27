@@ -14,6 +14,8 @@ import 'screens/scheduleScreen.dart';
 import 'screens/driverSearchingScreen.dart';
 import 'screens/landingScreen.dart';
 import 'screens/driverSignupScreen.dart';
+import 'screens/popupScreenDriver.dart';
+import 'screens/popupScreenPassenger.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -81,6 +83,14 @@ class MyApp extends ConsumerWidget {
                 name: 'searchPassenger',
                 path: 'searchPassenger',
                 builder: (context, state) => PassengerSearchingScreen()),
+            GoRoute(
+                name: 'popupwindow',
+                path: 'popupwindow',
+                builder: (context, state) => PopupWindow()),
+            GoRoute(
+                name: 'popupwindowPassenger',
+                path: 'popupwindowPassenger',
+                builder: (context, state) => PopupWindowPassenger()),
           ],
         )
       ],

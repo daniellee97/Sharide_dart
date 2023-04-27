@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final helloWorldProvider1 = StateProvider<String>((ref) { 
+final helloWorldProvider1 = StateProvider<String>((ref) {
   return 'Hello from different file';
-  });
+});
 
 final loggedIn = StateProvider<bool>((ref) {
   return false;
@@ -17,11 +17,11 @@ final userName = StateProvider<String>((ref) {
 });
 
 final authority = StateProvider<String>((ref) {
-  return "192.168.1.83:3000";
+  return "192.168.1.168:3000";
 });
 
 // added the available status provider
 final available = StateProvider<String>((ref) => "no");
 
-// added the email 
+// added the email
 final email = StateProvider<String>((ref) => "test");

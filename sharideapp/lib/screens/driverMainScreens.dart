@@ -249,7 +249,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                                         MaterialStateProperty.all(Colors.teal)),
                                 onPressed: () {
                                   _setDriverStatusAvailable();
-                                  context.push('/searchPassenger');
+                                  context.push('/popupwindow');
                                 },
                                 child: const Text(
                                   'Go online',
