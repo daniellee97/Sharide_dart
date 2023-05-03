@@ -8,13 +8,12 @@ class PassengerSearchingScreen extends ConsumerStatefulWidget {
   const PassengerSearchingScreen({Key? key}) : super(key: key);
 
   @override
-  _PassengerSearchingScreenState createState() => _PassengerSearchingScreenState();
-
+  _PassengerSearchingScreenState createState() =>
+      _PassengerSearchingScreenState();
 }
 
-class _PassengerSearchingScreenState extends ConsumerState<PassengerSearchingScreen> {
-
-
+class _PassengerSearchingScreenState
+    extends ConsumerState<PassengerSearchingScreen> {
   @override
   Widget build(BuildContext context) {
     String backendURL = ref.watch(authority);
@@ -22,20 +21,29 @@ class _PassengerSearchingScreenState extends ConsumerState<PassengerSearchingScr
     var _currStatus = ref.watch(available);
 
     _setDriverStatusUnavailable() async {
-       var url = Uri.http(backendURL, '/drivers');
-      http.post(url, body: {'sjsu_email': _currEmail, 'avail': _currStatus}).then((response) {
+      var url = Uri.http(backendURL, '/drivers');
+      http.post(url, body: {
+        'sjsu_email': _currEmail,
+        'avail': _currStatus
+      }).then((response) {
         print("testing");
         print("what here ${response.statusCode}");
-        if(response.statusCode == 200) {
+        if (response.statusCode == 200) {
           ref.read(available.notifier).state = 'no';
-          print("sjsu_email is $_currEmail and current status is ${ref.read(available.notifier).state}");
+          print(
+              "sjsu_email is $_currEmail and current status is ${ref.read(available.notifier).state}");
         } else {
           print('cannot change driver\'s status');
         }
       }).catchError((e) {
-         print("Offline for user $e");
+        print("Offline for user $e");
       });
     }
+
+    Future.delayed(const Duration(seconds: 5), () {
+      // Go to the new page after 5 seconds
+      context.go('/driverLiveTracking');
+    });
 
     return Scaffold(
         appBar: AppBar(

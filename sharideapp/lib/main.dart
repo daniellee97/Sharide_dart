@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sharideapp/screens/customerLiveTrackingScreen.dart';
+import 'package:sharideapp/screens/driverLiveTracking.dart';
 import 'package:sharideapp/screens/passengerSearchingScreen.dart';
 
 import 'Providers.dart';
@@ -81,6 +83,14 @@ class MyApp extends ConsumerWidget {
                 name: 'searchPassenger',
                 path: 'searchPassenger',
                 builder: (context, state) => PassengerSearchingScreen()),
+            GoRoute(
+                name: 'driverLiveTracking',
+                path: 'driverLiveTracking',
+                builder: (context, state) => DriverMapScreen()),
+            GoRoute(
+                name: 'customerLiveTracking',
+                path: 'customerLiveTracking',
+                builder: (context, state) => CustomerMapScreen()),
           ],
         )
       ],

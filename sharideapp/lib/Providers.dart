@@ -16,8 +16,20 @@ final userName = StateProvider<String>((ref) {
   return "curredddntUserName";
 });
 
+final driverName = StateProvider<String>((ref) {
+  return "Choosen Driver";
+});
+
+final currentLocation = StateProvider<String>((ref) {
+  return "1 Washington Sq, San Jose, CA 95112";
+});
+
+final currentDriverLocation = StateProvider<String>((ref) {
+  return "1401 N Shoreline Blvd, Mountain View, CA 94043";
+});
+
 final authority = StateProvider<String>((ref) {
-  return "192.168.1.83:3000";
+  return "10.0.0.46:3000";
 });
 
 // added the available status provider

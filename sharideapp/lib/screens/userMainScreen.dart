@@ -10,46 +10,48 @@ class UserMainScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var currentUserName = ref.watch(userName);
     var userEmail = ref.watch(email);
+    var currentLocationNow = ref.watch(currentLocation);
 
     String backendURL = ref.watch(authority);
 
     AlertDialog foundDriverAlert = const AlertDialog(
       title: Text("Found driver! Click on next step to start ride"),
-
     );
 
-    AlertDialog cannotFindDriverAlert = const AlertDialog(
-            title: Text("Cannot find driver"),
-            actions:[
-              // okButton,
-            ]
-          );
+    AlertDialog cannotFindDriverAlert =
+        const AlertDialog(title: Text("Cannot find driver"), actions: [
+      // okButton,
+    ]);
 
     _findDriver() async {
-       var url = Uri.http(backendURL, '/drivers/avail');
+      var url = Uri.http(backendURL, '/drivers/avail');
       http.get(url).then((response) {
         // print("what here $response.statusCode");
-        if(response.statusCode == 200) {
+        if (response.statusCode == 200) {
           var temp = json.decode(response.body);
           print("Driver found! \n Driver information: $temp");
 
-          showDialog(context: context, builder: (BuildContext context) {
-            return foundDriverAlert;}
-          );
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return foundDriverAlert;
+              });
 
           var driverEmail = json.decode(response.body)["sjsu_email"];
+          ref.read(driverName.notifier).state =
+              json.decode(response.body)['name'];
+          //driverName = json.decode(response.body)["name"];
           // create a processing trip here and check for status code
-          
-
-
         } else {
           print('No available driver');
-          showDialog(context: context, builder: (BuildContext context) {
-            return cannotFindDriverAlert;}
-          );
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return cannotFindDriverAlert;
+              });
         }
       }).catchError((e) {
-         print("Offline for user $e");
+        print("Offline for user $e");
       });
     }
 
@@ -118,7 +120,7 @@ class UserMainScreen extends ConsumerWidget {
                 Container(
                     decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color:  Color(0xFFFEFBE9)),
+                        color: Color(0xFFFEFBE9)),
                     width: double.infinity,
                     height: 120,
                     margin: const EdgeInsets.symmetric(horizontal: 15),
@@ -126,14 +128,14 @@ class UserMainScreen extends ConsumerWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
                           'Your default pick-up location:',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
-                        Text('123 ABC Rd., San Jose, CA 95050')
+                        Text('$currentLocationNow'),
                       ],
                     )),
                 Container(
@@ -155,7 +157,7 @@ class UserMainScreen extends ConsumerWidget {
                         padding: const EdgeInsets.all(10),
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color:  Color(0xFFFEFBE9)),
+                            color: Color(0xFFFEFBE9)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -199,8 +201,8 @@ class UserMainScreen extends ConsumerWidget {
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: ElevatedButton(
                                 style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.teal)),
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.teal)),
                                 onPressed: () => context.push('/scheduleRide'),
                                 child: const Text(
                                   'Schedule a ride',
@@ -214,12 +216,12 @@ class UserMainScreen extends ConsumerWidget {
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: ElevatedButton(
                                 style: ButtonStyle(
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Colors.teal)),
-                                onPressed: (){
+                                    backgroundColor:
+                                        MaterialStateProperty.all(Colors.teal)),
+                                onPressed: () {
                                   _findDriver();
                                   context.push('/searchDriver');
-                                }, 
+                                },
                                 child: const Text(
                                   'Search a driver',
                                   style: TextStyle(
