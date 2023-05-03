@@ -10,7 +10,7 @@ class UserMainScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var currentUserName = ref.watch(userName);
     var userEmail = ref.watch(email);
-
+    var currentLocationNow = ref.watch(currentLocation);
     String backendURL = ref.watch(authority);
 
     AlertDialog foundDriverAlert = const AlertDialog(
@@ -197,14 +197,14 @@ class UserMainScreen extends ConsumerWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text(
                           'Your default pick-up location:',
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
-                        Text('123 ABC Rd., San Jose, CA 95050')
+                        Text('$currentLocationNow'),
                       ],
                     )),
                 Container(
