@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sharideapp/screens/passengerSearchingScreen.dart';
 import 'package:sharideapp/screens/customerLiveTrackingScreen.dart';
 import 'package:sharideapp/screens/driverLiveTracking.dart';
 import 'package:sharideapp/screens/passengerSearchingScreen.dart';
@@ -16,6 +17,8 @@ import 'screens/scheduleScreen.dart';
 import 'screens/driverSearchingScreen.dart';
 import 'screens/landingScreen.dart';
 import 'screens/driverSignupScreen.dart';
+import 'screens/popupScreenDriver.dart';
+import 'screens/popupScreenPassenger.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,6 +82,18 @@ class MyApp extends ConsumerWidget {
               path: 'driverMain',
               builder: (context, state) => DriverMainScreen(),
             ),
+            GoRoute(
+                name: 'searchPassenger',
+                path: 'searchPassenger',
+                builder: (context, state) => PassengerSearchingScreen()),
+            GoRoute(
+                name: 'popupwindow',
+                path: 'popupwindow',
+                builder: (context, state) => PopupWindow()),
+            GoRoute(
+                name: 'popupwindowPassenger',
+                path: 'popupwindowPassenger',
+                builder: (context, state) => PopupWindowPassenger()),
             GoRoute(
                 name: 'searchPassenger',
                 path: 'searchPassenger',

@@ -61,6 +61,24 @@ tripProcessing.delete("/", (req, res) => {
     deleteOneDocument(MongoDB, collName, listingQuery, res)
 })
 
+tripProcessing.delete("/forDriver", (req, res) => {
+    
+    let listingQuery = {
+        driver_email: req.body.driver_email
+    }
+    deleteOneDocument(MongoDB, collName, listingQuery, res)
+})
+
+tripProcessing.delete("/forCustomer", (req, res) => {
+    
+    let listingQuery = {
+        customer_email: req.body.customer_email
+    }
+    deleteOneDocument(MongoDB, collName, listingQuery, res)
+})
+
+
+
 tripProcessing.delete("/deleteAll", (req, res) => {
     deleteAllDocument(MongoDB, collName, res)
 })
