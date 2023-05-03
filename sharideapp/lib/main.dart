@@ -83,10 +83,6 @@ class MyApp extends ConsumerWidget {
               builder: (context, state) => DriverMainScreen(),
             ),
             GoRoute(
-                name: 'searchPassenger',
-                path: 'searchPassenger',
-                builder: (context, state) => PassengerSearchingScreen()),
-            GoRoute(
                 name: 'popupwindow',
                 path: 'popupwindow',
                 builder: (context, state) => PopupWindow()),
