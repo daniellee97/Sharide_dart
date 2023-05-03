@@ -239,7 +239,7 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
                   onMapCreated: _onMapCreated,
                   initialCameraPosition: _initialCameraPosition,
                   markers: {
-                    markers.values.toSet(),
+                    //markers.values.toSet(),
                     if (_origin != null) _origin!,
                     if (_destination != null) _destination!,
                     Marker(
