@@ -33,7 +33,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
     // driver status setter
     _setDriverStatusAvailable() async {
       var url = Uri.http(backendURL, '/drivers');
-      print("sjsu_email is $_currEmail and current status is $_currStatus");
+      print("sjsu_email testing is $_currEmail and current status is $_currStatus");
       http.post(url, body: {'sjsu_email': _currEmail, 'avail': 'yes'}).then(
           (response) {
         print("testing");
