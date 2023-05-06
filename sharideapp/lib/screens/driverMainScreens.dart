@@ -54,6 +54,29 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
       });
     }
 
+    _setDriverStatusNotAvailable() async {
+      var url = Uri.http(backendURL, '/drivers');
+      print("sjsu_email is $_currEmail and current status is $_currStatus");
+      http.post(url, body: {'sjsu_email': _currEmail, 'avail': 'no'}).then(
+          (response) {
+        print("testing");
+        print("what here ${response.statusCode}");
+        if (response.statusCode == 200) {
+          ref.read(available.notifier).state = 'yes';
+          print(
+              "sjsu_email is $_currEmail and current status is ${ref.read(available.notifier).state} after changing the status");
+        } else {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return alert;
+              });
+        }
+      }).catchError((e) {
+        print("Offline for user $e");
+      });
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Sharide'),
@@ -85,6 +108,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                         ref.read(loggedIn.notifier).state = false;
                         ref.read(isDriver.notifier).state = false;
                         ref.read(userName.notifier).state = "";
+                        _setDriverStatusNotAvailable();
                       },
                       child: const Text(
                         'Log out',
