@@ -61,12 +61,12 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
           automaticallyImplyLeading: false,
         ),
         body: Container(
-            padding: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(40),
             color: Colors.black,
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
                       'Hello, $value',
@@ -76,29 +76,29 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                         color: Colors.white,
                       ),
                     ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.red)),
-                      onPressed: () {
-                        ref.read(available.notifier).state = "no";
-                        ref.read(loggedIn.notifier).state = false;
-                        ref.read(isDriver.notifier).state = false;
-                        ref.read(userName.notifier).state = "";
-                      },
-                      child: const Text(
-                        'Log out',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    )
+                    // ElevatedButton(
+                    //   style: ButtonStyle(
+                    //       backgroundColor:
+                    //           MaterialStateProperty.all(Colors.red)),
+                    //   onPressed: () {
+                    //     ref.read(available.notifier).state = "no";
+                    //     ref.read(loggedIn.notifier).state = false;
+                    //     ref.read(isDriver.notifier).state = false;
+                    //     ref.read(userName.notifier).state = "";
+                    //   },
+                    //   child: const Text(
+                    //     'Log out',
+                    //     style: TextStyle(color: Colors.black),
+                    //   ),
+                    // )
                   ],
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 60),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Text(
-                      'Your default pick-up location:',
+                      'Your home location:',
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -124,18 +124,11 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                         color: Color(0xFFFEFBE9)),
                     width: double.infinity,
                     height: 120,
-                    margin: const EdgeInsets.symmetric(horizontal: 15),
                     padding: const EdgeInsets.all(10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: const [
-                        Text(
-                          'Your default location:',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center,
-                        ),
                         Text('123 ABC Rd., San Jose, CA 95050')
                       ],
                     )),
@@ -143,58 +136,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                   margin: const EdgeInsets.all(15),
                   child: Column(
                     children: [
-                      const Text(
-                        'Your current ride schedule:',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                        textAlign: TextAlign.start,
-                      ),
-                      Container(
-                        height: 120,
-                        width: double.infinity,
-                        margin: const EdgeInsets.symmetric(vertical: 15),
-                        padding: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            color: Color(0xFFFEFBE9)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: const [
-                            Text(
-                              'March 5th, 2023',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              '11:30',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              'Pick-up at:',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              '123 ABC Rd., San Jose, CA 95050',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 160),
                       Column(
                         children: [
                           SizedBox(
