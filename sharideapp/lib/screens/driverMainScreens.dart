@@ -143,7 +143,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                             width: MediaQuery.of(context).size.width * 0.7,
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: DropdownButton<String>(
-                              value: 'Default Location',
+                              value: 'Home',
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 24,
                               elevation: 16,
@@ -158,13 +158,13 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                                 color: Colors.white,
                               ),
                               onChanged: (String? newValue) {
-                                if (newValue == 'Default Location' ||
+                                if (newValue == 'Home' ||
                                     newValue == 'Campus') {
                                   context.push('/scheduleRide');
                                 }
                               },
                               items: <String>[
-                                'Default Location',
+                                'Home',
                                 'Campus',
                               ].map<DropdownMenuItem<String>>((String value) {
                                 return DropdownMenuItem<String>(
