@@ -20,40 +20,42 @@ class _ScheduleState extends State<ScheduleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sharide'),
-        centerTitle: true,
-      ),
-      body: Container(
-          child: Column(
-        children: [
-          const Text(
-            'Select your ride schedule date and time:',
-            style: TextStyle(
-                color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          ElevatedButton(
-            child: const Text('Select date/time for your next ride'),
-            onPressed: () {
-              DatePicker.showDatePicker(context,
-                  showTitleActions: true,
-                  minTime: DateTime.now(),
-                  maxTime: DateTime(2030, 12, 31), onChanged: (date) {
-                print('change $date');
-              }, onConfirm: (date) {
-                _setSchedule(date);
-              }, currentTime: DateTime.now(), locale: LocaleType.en);
-            },
-          ),
-          Text('Selected date: ' + DateFormat.yMMMd().format(scheduledDate)),
-          ElevatedButton(
-              onPressed: () => context.pop(),
-              child: Text('Confirm')),
-          ElevatedButton(
-              onPressed: () => context.pop(),
-              child: Text('Cancel')),
-        ],
-      )),
-    );
+        appBar: AppBar(
+          title: const Text('Sharide'),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: Container(
+              child: Column(
+            children: [
+              const Text(
+                'Select your ride schedule date and time:',
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold),
+              ),
+              ElevatedButton(
+                child: const Text('Select date/time for your next ride'),
+                onPressed: () {
+                  DatePicker.showDatePicker(context,
+                      showTitleActions: true,
+                      minTime: DateTime.now(),
+                      maxTime: DateTime(2030, 12, 31), onChanged: (date) {
+                    print('change $date');
+                  }, onConfirm: (date) {
+                    _setSchedule(date);
+                  }, currentTime: DateTime.now(), locale: LocaleType.en);
+                },
+              ),
+              Text(
+                  'Selected date: ' + DateFormat.yMMMd().format(scheduledDate)),
+              ElevatedButton(
+                  onPressed: () => context.pop(), child: Text('Confirm')),
+              ElevatedButton(
+                  onPressed: () => context.pop(), child: Text('Cancel')),
+            ],
+          )),
+        ));
   }
 }
