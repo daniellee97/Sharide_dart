@@ -13,8 +13,16 @@ class UserMainScreen extends ConsumerWidget {
     var currentLocationNow = ref.watch(currentLocation);
     String backendURL = ref.watch(authority);
 
-    AlertDialog foundDriverAlert = const AlertDialog(
+    Widget okButton = TextButton(
+      onPressed: () {
+        context.go('/customerLiveTracking');
+      },
+      child: Text("OK"),
+    );
+
+    AlertDialog foundDriverAlert = AlertDialog(
       title: Text("Found driver! Click on next step to start ride"),
+      actions: [okButton],
     );
 
     AlertDialog cannotFindDriverAlert =

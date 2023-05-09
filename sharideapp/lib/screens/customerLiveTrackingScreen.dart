@@ -206,16 +206,17 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
     }
   }
 
+  /*
   void addCurrentLocation() async {
-    var currentLocationNow = ref.watch(currentLocation);
+    //var currentLocationNow = ref.watch(currentLocation);
     var userEmail = ref.watch(email);
     final LatLng userLocation = await getCoordinates();
     Location location = Location();
   }
-
+*/
   @override
   void initState() {
-    addCurrentLocation();
+    //addCurrentLocation();
     super.initState();
   }
 

@@ -22,10 +22,12 @@ Future<LatLng> getCoordinates(String address) async {
 class DriverSearchingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    /*
     Future.delayed(const Duration(seconds: 5), () {
       // Go to the new page after 5 seconds
       context.go('/customerLiveTracking');
     });
+    */
     return Scaffold(
         appBar: AppBar(
           title: const Text('Sharide'),
