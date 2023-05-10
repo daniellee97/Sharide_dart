@@ -12,11 +12,9 @@ class LoginScreen extends ConsumerStatefulWidget {
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
-
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   String? _email;
@@ -24,63 +22,71 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-   
     String backendURL = ref.watch(authority);
-    AlertDialog alert = const AlertDialog(
-            title: Text("Wrong login credentials"),
-            actions:[
-              // okButton,
-            ]
-          );
+    AlertDialog alert =
+        const AlertDialog(title: Text("Wrong login credentials"), actions: [
+      // okButton,
+    ]);
     _logInAsPassenger() async {
       // one example student: sampleStudent@sjsu.edu, samplePassword
-      
+
       // change IP address to your IP address (ex. "xxx.xxx.x.xx:3000")
 
       var url = Uri.http(backendURL, '/customers/logIn');
       print("sjsu_email is $_email and password is $_password");
-      http.post(url, body: {'sjsu_email': _email, 'password': _password}).then((response) {
+      http.post(url, body: {'sjsu_email': _email, 'password': _password}).then(
+          (response) {
         print("testing");
         print("what here $response.statusCode");
-        if(response.statusCode == 200) {
+        if (response.statusCode == 200) {
           // print("Log in successfully");
           ref.read(loggedIn.notifier).state = true;
           var temp = json.decode(response.body)['name'];
           ref.read(userName.notifier).state = temp;
-          ref.read(email.notifier).state = json.decode(response.body)['sjsu_email'];
+          ref.read(email.notifier).state =
+              json.decode(response.body)['sjsu_email'];
+          ref.read(currentLocation.notifier).state =
+              json.decode(response.body)['address'];
+          ref.read(email.notifier).state =
+              json.decode(response.body)['sjsu_email'];
         } else {
-          showDialog(context: context, builder: (BuildContext context) {
-            return alert;}
-          );
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return alert;
+              });
         }
       }).catchError((e) {
-         print("Offline for user $e");
+        print("Offline for user $e");
       });
-
     }
 
     _logInAsDriver() async {
       // one example driver: sampleDriver@sjsu.edu, sampleDriver
 
       var url = Uri.http(backendURL, '/drivers/logIn');
-      http.post(url, body: {'sjsu_email': _email, 'password': _password}).then((response) {
-        if(response.statusCode == 200) {
+      http.post(url, body: {'sjsu_email': _email, 'password': _password}).then(
+          (response) {
+        if (response.statusCode == 200) {
           ref.read(loggedIn.notifier).state = true;
           ref.read(isDriver.notifier).state = true;
           var temp = json.decode(response.body)['name'];
           ref.read(userName.notifier).state = temp;
-          ref.read(email.notifier).state = json.decode(response.body)['sjsu_email'];
-          ref.read(available.notifier).state = 'no'; 
-
+          ref.read(driverName.notifier).state =
+              json.decode(response.body)['name'];
+          ref.read(email.notifier).state =
+              json.decode(response.body)['sjsu_email'];
+          ref.read(available.notifier).state = 'no';
         } else {
-          showDialog(context: context, builder: (BuildContext context) {
-            return alert;}
-          );
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return alert;
+              });
         }
       }).catchError((e) {
         print("Offline for whatever reason");
       });
-
     }
 
     return Scaffold(
@@ -153,7 +159,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                     const SizedBox(height: 16),
                     SizedBox(
-                      width: MediaQuery.of(context).size.width *0.4,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       height: MediaQuery.of(context).size.height * 0.05,
                       child: ElevatedButton(
                         onPressed: () {
@@ -161,15 +167,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             _formKey.currentState!.save();
                             // Do something with the email and password
                             _logInAsDriver();
-                    
                           }
                         },
                         child: const Text('Login as Driver'),
                       ),
                     ),
-                    const SizedBox(height:15),
+                    const SizedBox(height: 15),
                     SizedBox(
-                      width: MediaQuery.of(context).size.width *0.4,
+                      width: MediaQuery.of(context).size.width * 0.4,
                       height: MediaQuery.of(context).size.height * 0.05,
                       child: ElevatedButton(
                         onPressed: () {
@@ -177,9 +182,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                             _formKey.currentState!.save();
                             // Do something with the email and password
                             _logInAsPassenger();
-                    
+
                             // start loging in as Passenger
-                            
                           }
                         },
                         child: const Text('Login as Passenger'),
@@ -195,4 +199,3 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     );
   }
 }
-

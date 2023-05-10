@@ -1,17 +1,37 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:sharideapp/DirectionsRepository.dart';
+import 'package:sharideapp/Providers.dart';
+import 'package:sharideapp/screens/paymentScreen.dart';
 import '../DirectionsModel.dart';
+import 'driverSearchingScreen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 
 //const String google_api_key = "AIzaSyC88AJvT4lwQlhR2DdgWILhDbjuH13mtBg";
-
-class DriverMapScreen extends StatefulWidget {
-  const DriverMapScreen({Key? key}) : super(key: key);
-  @override
-  State<DriverMapScreen> createState() => _DriverMapScreenState();
+Future<String> fetchStreetAddress() async {
+  //String backendURL = ref.watch(authority);
+  //var url = Uri.http(backendURL, '/drivers/avail');
+  final response = await http.get(
+      Uri.parse('localhost:3000/customers/644be9ae24a5d7c619d637cf/address'));
+  if (response.statusCode == 200) {
+    return response.body;
+  } else {
+    throw Exception('Failed to fetch customer address');
+  }
 }
 
-class _DriverMapScreenState extends State<DriverMapScreen> {
+class DriverMapScreen extends ConsumerStatefulWidget {
+  const DriverMapScreen({Key? key}) : super(key: key);
+
+  @override
+  DriverMapScreenState createState() => DriverMapScreenState();
+}
+
+class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
   static const _initialCameraPosition = CameraPosition(
     target: LatLng(37.773972, -122.431297),
     zoom: 11.5,
@@ -34,6 +54,15 @@ class _DriverMapScreenState extends State<DriverMapScreen> {
     markerId: MarkerId('destination'),
     position: LatLng(0, 0),
   );
+  late Marker? _locationCurrent = Marker(
+    markerId: MarkerId('Current Location'),
+    position: LatLng(37.335144, -121.8812744),
+    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+  );
+  LocationData? currentLocations;
+  late double userLocation2Lat = 10;
+  late double userLocation2Lng = 10;
+  //Set<Marker> _markers = {};
 
   //late Directions? _info
   /*
@@ -42,12 +71,65 @@ class _DriverMapScreenState extends State<DriverMapScreen> {
     _googleMapController.dispose();
     super.dispose();
   }
-
-  void _onMapCreated(GoogleMapController controller) {
+  */
+  void _onMapCreated(GoogleMapController controller) async {
     _googleMapController = controller;
+    //var currentLocationNow = ref.watch(currentLocation);
+    final LatLng userLocation2 = await getCoordinates();
+    userLocation2Lat = userLocation2.latitude;
+    userLocation2Lng = userLocation2.longitude;
+    print('Hey we are doing it here');
+    print('Here is the Latitude $userLocation2Lat');
+    print('Here is the Longitude $userLocation2Lng');
+    setState(() {
+      _locationCurrent = Marker(
+        markerId: MarkerId('Current Location'),
+        infoWindow: const InfoWindow(title: 'PLEASE'),
+        position: LatLng(userLocation2Lat, userLocation2Lng),
+      );
+    });
+    /*
+    _locationCurrent = Marker(
+      markerId: const MarkerId('Current Location'),
+      infoWindow: const InfoWindow(title: 'Current'),
+      position: LatLng(37.335144, -121.8812744),
+      //icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+    );
+    */
+  }
+
+  Future<LatLng> getCoordinates() async {
+    var currentLocationNow = ref.watch(currentLocation);
+    final response = await http.get(Uri.parse(
+        'https://maps.googleapis.com/maps/api/geocode/json?address=$currentLocationNow&key=AIzaSyC88AJvT4lwQlhR2DdgWILhDbjuH13mtBg'));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final coordinates = data['results'][0]['geometry']['location'];
+      print('There should be the address coordinates $coordinates');
+      return LatLng(coordinates['lat'], coordinates['lng']);
+    } else {
+      throw Exception('Failed to get coordinates');
+    }
+  }
+
+  /*
+  void addCurrentLocation() async {
+    //var currentLocationNow = ref.watch(currentLocation);
+    //var userEmail = ref.watch(email);
+    final LatLng userLocation = await getCoordinates();
+    Location location = Location();
   }
   */
+
   void _addMarker(LatLng pos) async {
+    var currentLocationNow = ref.watch(currentLocation);
+    var userEmail = ref.watch(email);
+    final LatLng userLocation = await getCoordinates();
+    print(
+        'Here we are going to be displaying the current location $userLocation');
+    // Call this function wherever you need to retrieve the SJSU email
+    //final sjsuEmail = await fetchStreetAddress();
     if (_origin == null || (_origin != null && _destination != null)) {
       //Origin is not set OR Origin/Destination are both set
       //Set Origin
@@ -95,6 +177,12 @@ class _DriverMapScreenState extends State<DriverMapScreen> {
   }
 
   @override
+  void initState() {
+    //addCurrentLocation();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -111,11 +199,17 @@ class _DriverMapScreenState extends State<DriverMapScreen> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
                 child: GoogleMap(
-                  //onMapCreated: _onMapCreated,
+                  onMapCreated: _onMapCreated,
                   initialCameraPosition: _initialCameraPosition,
                   markers: {
                     if (_origin != null) _origin!,
                     if (_destination != null) _destination!,
+                    Marker(
+                        markerId: MarkerId('Here'),
+                        infoWindow: const InfoWindow(title: 'CustomerLocation'),
+                        position: LatLng(userLocation2Lat, userLocation2Lng),
+                        icon: BitmapDescriptor.defaultMarkerWithHue(
+                            BitmapDescriptor.hueOrange)),
                   },
                   polylines: {
                     if (_info != null)
@@ -216,18 +310,26 @@ class _DriverMapScreenState extends State<DriverMapScreen> {
             ),
           ),
           Center(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              height: 50,
-              width: 300,
-              margin: EdgeInsets.only(left: 16, right: 16, top: 700),
-              child: Center(
-                child: Text(
-                  'END RIDE',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                height: 50,
+                width: 300,
+                margin: EdgeInsets.only(left: 16, right: 16, top: 700),
+                child: Center(
+                  child: Text(
+                    'END RIDE',
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
                 ),
               ),
             ),

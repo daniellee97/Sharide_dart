@@ -62,4 +62,5 @@ const deleteAllDocument = async (database, collName, res) => {
     res.send("Deleted all document")
 }
 
+
 module.exports =  {getAllDocuments, getOneDocument, createOneDocument, updateOneDocumentWithAnyValues, deleteOneDocument, deleteAllDocument};

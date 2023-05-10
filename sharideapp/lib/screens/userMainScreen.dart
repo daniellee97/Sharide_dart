@@ -10,11 +10,19 @@ class UserMainScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var currentUserName = ref.watch(userName);
     var userEmail = ref.watch(email);
-
+    var currentLocationNow = ref.watch(currentLocation);
     String backendURL = ref.watch(authority);
 
-    AlertDialog foundDriverAlert = const AlertDialog(
+    Widget okButtonPassenger = TextButton(
+      onPressed: () {
+        context.go('/customerLiveTracking');
+      },
+      child: Text("OK"),
+    );
+
+    AlertDialog foundDriverAlert = AlertDialog(
       title: Text("Found driver! Click on next step to start ride"),
+      actions: [okButtonPassenger],
     );
 
     AlertDialog cannotFindDriverAlert =
@@ -35,9 +43,14 @@ class UserMainScreen extends ConsumerWidget {
         if (response.statusCode == 200) {
           // create a trip processing here
           var urlTripProcessing = Uri.http(backendURL, '/tripProcessing');
-
           var driver_email = json.decode(response.body)["sjsu_email"];
-
+          var driverNames = json.decode(response.body)['name'];
+          //var driversLocation = json.decode(response.body)['address'];
+          ref.read(currentDriverLocation.notifier).state =
+              json.decode(response.body)['address'];
+          print('Wow I think we found a driver $driverNames');
+          ref.read(driverName.notifier).state = driverNames;
+          print("Now Are you working properly? $driverName");
           var body = {
             'customer_email': userEmail,
             'driver_email': driver_email,
