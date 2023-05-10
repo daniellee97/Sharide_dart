@@ -17,7 +17,7 @@ final userName = StateProvider<String>((ref) {
 });
 
 final driverName = StateProvider<String>((ref) {
-  return "Choosen Driver";
+  return "Choosens Driver";
 });
 
 final currentLocation = StateProvider<String>((ref) {

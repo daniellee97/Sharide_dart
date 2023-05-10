@@ -113,12 +113,14 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
     }
   }
 
+  /*
   void addCurrentLocation() async {
-    var currentLocationNow = ref.watch(currentLocation);
-    var userEmail = ref.watch(email);
+    //var currentLocationNow = ref.watch(currentLocation);
+    //var userEmail = ref.watch(email);
     final LatLng userLocation = await getCoordinates();
     Location location = Location();
   }
+  */
 
   void _addMarker(LatLng pos) async {
     var currentLocationNow = ref.watch(currentLocation);
@@ -176,7 +178,7 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
 
   @override
   void initState() {
-    addCurrentLocation();
+    //addCurrentLocation();
     super.initState();
   }
 

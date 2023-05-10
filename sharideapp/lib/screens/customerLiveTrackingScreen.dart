@@ -19,7 +19,7 @@ class CustomerMapScreen extends ConsumerStatefulWidget {
 }
 
 class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
-  static const _initialCameraPosition = CameraPosition(
+  var _initialCameraPosition = CameraPosition(
     target: LatLng(37.773972, -122.431297),
     zoom: 11.5,
   );

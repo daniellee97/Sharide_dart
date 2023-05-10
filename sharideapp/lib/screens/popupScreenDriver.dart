@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class PopupWindow extends StatelessWidget {
   @override
@@ -21,7 +22,7 @@ class PopupWindow extends StatelessWidget {
             TextButton(
               child: Text('OK'),
               onPressed: () {
-                Navigator.of(context).pop(true);
+                context.go('/driverLiveTracking');
               },
             ),
           ],
