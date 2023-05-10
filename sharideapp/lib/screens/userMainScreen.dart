@@ -148,7 +148,7 @@ class UserMainScreen extends ConsumerWidget {
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Hello, $currentUserName',
@@ -158,20 +158,20 @@ class UserMainScreen extends ConsumerWidget {
                         color: Colors.white,
                       ),
                     ),
-                    // ElevatedButton(
-                    //   style: ButtonStyle(
-                    //       backgroundColor:
-                    //           MaterialStateProperty.all(Colors.red)),
-                    //   onPressed: () {
-                    //     _deleteAnyTripProcessing();
-                    //     ref.read(loggedIn.notifier).state = false;
-                    //     ref.read(userName.notifier).state = "";
-                    //   },
-                    //   child: const Text(
-                    //     'Log out',
-                    //     style: TextStyle(color: Colors.black),
-                    //   ),
-                    // )
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red)),
+                      onPressed: () {
+                        _deleteAnyTripProcessing();
+                        ref.read(loggedIn.notifier).state = false;
+                        ref.read(userName.notifier).state = "";
+                      },
+                      child: const Text(
+                        'Log out',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    )
                   ],
                 ),
                 const SizedBox(height: 50),

@@ -66,7 +66,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Hello, $value',
@@ -76,62 +76,61 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                         color: Colors.white,
                       ),
                     ),
-                    // ElevatedButton(
-                    //   style: ButtonStyle(
-                    //       backgroundColor:
-                    //           MaterialStateProperty.all(Colors.red)),
-                    //   onPressed: () {
-                    //     ref.read(available.notifier).state = "no";
-                    //     ref.read(loggedIn.notifier).state = false;
-                    //     ref.read(isDriver.notifier).state = false;
-                    //     ref.read(userName.notifier).state = "";
-                    //   },
-                    //   child: const Text(
-                    //     'Log out',
-                    //     style: TextStyle(color: Colors.black),
-                    //   ),
-                    // )
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red)),
+                      onPressed: () {
+                        ref.read(available.notifier).state = "no";
+                        ref.read(loggedIn.notifier).state = false;
+                        ref.read(isDriver.notifier).state = false;
+                        ref.read(userName.notifier).state = "";
+                      },
+                      child: const Text(
+                        'Log out',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    )
                   ],
                 ),
                 const SizedBox(height: 50),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Your home address:',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                    ElevatedButton(
-                      onPressed: () => {},
-                      child: const Text(
-                        'Edit',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.teal)),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                Container(
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: Color(0xFFFEFBE9)),
-                    width: double.infinity,
-                    height: 120,
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Text('123 ABC Rd., San Jose, CA 95050')
-                      ],
-                    )),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     const Text(
+                //       'Your home address:',
+                //       style: TextStyle(
+                //           fontSize: 16,
+                //           fontWeight: FontWeight.bold,
+                //           color: Colors.white),
+                //       textAlign: TextAlign.center,
+                //     ),
+                //     ElevatedButton(
+                //       onPressed: () => {},
+                //       child: const Text(
+                //         'Edit',
+                //         style: TextStyle(color: Colors.white),
+                //       ),
+                //       style: ButtonStyle(
+                //           backgroundColor:
+                //               MaterialStateProperty.all(Colors.teal)),
+                //     ),
+                //   ],
+                // ),
+                // const SizedBox(height: 10),
+                // Container(
+                //     decoration: const BoxDecoration(
+                //         borderRadius: BorderRadius.all(Radius.circular(8)),
+                //         color: Color(0xFFFEFBE9)),
+                //     width: double.infinity,
+                //     height: 120,
+                //     padding: const EdgeInsets.all(10),
+                //     child: Column(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       crossAxisAlignment: CrossAxisAlignment.center,
+                //       children: const [Text('123 ABC Rd., San Jose, CA 95050')],
+                //     )),
+                
                 Container(
                   margin: const EdgeInsets.all(15),
                   child: Column(
