@@ -133,7 +133,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
       _locationCurrent = Marker(
         markerId: MarkerId('Current Location'),
         infoWindow: const InfoWindow(title: 'PLEASE'),
-        position: LatLng(userLocation2Lat, userLocation2Lng),
+        position: LatLng(driverLocationLat, driverLocationLng),
       ); /*
       _locationCurrentPassenger = Marker(
         markerId: const MarkerId('locationCurrentPassenger'),
@@ -272,7 +272,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                     child: GoogleMap(
                       onMapCreated: _onMapCreated,
                       initialCameraPosition: CameraPosition(
-                        target: LatLng(userLocation2Lat, userLocation2Lng),
+                        target: LatLng(driverLocationLat, driverLocationLng),
                         zoom: 13.5,
                       ),
                       markers: {
