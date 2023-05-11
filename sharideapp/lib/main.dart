@@ -6,6 +6,7 @@ import 'package:sharideapp/screens/passengerSearchingScreen.dart';
 import 'package:sharideapp/screens/customerLiveTrackingScreen.dart';
 import 'package:sharideapp/screens/driverLiveTracking.dart';
 import 'package:sharideapp/screens/passengerSearchingScreen.dart';
+import 'package:provider/provider.dart';
 
 import 'Providers.dart';
 
@@ -33,7 +34,6 @@ class MyApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     bool loggedInYet = ref.watch(loggedIn);
     bool isCurrentUserDriver = ref.watch(isDriver);
-
     // go router
     GoRouter _router = GoRouter(
       initialLocation: loggedInYet

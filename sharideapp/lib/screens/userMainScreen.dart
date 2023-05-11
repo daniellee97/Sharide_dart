@@ -54,6 +54,7 @@ class UserMainScreen extends ConsumerWidget {
           var body = {
             'customer_email': userEmail,
             'driver_email': driver_email,
+            'live_latitude': '103',
           };
 
           http.put(urlTripProcessing, body: body).then((response) {
@@ -209,8 +210,8 @@ class UserMainScreen extends ConsumerWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Text('123 ABC Rd., San Jose, CA 95050')
+                      children: [
+                        Text('$currentLocationNow'),
                       ],
                     )),
                 Container(

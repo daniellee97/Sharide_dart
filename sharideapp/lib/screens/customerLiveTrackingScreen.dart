@@ -20,7 +20,7 @@ class CustomerMapScreen extends ConsumerStatefulWidget {
 
 class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
   var _initialCameraPosition = CameraPosition(
-    target: LatLng(37.773972, -122.431297),
+    target: LatLng(37.3352, -121.8811),
     zoom: 11.5,
   );
   late Directions? _info = Directions(
@@ -57,9 +57,52 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
   late double driverLocationLat = -10;
   late double driverLocationLng = -10;
   var currentDriverName;
+  var currentDriverPlate;
   Set<Marker> _markers = {};
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  LocationData? currentLiveLocation;
 
+  void getCurrentLiveLocation() async {
+    Location location = Location();
+
+    location.getLocation().then(
+      (location) {
+        currentLiveLocation = location;
+      },
+    );
+    //GoogleMapController googleMapController = await _controller.future;
+    location.onLocationChanged.listen(
+      (newLoc) {
+        currentLiveLocation = newLoc;
+        setState(() {});
+      },
+    );
+  }
+
+/*
+  void getCurrentDriverLiveLocation() async {
+    Location locationDriver;
+    locationDriver = await ref.watch(driverLocationPing);
+    if (ref.read(driverLocationPing) != null) {
+      locationDriver = ref.read(driverLocationPing);
+    } else {
+      locationDriver = Location();
+    }
+
+    locationDriver.getLocation().then(
+      (locationDriver) {
+        //currentLiveLocation = locationDriver;
+        currentLiveLocation = ref.watch(driverCurrentLiveLocation);
+      },
+    );
+    locationDriver.onLocationChanged.listen(
+      (newloc) {
+        currentLiveLocation = newloc;
+        setState(() {});
+      },
+    );
+  }
+*/
   Future<LatLng> getCoordinates() async {
     var currentLocationNow = ref.watch(currentLocation);
     final response = await http.get(Uri.parse(
@@ -95,6 +138,7 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
     _googleMapController = controller;
     //var currentLocationNow = ref.watch(currentLocation);
     currentDriverName = ref.watch(driverName);
+    currentDriverPlate = ref.watch(driverPlate);
     final LatLng userLocation2 = await getCoordinates();
     final LatLng driverLocation = await getDriverCoordinates();
     driverLocationLat = driverLocation.latitude;
@@ -217,6 +261,8 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
   @override
   void initState() {
     //addCurrentLocation();
+    //getCurrentDriverLiveLocation();
+    getCurrentLiveLocation();
     super.initState();
   }
 
@@ -238,11 +284,21 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
                 borderRadius: BorderRadius.circular(12.0),
                 child: GoogleMap(
                   onMapCreated: _onMapCreated,
-                  initialCameraPosition: _initialCameraPosition,
+                  //onMapCreated: (mapContro)
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(currentLiveLocation!.latitude!,
+                        currentLiveLocation!.longitude!),
+                    zoom: 13.5,
+                  ),
                   markers: {
                     //markers.values.toSet(),
                     if (_origin != null) _origin!,
                     if (_destination != null) _destination!,
+                    Marker(
+                      markerId: const MarkerId('CurrentLiveLocation'),
+                      position: LatLng(currentLiveLocation!.latitude!,
+                          currentLiveLocation!.longitude!),
+                    ),
                     Marker(
                         markerId: MarkerId('Here'),
                         infoWindow: const InfoWindow(title: 'CustomerLocation'),
@@ -336,7 +392,7 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   Text(
-                    'MAJOR/YEAR',
+                    'License Plate: $currentDriverPlate',
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   Text(

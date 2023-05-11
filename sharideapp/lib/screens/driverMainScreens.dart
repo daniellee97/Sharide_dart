@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,12 +18,17 @@ class DriverMainScreen extends ConsumerStatefulWidget {
 class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
   @override
   Widget build(BuildContext context) {
+    AlertDialog cannotFindDriverAlert =
+        const AlertDialog(title: Text("Cannot find driver"), actions: [
+      // okButton,
+    ]);
     // get current user name
     var value = ref.watch(userName);
 
     // get current email
     var _currEmail = ref.watch(email);
     var _currStatus = ref.watch(available);
+    var currentDriveLocation = ref.watch(currentDriverLocation);
 
     String backendURL = ref.watch(authority);
     AlertDialog alert =
@@ -33,7 +39,10 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
     // driver status setter
     _setDriverStatusAvailable() async {
       var url = Uri.http(backendURL, '/drivers');
+      var url2 = Uri.http(backendURL, '/drivers/avail');
       print("sjsu_email is $_currEmail and current status is $_currStatus");
+      print(
+          "sjsu_email is $_currEmail and current location is ${ref.read(currentDriverLocation.notifier).state}");
       http.post(url, body: {'sjsu_email': _currEmail, 'avail': 'yes'}).then(
           (response) {
         print("testing");
@@ -41,7 +50,9 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
         if (response.statusCode == 200) {
           ref.read(available.notifier).state = 'yes';
           print(
-              "sjsu_email is $_currEmail and current status is ${ref.read(available.notifier).state} after changing the status");
+              "sjsu_email is $_currEmail and current location is ${ref.read(currentDriverLocation.notifier).state}");
+          print(
+              "sjsu_email is $_currEmail and currentss status is ${ref.read(available.notifier).state} after changing the status");
         } else {
           showDialog(
               context: context,
@@ -51,6 +62,22 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
         }
       }).catchError((e) {
         print("Offline for user $e");
+      });
+
+      http.get(url).then((response) {
+        if (response.statusCode == 200) {
+          print("We are making some progress now!!!!");
+          print(
+              "sjsu_email is $_currEmail and currentss location is ${json.decode(response.body)['address']}");
+        } else {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return cannotFindDriverAlert;
+              });
+        }
+      }).catchError((e) {
+        print("What went wrong here for $e");
       });
     }
 
@@ -128,9 +155,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Text('123 ABC Rd., San Jose, CA 95050')
-                      ],
+                      children: [Text('$currentDriveLocation')],
                     )),
                 Container(
                   margin: const EdgeInsets.all(15),
