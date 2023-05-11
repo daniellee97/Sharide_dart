@@ -28,6 +28,7 @@ class _DriverSignUpFormState extends ConsumerState<SignUpFormDriver> {
   final TextEditingController _vehicleYearController = TextEditingController();
   final TextEditingController _vehicleMakeController = TextEditingController();
   final TextEditingController _licenceController = TextEditingController();
+  final TextEditingController _defaultLocationController = TextEditingController();
   // final TextEditingController _vehicleModelController = TextEditingController();
 
   String? _name;
@@ -36,6 +37,7 @@ class _DriverSignUpFormState extends ConsumerState<SignUpFormDriver> {
   int? _vehicleYear;
   String? _vehicleMake;
   String? _licence;
+  String? _defaultLocation;
   // String? _vehicleModel;
 
   //Sign up page for driver( vehicle year, make, model, plate number)
@@ -53,6 +55,7 @@ class _DriverSignUpFormState extends ConsumerState<SignUpFormDriver> {
       _vehicleMake = _vehicleMakeController.text;
       // _vehicleModel = _vehicleModelController.text;
       _licence = _licenceController.text;
+      _defaultLocation = _defaultLocationController.text;
     });
   }
 
@@ -86,6 +89,7 @@ class _DriverSignUpFormState extends ConsumerState<SignUpFormDriver> {
         'password': _password,
         'vehicleYear': _vehicleYear.toString(),
         'vehicleMake': _vehicleMake,
+        'defaultLocation': _defaultLocation
       };
 
       // print(
@@ -197,6 +201,18 @@ class _DriverSignUpFormState extends ConsumerState<SignUpFormDriver> {
                   },
                   obscureText: true,
                   onSaved: (value) => _password = value,
+                ),
+                TextFormField(
+                  controller: _defaultLocationController,
+                  decoration: const InputDecoration(labelText: 'Default location'),
+                  //keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your defualt location';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) => _defaultLocation = value,
                 ),
                 ElevatedButton(
                   onPressed: () {
