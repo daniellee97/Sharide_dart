@@ -13,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
-
 class DriverMainScreen extends ConsumerStatefulWidget {
   const DriverMainScreen({Key? key}) : super(key: key);
 
@@ -22,7 +21,6 @@ class DriverMainScreen extends ConsumerStatefulWidget {
 }
 
 class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
-
   Future<LatLng> getCoordinates() async {
     var currentLocationNow = ref.watch(currentLocation);
     final response = await http.get(Uri.parse(
@@ -44,7 +42,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
     final response = await http.get(Uri.parse(
         'https://maps.googleapis.com/maps/api/geocode/json?address=$currentDriverLocationNow&key=AIzaSyC88AJvT4lwQlhR2DdgWILhDbjuH13mtBg%27'));
 
-    if(response.statusCode == 200) {
+    if (response.statusCode == 200) {
       final data = json.decode(response.body);
       final coordinates = data['results'][0]['geometry']['location'];
       print('There should be the address coordinates $coordinates');
@@ -149,8 +147,6 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
 
     setState(() => _info = directions!);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -269,46 +265,47 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                 //       children: [Text('$currentLocationNow')],
                 //     )),
                 Container(
-            child: Padding(
-              padding: EdgeInsets.only(
-                  bottom: 400.0, top: 20.0, left: 12.0, right: 12.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12.0),
-                child: GoogleMap(
-                  onMapCreated: _onMapCreated,
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(currentLiveLocation!.latitude!,
-                        currentLiveLocation!.longitude!),
-                    zoom: 13.5,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        bottom: 400.0, top: 20.0, left: 12.0, right: 12.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12.0),
+                      child: GoogleMap(
+                        onMapCreated: _onMapCreated,
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(10, 10),
+                          zoom: 13.5,
+                        ),
+                        markers: {
+                          //markers.values.toSet(),
+                          if (_origin != null) _origin!,
+                          if (_destination != null) _destination!,
+                          Marker(
+                              markerId: MarkerId('DriverAddress'),
+                              infoWindow:
+                                  const InfoWindow(title: 'DriverLocation'),
+                              position:
+                                  LatLng(driverLocationLat, driverLocationLng),
+                              icon: BitmapDescriptor.defaultMarkerWithHue(
+                                  BitmapDescriptor.hueViolet)),
+                        },
+                        // polylines: {
+                        //   if (_info != null)
+                        //     Polyline(
+                        //       polylineId: const PolylineId('overview_polyine'),
+                        //       color: Colors.blue,
+                        //       width: 5,
+                        //       points: _info!.polylinePoints
+                        //           .map((e) => LatLng(e.latitude, e.longitude))
+                        //           .toList(),
+                        //     )
+                        // },
+                        // myLocationButtonEnabled: true,
+                        // onLongPress: _addMarker,
+                      ),
+                    ),
                   ),
-                  markers: {
-                    //markers.values.toSet(),
-                    if (_origin != null) _origin!,
-                    if (_destination != null) _destination!,
-                    Marker(
-                        markerId: MarkerId('DriverAddress'),
-                        infoWindow: const InfoWindow(title: 'DriverLocation'),
-                        position: LatLng(driverLocationLat, driverLocationLng),
-                        icon: BitmapDescriptor.defaultMarkerWithHue(
-                            BitmapDescriptor.hueViolet)),
-                  },
-                  // polylines: {
-                  //   if (_info != null)
-                  //     Polyline(
-                  //       polylineId: const PolylineId('overview_polyine'),
-                  //       color: Colors.blue,
-                  //       width: 5,
-                  //       points: _info!.polylinePoints
-                  //           .map((e) => LatLng(e.latitude, e.longitude))
-                  //           .toList(),
-                  //     )
-                  // },
-                  // myLocationButtonEnabled: true,
-                  // onLongPress: _addMarker,
                 ),
-              ),
-            ),
-          ),
                 Container(
                   margin: const EdgeInsets.all(15),
                   child: Column(
