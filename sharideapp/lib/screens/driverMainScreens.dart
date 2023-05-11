@@ -195,6 +195,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
           automaticallyImplyLeading: false,
         ),
         body: Container(
+          
             padding: const EdgeInsets.all(40),
             color: Colors.black,
             child: Column(
@@ -265,9 +266,8 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                 //       children: [Text('$currentLocationNow')],
                 //     )),
                 Container(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                        bottom: 400.0, top: 20.0, left: 12.0, right: 12.0),
+                  width: 300,
+                  height: 300,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12.0),
                       child: GoogleMap(
@@ -304,13 +304,12 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                         // onLongPress: _addMarker,
                       ),
                     ),
-                  ),
                 ),
                 Container(
                   margin: const EdgeInsets.all(15),
                   child: Column(
                     children: [
-                      const SizedBox(height: 160),
+                      const SizedBox(height: 30),
                       Column(
                         children: [
                           SizedBox(
