@@ -87,8 +87,8 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
   LocationData? currentLocations;
   late double userLocation2Lat = 10;
   late double userLocation2Lng = 10;
-  late double driverLocationLat = -10;
-  late double driverLocationLng = -10;
+  late double driverLocationLat = 37.335144;
+  late double driverLocationLng = -121.8812744;
   var currentDriverName;
   var currentDriverPlate;
   Set<Marker> _markers = {};
@@ -195,7 +195,6 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
           automaticallyImplyLeading: false,
         ),
         body: Container(
-          
             padding: const EdgeInsets.all(40),
             color: Colors.black,
             child: Column(
@@ -268,42 +267,42 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                 Container(
                   width: 300,
                   height: 300,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12.0),
-                      child: GoogleMap(
-                        onMapCreated: _onMapCreated,
-                        initialCameraPosition: CameraPosition(
-                          target: LatLng(10, 10),
-                          zoom: 13.5,
-                        ),
-                        markers: {
-                          //markers.values.toSet(),
-                          if (_origin != null) _origin!,
-                          if (_destination != null) _destination!,
-                          Marker(
-                              markerId: MarkerId('DriverAddress'),
-                              infoWindow:
-                                  const InfoWindow(title: 'DriverLocation'),
-                              position:
-                                  LatLng(driverLocationLat, driverLocationLng),
-                              icon: BitmapDescriptor.defaultMarkerWithHue(
-                                  BitmapDescriptor.hueViolet)),
-                        },
-                        // polylines: {
-                        //   if (_info != null)
-                        //     Polyline(
-                        //       polylineId: const PolylineId('overview_polyine'),
-                        //       color: Colors.blue,
-                        //       width: 5,
-                        //       points: _info!.polylinePoints
-                        //           .map((e) => LatLng(e.latitude, e.longitude))
-                        //           .toList(),
-                        //     )
-                        // },
-                        // myLocationButtonEnabled: true,
-                        // onLongPress: _addMarker,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12.0),
+                    child: GoogleMap(
+                      onMapCreated: _onMapCreated,
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(userLocation2Lat, userLocation2Lng),
+                        zoom: 13.5,
                       ),
+                      markers: {
+                        //markers.values.toSet(),
+                        if (_origin != null) _origin!,
+                        if (_destination != null) _destination!,
+                        Marker(
+                            markerId: MarkerId('DriverAddress'),
+                            infoWindow:
+                                const InfoWindow(title: 'DriverLocation'),
+                            position:
+                                LatLng(driverLocationLat, driverLocationLng),
+                            icon: BitmapDescriptor.defaultMarkerWithHue(
+                                BitmapDescriptor.hueViolet)),
+                      },
+                      // polylines: {
+                      //   if (_info != null)
+                      //     Polyline(
+                      //       polylineId: const PolylineId('overview_polyine'),
+                      //       color: Colors.blue,
+                      //       width: 5,
+                      //       points: _info!.polylinePoints
+                      //           .map((e) => LatLng(e.latitude, e.longitude))
+                      //           .toList(),
+                      //     )
+                      // },
+                      // myLocationButtonEnabled: true,
+                      // onLongPress: _addMarker,
                     ),
+                  ),
                 ),
                 Container(
                   margin: const EdgeInsets.all(15),
