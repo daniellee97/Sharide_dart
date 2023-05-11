@@ -15,6 +15,7 @@ class DriverMainScreen extends ConsumerStatefulWidget {
 }
 
 class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
+  String dropdownValue = 'Home';
   @override
   Widget build(BuildContext context) {
     // get current user name
@@ -128,9 +129,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Text('123 ABC Rd., San Jose, CA 95050')
-                      ],
+                      children: const [Text('123 ABC Rd., San Jose, CA 95050')],
                     )),
                 Container(
                   margin: const EdgeInsets.all(15),
@@ -143,7 +142,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                             width: MediaQuery.of(context).size.width * 0.7,
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: DropdownButton<String>(
-                              value: 'Home',
+                              value: dropdownValue,
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 24,
                               elevation: 16,
@@ -158,10 +157,9 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                                 color: Colors.white,
                               ),
                               onChanged: (String? newValue) {
-                                if (newValue == 'Home' ||
-                                    newValue == 'Campus') {
-                                  context.push('/scheduleRide');
-                                }
+                                setState(() {
+                                  dropdownValue = newValue!;
+                                });
                               },
                               items: <String>[
                                 'Home',
