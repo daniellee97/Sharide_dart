@@ -49,6 +49,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               json.decode(response.body)['address'];
           ref.read(email.notifier).state =
               json.decode(response.body)['sjsu_email'];
+          ref.read(currentLocation.notifier).state =
+              json.decode(response.body)['address'];
         } else {
           showDialog(
               context: context,
@@ -77,6 +79,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ref.read(email.notifier).state =
               json.decode(response.body)['sjsu_email'];
           ref.read(available.notifier).state = 'no';
+          ref.read(currentLocation.notifier).state =
+              json.decode(response.body)['address'];
         } else {
           showDialog(
               context: context,

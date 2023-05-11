@@ -11,6 +11,7 @@ class UserMainScreen extends ConsumerWidget {
     var currentUserName = ref.watch(userName);
     var userEmail = ref.watch(email);
     var currentLocationNow = ref.watch(currentLocation);
+    
     String backendURL = ref.watch(authority);
 
     Widget okButtonPassenger = TextButton(
@@ -209,8 +210,8 @@ class UserMainScreen extends ConsumerWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
-                        Text('123 ABC Rd., San Jose, CA 95050')
+                      children: [
+                        Text('$currentLocationNow')
                       ],
                     )),
                 Container(

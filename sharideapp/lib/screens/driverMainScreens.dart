@@ -7,6 +7,11 @@ import '../Providers.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:sharideapp/DirectionsRepository.dart';
+import '../DirectionsModel.dart';
+import 'driverSearchingScreen.dart';
+
+
 class DriverMainScreen extends ConsumerStatefulWidget {
   const DriverMainScreen({Key? key}) : super(key: key);
 
@@ -23,6 +28,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
     // get current email
     var _currEmail = ref.watch(email);
     var _currStatus = ref.watch(available);
+    var currentLocationNow = ref.watch(currentLocation);
 
     String backendURL = ref.watch(authority);
     AlertDialog alert =
@@ -94,43 +100,42 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                   ],
                 ),
                 const SizedBox(height: 50),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     const Text(
-                //       'Your home address:',
-                //       style: TextStyle(
-                //           fontSize: 16,
-                //           fontWeight: FontWeight.bold,
-                //           color: Colors.white),
-                //       textAlign: TextAlign.center,
-                //     ),
-                //     ElevatedButton(
-                //       onPressed: () => {},
-                //       child: const Text(
-                //         'Edit',
-                //         style: TextStyle(color: Colors.white),
-                //       ),
-                //       style: ButtonStyle(
-                //           backgroundColor:
-                //               MaterialStateProperty.all(Colors.teal)),
-                //     ),
-                //   ],
-                // ),
-                // const SizedBox(height: 10),
-                // Container(
-                //     decoration: const BoxDecoration(
-                //         borderRadius: BorderRadius.all(Radius.circular(8)),
-                //         color: Color(0xFFFEFBE9)),
-                //     width: double.infinity,
-                //     height: 120,
-                //     padding: const EdgeInsets.all(10),
-                //     child: Column(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       crossAxisAlignment: CrossAxisAlignment.center,
-                //       children: const [Text('123 ABC Rd., San Jose, CA 95050')],
-                //     )),
-                
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Your home address:',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                    ElevatedButton(
+                      onPressed: () => {},
+                      child: const Text(
+                        'Edit',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.teal)),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Container(
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        color: Color(0xFFFEFBE9)),
+                    width: double.infinity,
+                    height: 120,
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [Text('$currentLocationNow')],
+                    )),
                 Container(
                   margin: const EdgeInsets.all(15),
                   child: Column(
