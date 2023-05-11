@@ -89,7 +89,7 @@ class _DriverSignUpFormState extends ConsumerState<SignUpFormDriver> {
         'password': _password,
         'vehicleYear': _vehicleYear.toString(),
         'vehicleMake': _vehicleMake,
-        'defaultLocation': _defaultLocation
+        'address': _defaultLocation
       };
 
       // print(
