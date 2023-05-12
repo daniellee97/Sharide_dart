@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import '../controllers/payment_controller.dart';
+import 'dart:math';
 
 void main() async {
   Stripe.publishableKey =
@@ -21,7 +22,7 @@ class HomePage extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              controller.makePayment(amount: '5', currency: 'USD');
+              controller.makePayment(amount: Random().nextInt(10).toString(), currency: 'USD');
               print("button is pressed");
             },
             child: Center(
