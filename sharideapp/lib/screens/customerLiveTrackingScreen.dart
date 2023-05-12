@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:sharideapp/DirectionsRepository.dart';
@@ -20,7 +21,7 @@ class CustomerMapScreen extends ConsumerStatefulWidget {
 
 class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
   var _initialCameraPosition = CameraPosition(
-    target: LatLng(37.773972, -122.431297),
+    target: LatLng(37.3352, -121.8811),
     zoom: 11.5,
   );
   late Directions? _info = Directions(
@@ -57,8 +58,27 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
   late double driverLocationLat = -10;
   late double driverLocationLng = -10;
   var currentDriverName;
+  var currentDriverPlate;
   Set<Marker> _markers = {};
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  LocationData? currentLiveLocation;
+
+  void getCurrentLiveLocation() async {
+    Location location = Location();
+
+    location.getLocation().then(
+      (location) {
+        currentLiveLocation = location;
+      },
+    );
+    //GoogleMapController googleMapController = await _controller.future;
+    location.onLocationChanged.listen(
+      (newLoc) {
+        currentLiveLocation = newLoc;
+        setState(() {});
+      },
+    );
+  }
 
   Future<LatLng> getCoordinates() async {
     var currentLocationNow = ref.watch(currentLocation);
@@ -95,6 +115,7 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
     _googleMapController = controller;
     //var currentLocationNow = ref.watch(currentLocation);
     currentDriverName = ref.watch(driverName);
+    currentDriverPlate = ref.watch(driverPlate);
     final LatLng userLocation2 = await getCoordinates();
     final LatLng driverLocation = await getDriverCoordinates();
     driverLocationLat = driverLocation.latitude;
@@ -206,17 +227,19 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
     }
   }
 
-  /*
-  void addCurrentLocation() async {
-    //var currentLocationNow = ref.watch(currentLocation);
-    var userEmail = ref.watch(email);
-    final LatLng userLocation = await getCoordinates();
-    Location location = Location();
+  Future<void> _UpdatePolyLines(LatLng Despos, LatLng Oripos) async {
+    //Then here we are getting the directions
+    final directions = await DirectionsRepository()
+        .getDirections(origin: Oripos, destination: Despos);
+
+    setState(() => _info = directions!);
   }
-*/
+
   @override
   void initState() {
     //addCurrentLocation();
+    //getCurrentDriverLiveLocation();
+    getCurrentLiveLocation();
     super.initState();
   }
 
@@ -238,11 +261,21 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
                 borderRadius: BorderRadius.circular(12.0),
                 child: GoogleMap(
                   onMapCreated: _onMapCreated,
-                  initialCameraPosition: _initialCameraPosition,
+                  //onMapCreated: (mapContro)
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(currentLiveLocation!.latitude!,
+                        currentLiveLocation!.longitude!),
+                    zoom: 13.5,
+                  ),
                   markers: {
                     //markers.values.toSet(),
                     if (_origin != null) _origin!,
                     if (_destination != null) _destination!,
+                    Marker(
+                      markerId: const MarkerId('CurrentLiveLocation'),
+                      position: LatLng(currentLiveLocation!.latitude!,
+                          currentLiveLocation!.longitude!),
+                    ),
                     Marker(
                         markerId: MarkerId('Here'),
                         infoWindow: const InfoWindow(title: 'CustomerLocation'),
@@ -268,7 +301,7 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
                       )
                   },
                   myLocationButtonEnabled: true,
-                  onLongPress: _addMarker,
+                  //onLongPress: _addMarker,
                 ),
               ),
             ),
@@ -282,7 +315,7 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
               ),
               height: 50,
               width: 300,
-              margin: EdgeInsets.only(top: 100.0),
+              margin: EdgeInsets.only(top: 65.0),
               child: Row(
                 children: [
                   Expanded(
@@ -336,22 +369,95 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   Text(
-                    'MAJOR/YEAR',
+                    'License Plate: $currentDriverPlate',
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   Text(
-                    'FUN FACT',
+                    'Car Make: Honda',
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   Text(
-                    '(Favorite Musics, Game, etc.)',
+                    'Car Model: Civic',
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ],
               ),
               height: 240,
               width: 300,
-              margin: EdgeInsets.only(left: 16, right: 16, top: 450),
+              margin: EdgeInsets.only(left: 16, right: 16, top: 375),
+            ),
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  height: 100,
+                  width: 300,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          //Do something here with waypoint
+                          setState(() {
+                            //Here we are just temp setting the updated coords to the
+                            //driverlocation can update later to dyncamically change
+                            //between going to school or another location
+                            driverLocationLat = 37.3352;
+                            driverLocationLng = -121.8811;
+                            _UpdatePolyLines(
+                                LatLng(driverLocationLat, driverLocationLng),
+                                LatLng(userLocation2Lat, userLocation2Lng));
+                          });
+                        },
+                        child: Text('PICKED UP BY DRIVER'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.green,
+                          fixedSize: Size(140, 70),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          context.push('/paymentPage');
+                        },
+                        child: Text('MAKE PAYMENT'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.red,
+                          fixedSize: Size(140, 70),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                /*
+                SizedBox(
+                  height: 50,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      height: 50,
+                      width: 300,
+                      margin: EdgeInsets.only(left: 16, right: 16),
+                      child: Center(
+                        child: Text(
+                          'END RIDE',
+                          style: TextStyle(fontSize: 20, color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),*/
+              ],
             ),
           ),
         ],
