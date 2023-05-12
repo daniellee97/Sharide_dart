@@ -55,6 +55,29 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
       });
     }
 
+    _setDriverStatusUnavailable() async {
+      var url = Uri.http(backendURL, '/drivers');
+      print("sjsu_email is $_currEmail and current status is $_currStatus");
+      http.post(url, body: {'sjsu_email': _currEmail, 'avail': 'no'}).then(
+          (response) {
+        print("testing");
+        print("what here ${response.statusCode}");
+        if (response.statusCode == 200) {
+          ref.read(available.notifier).state = 'no';
+          print(
+              "sjsu_email is $_currEmail and current status is ${ref.read(available.notifier).state} after changing the status");
+        } else {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return alert;
+              });
+        }
+      }).catchError((e) {
+        print("Offline for user $e");
+      });
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Sharide'),
@@ -77,21 +100,22 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                         color: Colors.white,
                       ),
                     ),
-                    // ElevatedButton(
-                    //   style: ButtonStyle(
-                    //       backgroundColor:
-                    //           MaterialStateProperty.all(Colors.red)),
-                    //   onPressed: () {
-                    //     ref.read(available.notifier).state = "no";
-                    //     ref.read(loggedIn.notifier).state = false;
-                    //     ref.read(isDriver.notifier).state = false;
-                    //     ref.read(userName.notifier).state = "";
-                    //   },
-                    //   child: const Text(
-                    //     'Log out',
-                    //     style: TextStyle(color: Colors.black),
-                    //   ),
-                    // )
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red)),
+                      onPressed: () {
+                        _setDriverStatusUnavailable();
+                        ref.read(available.notifier).state = "no";
+                        ref.read(loggedIn.notifier).state = false;
+                        ref.read(isDriver.notifier).state = false;
+                        ref.read(userName.notifier).state = "";
+                      },
+                      child: const Text(
+                        'Log out',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    )
                   ],
                 ),
                 const SizedBox(height: 50),

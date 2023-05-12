@@ -37,7 +37,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       http.post(url, body: {'sjsu_email': _email, 'password': _password}).then(
           (response) {
         print("testing");
-        print("what here $response.statusCode");
+        print(response.statusCode);
         if (response.statusCode == 200) {
           // print("Log in successfully");
           ref.read(loggedIn.notifier).state = true;
