@@ -19,6 +19,8 @@ class UserMainScreen extends ConsumerStatefulWidget {
 }
 
 class _UserMainScreenState extends ConsumerState<UserMainScreen> {
+  String dropdownValue = 'Home';
+
   Future<LatLng> getCoordinates() async {
     var currentLocationNow = ref.watch(currentLocation);
     final response = await http.get(Uri.parse(
@@ -387,7 +389,7 @@ class _UserMainScreenState extends ConsumerState<UserMainScreen> {
                             width: MediaQuery.of(context).size.width * 0.7,
                             height: MediaQuery.of(context).size.height * 0.06,
                             child: DropdownButton<String>(
-                              value: 'Home',
+                              value: dropdownValue,
                               icon: const Icon(Icons.arrow_drop_down),
                               iconSize: 24,
                               elevation: 16,
@@ -402,10 +404,9 @@ class _UserMainScreenState extends ConsumerState<UserMainScreen> {
                                 color: Colors.white,
                               ),
                               onChanged: (String? newValue) {
-                                if (newValue == 'Home' ||
-                                    newValue == 'Campus') {
-                                  context.push('/scheduleRide');
-                                }
+                                setState(() {
+                                  dropdownValue = newValue!;
+                                });
                               },
                               items: <String>[
                                 'Home',
