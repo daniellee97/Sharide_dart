@@ -2,9 +2,10 @@
 
 Sharide is an application that offers ride functinality for students at SJSU.
 Functionality
-The app offers people to sign up as either a passenger or driver
-The matching algorithm, passenger only get matched if at least one of the driver is online
-Once matched, passenger will go on to live tracking feature
+
+- The app offers people to sign up as either a passenger or driver
+- The matching algorithm, passenger only get matched if at least one of the driver is online
+- Once matched, passenger will go on to live tracking feature
 
 ## Run the app on your computer
 Make sure to install the following technologies first:
