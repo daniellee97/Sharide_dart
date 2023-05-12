@@ -29,7 +29,7 @@ final currentDriverLocation = StateProvider<String>((ref) {
 });
 
 final authority = StateProvider<String>((ref) {
-  return "10.250.41.176:3000";
+  return "192.168.1.67:3000";
 });
 
 // added the available status provider
