@@ -5,9 +5,17 @@ import '../Providers.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class UserMainScreen extends ConsumerWidget {
+
+class UserMainScreen extends ConsumerStatefulWidget {
+  const UserMainScreen({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _UserMainScreenState createState() => _UserMainScreenState();
+}
+
+class _UserMainScreenState extends ConsumerState<UserMainScreen> {
+  @override
+  Widget build(BuildContext context) {
     var currentUserName = ref.watch(userName);
     var userEmail = ref.watch(email);
     var currentLocationNow = ref.watch(currentLocation);
