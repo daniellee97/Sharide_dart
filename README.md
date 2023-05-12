@@ -18,25 +18,25 @@ Then run the app based on instructions below:
     cd into the backend
     type 'node index.js'
 2. To run frontend, perform those steps in a terminal
-    go to the Providers.dart in the frontend (sharideapp/Providers.dart)
-        change the authority ip address part to your local ip address, which is the local host
-        make sure the specified port is not used (3000)
-    cd into Sharide_dart
-    type 'flutter run'
+    - go to the Providers.dart in the frontend (sharideapp/Providers.dart)
+    - change the authority ip address part to your local ip address, which is the local host
+    - make sure the specified port is not used (3000)
+    - cd into Sharide_dart in a terminal
+    - type 'flutter run'
 
 ## Architecture
 The code is as below
 SHARIDE_DART
-    backend
-      RestAPI   (the REST APIs)
-      test      (test cases for those APIs)
-      index     (main entry point of the backend)
-    sharideapp
-      lib
-          Controllers   (Payment Controllers)
-      screens           (where all the frontend screens locate)
-      main              (main entry point of the app)
-      Providers         (store the state of the app)
+    - backend
+      - RestAPI   (the REST APIs)
+      - test      (test cases for those APIs)
+      - index     (main entry point of the backend)
+    - sharideapp
+      - lib
+          - Controllers   (Payment Controllers)
+      - screens           (where all the frontend screens locate)
+      - main              (main entry point of the app)
+      - Providers         (store the state of the app)
                     
 ### Backend
 The backend consists of REST APIs and test case for those APIs
