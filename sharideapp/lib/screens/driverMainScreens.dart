@@ -88,8 +88,8 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
   LocationData? currentLocations;
   late double userLocation2Lat = 10;
   late double userLocation2Lng = 10;
-  late double driverLocationLat = 37.335144;
-  late double driverLocationLng = -121.8812744;
+  late double driverLocationLat = 100;
+  late double driverLocationLng = -100;
   var currentDriverName;
   var currentDriverPlate;
   Set<Marker> _markers = {};

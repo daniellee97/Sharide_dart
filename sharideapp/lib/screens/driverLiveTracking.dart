@@ -199,8 +199,9 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
       );*/
       */
     });
-    final directions = await DirectionsRepository()
-        .getDirections(origin: userLocation2, destination: driverLocation);
+
+    final directions = await DirectionsRepository().getDirections(
+        origin: LatLng(37.7157, -121.9101), destination: driverLocation);
 
     setState(() => _info = directions!);
   }
@@ -266,12 +267,13 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
           position: pos,
         );
       });
-
+      /*
       //Then here we are getting the directions
       final directions = await DirectionsRepository()
           .getDirections(origin: _origin!.position, destination: pos);
 
       setState(() => _info = directions!);
+      */
     }
   }
 
@@ -326,7 +328,7 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
                         markerId: MarkerId('Here'),
                         infoWindow:
                             const InfoWindow(title: 'CustomersLocation'),
-                        position: LatLng(userLocation2Lat, userLocation2Lng),
+                        position: LatLng(37.7157, -121.9101),
                         icon: BitmapDescriptor.defaultMarkerWithHue(
                             BitmapDescriptor.hueOrange)),
                     Marker(
@@ -336,6 +338,7 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
                         icon: BitmapDescriptor.defaultMarkerWithHue(
                             BitmapDescriptor.hueViolet)),
                   },
+
                   polylines: {
                     if (_info != null)
                       Polyline(
@@ -347,6 +350,7 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
                             .toList(),
                       )
                   },
+
                   myLocationButtonEnabled: true,
                   //onLongPress: _addMarker,
                 ),
@@ -447,7 +451,8 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
                             driverLocationLng = -121.8811;
                             _UpdatePolyLines(
                                 LatLng(driverLocationLat, driverLocationLng),
-                                LatLng(37.3346, -122.0090));
+                                LatLng(37.7157,
+                                    -121.9101) /*LatLng(userLocation2Lat, userLocation2Lng)*/);
                           });
                         },
                         child: Text('Picked Up Passenger'),

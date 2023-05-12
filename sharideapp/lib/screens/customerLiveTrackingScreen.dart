@@ -80,30 +80,6 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
     );
   }
 
-/*
-  void getCurrentDriverLiveLocation() async {
-    Location locationDriver;
-    locationDriver = await ref.watch(driverLocationPing);
-    if (ref.read(driverLocationPing) != null) {
-      locationDriver = ref.read(driverLocationPing);
-    } else {
-      locationDriver = Location();
-    }
-
-    locationDriver.getLocation().then(
-      (locationDriver) {
-        //currentLiveLocation = locationDriver;
-        currentLiveLocation = ref.watch(driverCurrentLiveLocation);
-      },
-    );
-    locationDriver.onLocationChanged.listen(
-      (newloc) {
-        currentLiveLocation = newloc;
-        setState(() {});
-      },
-    );
-  }
-*/
   Future<LatLng> getCoordinates() async {
     var currentLocationNow = ref.watch(currentLocation);
     final response = await http.get(Uri.parse(
@@ -251,14 +227,14 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
     }
   }
 
-  /*
-  void addCurrentLocation() async {
-    //var currentLocationNow = ref.watch(currentLocation);
-    var userEmail = ref.watch(email);
-    final LatLng userLocation = await getCoordinates();
-    Location location = Location();
+  Future<void> _UpdatePolyLines(LatLng Despos, LatLng Oripos) async {
+    //Then here we are getting the directions
+    final directions = await DirectionsRepository()
+        .getDirections(origin: Oripos, destination: Despos);
+
+    setState(() => _info = directions!);
   }
-*/
+
   @override
   void initState() {
     //addCurrentLocation();
@@ -325,7 +301,7 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
                       )
                   },
                   myLocationButtonEnabled: true,
-                  onLongPress: _addMarker,
+                  //onLongPress: _addMarker,
                 ),
               ),
             ),
@@ -339,7 +315,7 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
               ),
               height: 50,
               width: 300,
-              margin: EdgeInsets.only(top: 40.0),
+              margin: EdgeInsets.only(top: 65.0),
               child: Row(
                 children: [
                   Expanded(
@@ -408,7 +384,7 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
               ),
               height: 240,
               width: 300,
-              margin: EdgeInsets.only(left: 16, right: 16, top: 355),
+              margin: EdgeInsets.only(left: 16, right: 16, top: 375),
             ),
           ),
           Center(
@@ -423,7 +399,6 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          /*
                           //Do something here with waypoint
                           setState(() {
                             //Here we are just temp setting the updated coords to the
@@ -433,11 +408,10 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
                             driverLocationLng = -121.8811;
                             _UpdatePolyLines(
                                 LatLng(driverLocationLat, driverLocationLng),
-                                LatLng(37.3346, -122.0090));
+                                LatLng(userLocation2Lat, userLocation2Lng));
                           });
-                          */
                         },
-                        child: Text('Picked Up By Driver'),
+                        child: Text('PICKED UP BY DRIVER'),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.green,
                           fixedSize: Size(140, 70),
@@ -447,7 +421,7 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
                         onPressed: () {
                           context.push('/paymentPage');
                         },
-                        child: Text('END RIDE'),
+                        child: Text('MAKE PAYMENT'),
                         style: ElevatedButton.styleFrom(
                           primary: Colors.red,
                           fixedSize: Size(140, 70),
