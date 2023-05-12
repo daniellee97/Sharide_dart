@@ -28,15 +28,22 @@ Then run the app based on instructions below:
 The code is as below
 SHARIDE_DART
     - backend
-      - RestAPI   (the REST APIs)
-      - test      (test cases for those APIs)
-      - index     (main entry point of the backend)
+        RestAPI   (the REST APIs)
+        
+        test      (test cases for those APIs)
+        
+        index     (main entry point of the backend)
+      
     - sharideapp
-      - lib
-          - Controllers   (Payment Controllers)
-      - screens           (where all the frontend screens locate)
-      - main              (main entry point of the app)
-      - Providers         (store the state of the app)
+        lib
+          
+          Controllers   (Payment Controllers)
+        
+        screens           (where all the frontend screens locate)
+        
+        main              (main entry point of the app)
+        
+        Providers         (store the state of the app)
                     
 ### Backend
 The backend consists of REST APIs and test case for those APIs
