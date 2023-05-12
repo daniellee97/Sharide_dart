@@ -51,10 +51,10 @@ SHARIDE_DART
         Providers         (store the state of the app)
                     
 ### Backend
-The backend consists of REST APIs and test case for those APIs
-The REST APIs format is specify in index.js
-The specific APIs are in RestAPI folder
-The tests are those APIs are in test folder
+- The backend consists of REST APIs and test case for those APIs
+- The REST APIs format is specify in index.js
+- The specific APIs are in RestAPI folder
+- The tests are those APIs are in test folder
 
 To run backend test:
 1. Open a terminal and cd into backend
