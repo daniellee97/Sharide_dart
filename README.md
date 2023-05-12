@@ -69,15 +69,11 @@ example of testing
 https://www.npmjs.com/package/supertest
 
 ### Frontend
-For frontend we use Flutter
-
-The architecture is specify as above
-
-screens folder contains all the screens for our app
-
-Providers is the file where we store all the state of the app
-
-For this project we used Riverpod as our state management
+- For frontend we use Flutter
+- The architecture is specify as above
+- The screens folder contains all the screens for our app
+- Providers.dart is the file where we store all the state of the app
+- For this project we used Riverpod as our state management
 
 
 
