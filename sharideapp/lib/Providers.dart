@@ -40,7 +40,7 @@ final currentDriverLocation = StateProvider<String>((ref) {
 });
 
 final authority = StateProvider<String>((ref) {
-  return "192.168.1.83:3000";
+  return "xxx.xxx.xxx.xxx:3000";
 });
 
 final driverLatitude = StateProvider<String>((ref) {
