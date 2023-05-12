@@ -25,7 +25,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
   Future<LatLng> getCoordinates() async {
     var currentLocationNow = ref.watch(currentLocation);
     final response = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?address=$currentLocationNow&key=AIzaSyC88AJvT4lwQlhR2DdgWILhDbjuH13mtBg%27'));
+        'https://maps.googleapis.com/maps/api/geocode/json?address=$currentLocationNow&key=AIzaSyAVBHwy-IOLRqmTKk00_76TRrtcq0HzQ1g'));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -41,7 +41,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
     var currentDriverLocationNow = ref.watch(currentDriverLocation);
     print('There is this address for the driver $currentDriverLocationNow');
     final response = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?address=$currentDriverLocationNow&key=AIzaSyC88AJvT4lwQlhR2DdgWILhDbjuH13mtBg%27'));
+        'https://maps.googleapis.com/maps/api/geocode/json?address=$currentDriverLocationNow&key=AIzaSyAVBHwy-IOLRqmTKk00_76TRrtcq0HzQ1g'));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -299,12 +299,9 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                       onMapCreated: _onMapCreated,
                       initialCameraPosition: CameraPosition(
                         target: LatLng(driverLocationLat, driverLocationLng),
-                        zoom: 13.5,
+                        zoom: 11,
                       ),
                       markers: {
-                        //markers.values.toSet(),
-                        if (_origin != null) _origin!,
-                        if (_destination != null) _destination!,
                         Marker(
                             markerId: MarkerId('DriverAddress'),
                             infoWindow:
@@ -314,19 +311,11 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                             icon: BitmapDescriptor.defaultMarkerWithHue(
                                 BitmapDescriptor.hueViolet)),
                       },
-                      // polylines: {
-                      //   if (_info != null)
-                      //     Polyline(
-                      //       polylineId: const PolylineId('overview_polyine'),
-                      //       color: Colors.blue,
-                      //       width: 5,
-                      //       points: _info!.polylinePoints
-                      //           .map((e) => LatLng(e.latitude, e.longitude))
-                      //           .toList(),
-                      //     )
-                      // },
-                      // myLocationButtonEnabled: true,
-                      // onLongPress: _addMarker,
+                      cameraTargetBounds: CameraTargetBounds(LatLngBounds(
+                          northeast:
+                              LatLng(driverLocationLat, driverLocationLng),
+                          southwest:
+                              LatLng(driverLocationLat, driverLocationLng))),
                     ),
                   ),
                 ),

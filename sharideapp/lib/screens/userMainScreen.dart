@@ -22,10 +22,11 @@ class _UserMainScreenState extends ConsumerState<UserMainScreen> {
   Future<LatLng> getCoordinates() async {
     var currentLocationNow = ref.watch(currentLocation);
     final response = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?address=$currentLocationNow&key=AIzaSyC88AJvT4lwQlhR2DdgWILhDbjuH13mtBg%27'));
+        'https://maps.googleapis.com/maps/api/geocode/json?address=$currentLocationNow&key=AIzaSyAVBHwy-IOLRqmTKk00_76TRrtcq0HzQ1g'));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
+      print("WE are trying to get the address $data");
       final coordinates = data['results'][0]['geometry']['location'];
       print('There should be the address coordinates $coordinates');
       return LatLng(coordinates['lat'], coordinates['lng']);
@@ -38,7 +39,7 @@ class _UserMainScreenState extends ConsumerState<UserMainScreen> {
     var currentDriverLocationNow = ref.watch(currentDriverLocation);
     print('There is this address for the driver $currentDriverLocationNow');
     final response = await http.get(Uri.parse(
-        'https://maps.googleapis.com/maps/api/geocode/json?address=$currentDriverLocationNow&key=AIzaSyC88AJvT4lwQlhR2DdgWILhDbjuH13mtBg%27'));
+        'https://maps.googleapis.com/maps/api/geocode/json?address=$currentDriverLocationNow&key=AIzaSyAVBHwy-IOLRqmTKk00_76TRrtcq0HzQ1g'));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -118,21 +119,13 @@ class _UserMainScreenState extends ConsumerState<UserMainScreen> {
       ),
     );
     setState(() {
-      markers[MarkerId('place_name')] = marker;
-      _markers.add(
-        Marker(
-          markerId: MarkerId("marker_1"),
-          position: LatLng(37.7749, -122.4194),
-          infoWindow: InfoWindow(title: "My Marker"),
-          icon:
-              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-        ),
-      );
-      _locationCurrent = Marker(
-        markerId: MarkerId('Current Location'),
-        infoWindow: const InfoWindow(title: 'PLEASE'),
-        position: LatLng(driverLocationLat, driverLocationLng),
-      ); /*
+      Marker(
+          markerId: MarkerId('DriverAddress'),
+          infoWindow: const InfoWindow(title: 'Passenger Location'),
+          position: LatLng(userLocation2Lat, userLocation2Lng),
+          icon: BitmapDescriptor.defaultMarkerWithHue(
+              BitmapDescriptor.hueOrange));
+      /*
       _locationCurrentPassenger = Marker(
         markerId: const MarkerId('locationCurrentPassenger'),
         infoWindow: const InfoWindow(title: 'CustomerLocation'),
@@ -140,6 +133,7 @@ class _UserMainScreenState extends ConsumerState<UserMainScreen> {
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
       );*/
     });
+    CameraUpdate.newLatLng(LatLng(userLocation2Lat, userLocation2Lng));
     final directions = await DirectionsRepository()
         .getDirections(origin: userLocation2, destination: driverLocation);
 
@@ -361,35 +355,24 @@ class _UserMainScreenState extends ConsumerState<UserMainScreen> {
                     child: GoogleMap(
                       onMapCreated: _onMapCreated,
                       initialCameraPosition: CameraPosition(
-                        target: LatLng(driverLocationLat, driverLocationLng),
+                        target: LatLng(userLocation2Lat, userLocation2Lng),
                         zoom: 13.5,
                       ),
                       markers: {
                         //markers.values.toSet(),
-                        if (_origin != null) _origin!,
-                        if (_destination != null) _destination!,
                         Marker(
                             markerId: MarkerId('DriverAddress'),
                             infoWindow:
-                                const InfoWindow(title: 'DriverLocation'),
+                                const InfoWindow(title: 'Passenger Location'),
                             position:
-                                LatLng(driverLocationLat, driverLocationLng),
+                                LatLng(userLocation2Lat, userLocation2Lng),
                             icon: BitmapDescriptor.defaultMarkerWithHue(
-                                BitmapDescriptor.hueViolet)),
+                                BitmapDescriptor.hueOrange)),
                       },
-                      // polylines: {
-                      //   if (_info != null)
-                      //     Polyline(
-                      //       polylineId: const PolylineId('overview_polyine'),
-                      //       color: Colors.blue,
-                      //       width: 5,
-                      //       points: _info!.polylinePoints
-                      //           .map((e) => LatLng(e.latitude, e.longitude))
-                      //           .toList(),
-                      //     )
-                      // },
-                      // myLocationButtonEnabled: true,
-                      // onLongPress: _addMarker,
+                      cameraTargetBounds: CameraTargetBounds(LatLngBounds(
+                          northeast: LatLng(userLocation2Lat, userLocation2Lng),
+                          southwest:
+                              LatLng(userLocation2Lat, userLocation2Lng))),
                     ),
                   ),
                 ),
