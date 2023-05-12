@@ -25,8 +25,9 @@ Then run the app based on instructions below:
     - type 'flutter run'
 
 ## Architecture
-The code is as below
+The file architecture is as below
 SHARIDE_DART
+
     - backend
         RestAPI   (the REST APIs)
         
