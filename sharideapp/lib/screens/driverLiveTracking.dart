@@ -387,7 +387,7 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
             child: Container(
               //color: Colors.blue,
               decoration: BoxDecoration(
-                color: Colors.blue,
+                color: Colors.teal,
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Column(

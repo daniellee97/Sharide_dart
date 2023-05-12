@@ -8,6 +8,12 @@ import '../Providers.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:sharideapp/DirectionsRepository.dart';
+import '../DirectionsModel.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+
 class DriverMainScreen extends ConsumerStatefulWidget {
   const DriverMainScreen({Key? key}) : super(key: key);
 
@@ -16,6 +22,133 @@ class DriverMainScreen extends ConsumerStatefulWidget {
 }
 
 class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
+  Future<LatLng> getCoordinates() async {
+    var currentLocationNow = ref.watch(currentLocation);
+    final response = await http.get(Uri.parse(
+        'https://maps.googleapis.com/maps/api/geocode/json?address=$currentLocationNow&key=AIzaSyC88AJvT4lwQlhR2DdgWILhDbjuH13mtBg%27'));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final coordinates = data['results'][0]['geometry']['location'];
+      print('There should be the address coordinates $coordinates');
+      return LatLng(coordinates['lat'], coordinates['lng']);
+    } else {
+      throw Exception('Failed to get coordinates');
+    }
+  }
+
+  Future<LatLng> getDriverCoordinates() async {
+    var currentDriverLocationNow = ref.watch(currentDriverLocation);
+    print('There is this address for the driver $currentDriverLocationNow');
+    final response = await http.get(Uri.parse(
+        'https://maps.googleapis.com/maps/api/geocode/json?address=$currentDriverLocationNow&key=AIzaSyC88AJvT4lwQlhR2DdgWILhDbjuH13mtBg%27'));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final coordinates = data['results'][0]['geometry']['location'];
+      print('There should be the address coordinates $coordinates');
+      return LatLng(coordinates['lat'], coordinates['lng']);
+    } else {
+      throw Exception('Failed to get coordinates');
+    }
+  }
+
+  var _initialCameraPosition = CameraPosition(
+    target: LatLng(37.3352, -121.8811),
+    zoom: 11.5,
+  );
+  late Directions? _info = Directions(
+    bounds: LatLngBounds(
+      southwest: LatLng(0, 0),
+      northeast: LatLng(0, 0),
+    ),
+    polylinePoints: [],
+    totalDistance: '',
+    totalDuration: '',
+  );
+  late GoogleMapController _googleMapController;
+  late Marker? _origin = Marker(
+    markerId: MarkerId('origin'),
+    position: LatLng(0, 0),
+  );
+  late Marker? _destination = Marker(
+    markerId: MarkerId('destination'),
+    position: LatLng(0, 0),
+  );
+  late Marker? _locationCurrent = Marker(
+    markerId: MarkerId('Current Location'),
+    position: LatLng(37.335144, -121.8812744),
+    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+  );
+  late Marker? _locationCurrentPassenger = Marker(
+    markerId: MarkerId('locationCurrentPassenger'),
+    position: LatLng(0, 0),
+    //position: LatLng(37.328880, -121.889794),
+  );
+  LocationData? currentLocations;
+  late double userLocation2Lat = 10;
+  late double userLocation2Lng = 10;
+  late double driverLocationLat = 37.335144;
+  late double driverLocationLng = -121.8812744;
+  var currentDriverName;
+  var currentDriverPlate;
+  Set<Marker> _markers = {};
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
+  LocationData? currentLiveLocation;
+
+  void _onMapCreated(GoogleMapController controller) async {
+    _googleMapController = controller;
+    //var currentLocationNow = ref.watch(currentLocation);
+    currentDriverName = ref.watch(driverName);
+    final LatLng userLocation2 = await getCoordinates();
+    final LatLng driverLocation = await getDriverCoordinates();
+    driverLocationLat = driverLocation.latitude;
+    driverLocationLng = driverLocation.longitude;
+    userLocation2Lat = userLocation2.latitude;
+    userLocation2Lng = userLocation2.longitude;
+    print('Hey we are doing it here');
+    print('Here is the Latitude for Passenger: $userLocation2Lat');
+    print('Here is the Longitude for Passenger: $userLocation2Lng');
+    print('Here is the Latitude for Driver: $driverLocationLat');
+    print('Here is the Longitude for Driver: $driverLocationLng');
+    final marker = Marker(
+      markerId: MarkerId('place_name'),
+      position: LatLng(37.328880, -121.889794),
+      // icon: BitmapDescriptor.,
+      infoWindow: InfoWindow(
+        title: 'title',
+        snippet: 'address',
+      ),
+    );
+    setState(() {
+      markers[MarkerId('place_name')] = marker;
+      _markers.add(
+        Marker(
+          markerId: MarkerId("marker_1"),
+          position: LatLng(37.7749, -122.4194),
+          infoWindow: InfoWindow(title: "My Marker"),
+          icon:
+              BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+        ),
+      );
+      _locationCurrent = Marker(
+        markerId: MarkerId('Current Location'),
+        infoWindow: const InfoWindow(title: 'PLEASE'),
+        position: LatLng(driverLocationLat, driverLocationLng),
+      ); /*
+      _locationCurrentPassenger = Marker(
+        markerId: const MarkerId('locationCurrentPassenger'),
+        infoWindow: const InfoWindow(title: 'CustomerLocation'),
+        //position: LatLng(userLocation2Lat, userLocation2Lng),
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+      );*/
+    });
+    final directions = await DirectionsRepository()
+        .getDirections(origin: userLocation2, destination: driverLocation);
+
+    setState(() => _info = directions!);
+  }
+
   @override
   Widget build(BuildContext context) {
     AlertDialog cannotFindDriverAlert =
@@ -93,7 +226,7 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
             child: Column(
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       'Hello, $value',
@@ -103,65 +236,105 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                         color: Colors.white,
                       ),
                     ),
-                    // ElevatedButton(
-                    //   style: ButtonStyle(
-                    //       backgroundColor:
-                    //           MaterialStateProperty.all(Colors.red)),
-                    //   onPressed: () {
-                    //     ref.read(available.notifier).state = "no";
-                    //     ref.read(loggedIn.notifier).state = false;
-                    //     ref.read(isDriver.notifier).state = false;
-                    //     ref.read(userName.notifier).state = "";
-                    //   },
-                    //   child: const Text(
-                    //     'Log out',
-                    //     style: TextStyle(color: Colors.black),
-                    //   ),
-                    // )
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red)),
+                      onPressed: () {
+                        ref.read(available.notifier).state = "no";
+                        ref.read(loggedIn.notifier).state = false;
+                        ref.read(isDriver.notifier).state = false;
+                        ref.read(userName.notifier).state = "";
+                      },
+                      child: const Text(
+                        'Log out',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    )
                   ],
                 ),
                 const SizedBox(height: 50),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Your home address:',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-                    ElevatedButton(
-                      onPressed: () => {},
-                      child: const Text(
-                        'Edit',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Colors.teal)),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     const Text(
+                //       'Your home address:',
+                //       style: TextStyle(
+                //           fontSize: 16,
+                //           fontWeight: FontWeight.bold,
+                //           color: Colors.white),
+                //       textAlign: TextAlign.center,
+                //     ),
+                //     ElevatedButton(
+                //       onPressed: () => {},
+                //       child: const Text(
+                //         'Edit',
+                //         style: TextStyle(color: Colors.white),
+                //       ),
+                //       style: ButtonStyle(
+                //           backgroundColor:
+                //               MaterialStateProperty.all(Colors.teal)),
+                //     ),
+                //   ],
+                // ),
+                // const SizedBox(height: 10),
+                // Container(
+                //     decoration: const BoxDecoration(
+                //         borderRadius: BorderRadius.all(Radius.circular(8)),
+                //         color: Color(0xFFFEFBE9)),
+                //     width: double.infinity,
+                //     height: 120,
+                //     padding: const EdgeInsets.all(10),
+                //     child: Column(
+                //       mainAxisAlignment: MainAxisAlignment.center,
+                //       crossAxisAlignment: CrossAxisAlignment.center,
+                //       children: [Text('$currentLocationNow')],
+                //     )),
                 Container(
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                        color: Color(0xFFFEFBE9)),
-                    width: double.infinity,
-                    height: 120,
-                    padding: const EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [Text('$currentDriveLocation')],
-                    )),
+                  width: 300,
+                  height: 300,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12.0),
+                    child: GoogleMap(
+                      onMapCreated: _onMapCreated,
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(driverLocationLat, driverLocationLng),
+                        zoom: 13.5,
+                      ),
+                      markers: {
+                        //markers.values.toSet(),
+                        if (_origin != null) _origin!,
+                        if (_destination != null) _destination!,
+                        Marker(
+                            markerId: MarkerId('DriverAddress'),
+                            infoWindow:
+                                const InfoWindow(title: 'DriverLocation'),
+                            position:
+                                LatLng(driverLocationLat, driverLocationLng),
+                            icon: BitmapDescriptor.defaultMarkerWithHue(
+                                BitmapDescriptor.hueViolet)),
+                      },
+                      // polylines: {
+                      //   if (_info != null)
+                      //     Polyline(
+                      //       polylineId: const PolylineId('overview_polyine'),
+                      //       color: Colors.blue,
+                      //       width: 5,
+                      //       points: _info!.polylinePoints
+                      //           .map((e) => LatLng(e.latitude, e.longitude))
+                      //           .toList(),
+                      //     )
+                      // },
+                      // myLocationButtonEnabled: true,
+                      // onLongPress: _addMarker,
+                    ),
+                  ),
+                ),
                 Container(
                   margin: const EdgeInsets.all(15),
                   child: Column(
                     children: [
-                      const SizedBox(height: 160),
+                      const SizedBox(height: 30),
                       Column(
                         children: [
                           SizedBox(

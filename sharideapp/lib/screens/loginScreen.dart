@@ -47,6 +47,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               json.decode(response.body)['sjsu_email'];
           ref.read(currentLocation.notifier).state =
               json.decode(response.body)['address'];
+          // Look into this later!!
           ref.read(driverName.notifier).state =
               json.decode(response.body)['name'];
         } else {
@@ -86,6 +87,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           print(
               'Here is the driver available: ${ref.read(available.notifier).state}');
           ref.read(available.notifier).state = 'no';
+          ref.read(currentLocation.notifier).state =
+              json.decode(response.body)['address'];
         } else {
           showDialog(
               context: context,
