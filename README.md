@@ -1,6 +1,7 @@
 # Sharide_dart
 
 Sharide is an application that offers ride functinality for students at SJSU.
+
 Functionality
 
 - The app offers people to sign up as either a passenger or driver
