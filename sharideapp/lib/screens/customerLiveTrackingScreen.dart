@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:sharideapp/DirectionsRepository.dart';
@@ -338,7 +339,7 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
               ),
               height: 50,
               width: 300,
-              margin: EdgeInsets.only(top: 100.0),
+              margin: EdgeInsets.only(top: 40.0),
               child: Row(
                 children: [
                   Expanded(
@@ -396,18 +397,93 @@ class _CustomerMapScreenState extends ConsumerState<CustomerMapScreen> {
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   Text(
-                    'FUN FACT',
+                    'Car Make: Honda',
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   Text(
-                    '(Favorite Musics, Game, etc.)',
+                    'Car Model: Civic',
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                 ],
               ),
               height: 240,
               width: 300,
-              margin: EdgeInsets.only(left: 16, right: 16, top: 450),
+              margin: EdgeInsets.only(left: 16, right: 16, top: 355),
+            ),
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(
+                  height: 100,
+                  width: 300,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          /*
+                          //Do something here with waypoint
+                          setState(() {
+                            //Here we are just temp setting the updated coords to the
+                            //driverlocation can update later to dyncamically change
+                            //between going to school or another location
+                            driverLocationLat = 37.3352;
+                            driverLocationLng = -121.8811;
+                            _UpdatePolyLines(
+                                LatLng(driverLocationLat, driverLocationLng),
+                                LatLng(37.3346, -122.0090));
+                          });
+                          */
+                        },
+                        child: Text('Picked Up By Driver'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.green,
+                          fixedSize: Size(140, 70),
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          context.push('/paymentPage');
+                        },
+                        child: Text('END RIDE'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.red,
+                          fixedSize: Size(140, 70),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                /*
+                SizedBox(
+                  height: 50,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      height: 50,
+                      width: 300,
+                      margin: EdgeInsets.only(left: 16, right: 16),
+                      child: Center(
+                        child: Text(
+                          'END RIDE',
+                          style: TextStyle(fontSize: 20, color: Colors.black),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),*/
+              ],
             ),
           ),
         ],

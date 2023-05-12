@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class TripEndingScreen extends StatelessWidget {
   @override
@@ -32,7 +33,9 @@ class TripEndingScreen extends StatelessWidget {
               ]),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                context.push('/driverMain');
+              },
               child: Text('Close'),
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.blue)),

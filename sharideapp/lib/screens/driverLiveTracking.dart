@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:sharideapp/DirectionsRepository.dart';
@@ -174,6 +175,7 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
       ),
     );
     setState(() {
+      /*
       markers[MarkerId('place_name')] = marker;
       _markers.add(
         Marker(
@@ -195,6 +197,7 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
         //position: LatLng(userLocation2Lat, userLocation2Lng),
         icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
       );*/
+      */
     });
     final directions = await DirectionsRepository()
         .getDirections(origin: userLocation2, destination: driverLocation);
@@ -321,8 +324,9 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
                     ),
                     Marker(
                         markerId: MarkerId('Here'),
-                        infoWindow: const InfoWindow(title: 'CustomerLocation'),
-                        position: LatLng(37.3346, -122.0090),
+                        infoWindow:
+                            const InfoWindow(title: 'CustomersLocation'),
+                        position: LatLng(userLocation2Lat, userLocation2Lng),
                         icon: BitmapDescriptor.defaultMarkerWithHue(
                             BitmapDescriptor.hueOrange)),
                     Marker(
@@ -415,14 +419,6 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
                     'MAJOR/YEAR',
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
-                  Text(
-                    'FUN FACT',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
-                  Text(
-                    '(Favorite Musics, Game, etc.)',
-                    style: TextStyle(fontSize: 16, color: Colors.white),
-                  ),
                 ],
               ),
               height: 220,
@@ -435,7 +431,8 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 SizedBox(
-                  height: 50,
+                  height: 100,
+                  width: 300,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -454,15 +451,25 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
                           });
                         },
                         child: Text('Picked Up Passenger'),
-                        style: ElevatedButton.styleFrom(primary: Colors.blue),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.green,
+                          fixedSize: Size(140, 60),
+                        ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
-                        child: Text('Button 2'),
+                        onPressed: () {
+                          context.push('/tripEnding');
+                        },
+                        child: Text('END RIDE'),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.red,
+                          fixedSize: Size(140, 60),
+                        ),
                       ),
                     ],
                   ),
                 ),
+                /*
                 SizedBox(
                   height: 50,
                   child: GestureDetector(
@@ -488,7 +495,7 @@ class DriverMapScreenState extends ConsumerState<DriverMapScreen> {
                       ),
                     ),
                   ),
-                ),
+                ),*/
               ],
             ),
           ),

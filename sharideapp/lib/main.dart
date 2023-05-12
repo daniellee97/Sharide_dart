@@ -7,6 +7,7 @@ import 'package:sharideapp/screens/customerLiveTrackingScreen.dart';
 import 'package:sharideapp/screens/driverLiveTracking.dart';
 import 'package:sharideapp/screens/passengerSearchingScreen.dart';
 import 'package:provider/provider.dart';
+import 'package:sharideapp/screens/tripEndingScreen.dart';
 
 import 'Providers.dart';
 
@@ -20,6 +21,7 @@ import 'screens/landingScreen.dart';
 import 'screens/driverSignupScreen.dart';
 import 'screens/popupScreenDriver.dart';
 import 'screens/popupScreenPassenger.dart';
+import 'screens/paymentScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,6 +59,10 @@ class MyApp extends ConsumerWidget {
               path: 'passengerSignup',
               builder: (context, state) => SignUpForm(),
             ),
+            GoRoute(
+                name: 'tripEnding',
+                path: 'tripEnding',
+                builder: (context, state) => TripEndingScreen()),
             GoRoute(
               name: 'driverSignup',
               path: 'driverSignup',
@@ -102,6 +108,10 @@ class MyApp extends ConsumerWidget {
                 name: 'customerLiveTracking',
                 path: 'customerLiveTracking',
                 builder: (context, state) => CustomerMapScreen()),
+            GoRoute(
+                name: 'paymentPage',
+                path: 'paymentPage',
+                builder: (context, state) => HomePage()),
           ],
         )
       ],
