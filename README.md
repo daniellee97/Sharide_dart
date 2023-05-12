@@ -29,6 +29,7 @@ The file architecture is as below
 SHARIDE_DART
 
     - backend
+    
         RestAPI   (the REST APIs)
         
         test      (test cases for those APIs)
@@ -36,6 +37,7 @@ SHARIDE_DART
         index     (main entry point of the backend)
       
     - sharideapp
+    
         lib
           
           Controllers   (Payment Controllers)
