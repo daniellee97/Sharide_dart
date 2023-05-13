@@ -430,10 +430,13 @@ class _UserMainScreenState extends ConsumerState<UserMainScreen> {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.7,
                             height: MediaQuery.of(context).size.height * 0.06,
-                            child: ElevatedButton(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: ElevatedButton(
                                 style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all(Colors.teal)),
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.teal),
+                                ),
                                 onPressed: () {
                                   _findDriver();
                                   context.push('/searchDriver');
@@ -442,15 +445,20 @@ class _UserMainScreenState extends ConsumerState<UserMainScreen> {
                                   'Search a driver',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 16),
-                                )),
+                                ),
+                              ),
+                            ),
                           ),
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.7,
                             height: MediaQuery.of(context).size.height * 0.06,
-                            child: ElevatedButton(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: ElevatedButton(
                                 style: ButtonStyle(
-                                    backgroundColor:
-                                        MaterialStateProperty.all(Colors.teal)),
+                                  backgroundColor:
+                                      MaterialStateProperty.all(Colors.teal),
+                                ),
                                 onPressed: () {
                                   _startsRideForPassenger();
                                 },
@@ -458,7 +466,9 @@ class _UserMainScreenState extends ConsumerState<UserMainScreen> {
                                   'Start ride',
                                   style: TextStyle(
                                       color: Colors.black, fontSize: 16),
-                                )),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
