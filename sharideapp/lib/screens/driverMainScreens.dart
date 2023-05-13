@@ -281,14 +281,14 @@ class _DriverMainScreenState extends ConsumerState<DriverMainScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'Your home address:',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
+                    // const Text(
+                    //   'Your home address:',
+                    //   style: TextStyle(
+                    //       fontSize: 16,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: Colors.white),
+                    //   textAlign: TextAlign.center,
+                    // ),
                     ElevatedButton(
                       style: ButtonStyle(
                           backgroundColor:
